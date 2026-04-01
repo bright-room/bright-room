@@ -53,112 +53,120 @@ fun JoinSection(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
-    Column(
-        modifier = Modifier
-            .widthIn(max = 1200.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 100.dp, bottom = 60.dp),
-    ) {
-        Card(
-            shape = RoundedCornerShape(24.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            ),
-            border = CardDefaults.outlinedCardBorder(),
-        ) {
-            Box(
-                modifier = Modifier
+        Column(
+            modifier =
+                Modifier
+                    .widthIn(max = 1200.dp)
                     .fillMaxWidth()
-                    .background(
-                        Brush.radialGradient(
-                            colors = listOf(
-                                MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
-                                Color.Transparent,
-                            ),
-                            radius = 600f,
-                        ),
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 100.dp, bottom = 60.dp),
+        ) {
+            Card(
+                shape = RoundedCornerShape(24.dp),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                     ),
+                border = CardDefaults.outlinedCardBorder(),
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 40.dp, vertical = 64.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .background(
+                                Brush.radialGradient(
+                                    colors =
+                                        listOf(
+                                            MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
+                                            Color.Transparent,
+                                        ),
+                                    radius = 600f,
+                                ),
+                            ),
                 ) {
-                    SectionHeader(
-                        label = stringResource(Res.string.join_label),
-                        title = stringResource(Res.string.join_title),
-                        description = stringResource(Res.string.join_desc),
-                    )
-
-                    Spacer(Modifier.height(48.dp))
-
-                    val steps = listOf(
-                        Triple("01", Res.string.join_step1_title, Res.string.join_step1_desc),
-                        Triple("02", Res.string.join_step2_title, Res.string.join_step2_desc),
-                        Triple("03", Res.string.join_step3_title, Res.string.join_step3_desc),
-                    )
-
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally),
-                        verticalArrangement = Arrangement.spacedBy(24.dp),
-                        maxItemsInEachRow = 3,
+                    Column(
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 40.dp, vertical = 64.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        steps.forEach { (num, titleRes, descRes) ->
-                            Column(
-                                modifier = Modifier.widthIn(min = 220.dp, max = 260.dp).padding(16.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                Text(
-                                    text = num,
-                                    fontFamily = FontFamily.Monospace,
-                                    fontSize = 32.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-                                )
-                                Spacer(Modifier.height(12.dp))
-                                Text(
-                                    text = stringResource(titleRes),
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.SemiBold,
-                                    textAlign = TextAlign.Center,
-                                )
-                                Spacer(Modifier.height(8.dp))
-                                Text(
-                                    text = stringResource(descRes),
-                                    fontSize = 13.sp,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    lineHeight = 22.sp,
-                                    textAlign = TextAlign.Center,
-                                )
+                        SectionHeader(
+                            label = stringResource(Res.string.join_label),
+                            title = stringResource(Res.string.join_title),
+                            description = stringResource(Res.string.join_desc),
+                        )
+
+                        Spacer(Modifier.height(48.dp))
+
+                        val steps =
+                            listOf(
+                                Triple("01", Res.string.join_step1_title, Res.string.join_step1_desc),
+                                Triple("02", Res.string.join_step2_title, Res.string.join_step2_desc),
+                                Triple("03", Res.string.join_step3_title, Res.string.join_step3_desc),
+                            )
+
+                        FlowRow(
+                            horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally),
+                            verticalArrangement = Arrangement.spacedBy(24.dp),
+                            maxItemsInEachRow = 3,
+                        ) {
+                            steps.forEach { (num, titleRes, descRes) ->
+                                Column(
+                                    modifier = Modifier.widthIn(min = 220.dp, max = 260.dp).padding(16.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    Text(
+                                        text = num,
+                                        fontFamily = FontFamily.Monospace,
+                                        fontSize = 32.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                                    )
+                                    Spacer(Modifier.height(12.dp))
+                                    Text(
+                                        text = stringResource(titleRes),
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                    Spacer(Modifier.height(8.dp))
+                                    Text(
+                                        text = stringResource(descRes),
+                                        fontSize = 13.sp,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        lineHeight = 22.sp,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                }
                             }
                         }
-                    }
 
-                    Spacer(Modifier.height(40.dp))
+                        Spacer(Modifier.height(40.dp))
 
-                    Button(
-                        onClick = { openUrl("https://github.com/bright-room") },
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = if (viewModel.isDarkTheme) {
-                                MaterialTheme.colorScheme.background
-                            } else {
-                                Color.White
-                            },
-                        ),
-                    ) {
-                        Text(
-                            text = stringResource(Res.string.join_btn),
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier.padding(vertical = 6.dp),
-                        )
+                        Button(
+                            onClick = { openUrl("https://github.com/bright-room") },
+                            shape = RoundedCornerShape(10.dp),
+                            colors =
+                                ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor =
+                                        if (viewModel.isDarkTheme) {
+                                            MaterialTheme.colorScheme.background
+                                        } else {
+                                            Color.White
+                                        },
+                                ),
+                        ) {
+                            Text(
+                                text = stringResource(Res.string.join_btn),
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.padding(vertical = 6.dp),
+                            )
+                        }
                     }
                 }
             }
         }
-    }
     }
 }

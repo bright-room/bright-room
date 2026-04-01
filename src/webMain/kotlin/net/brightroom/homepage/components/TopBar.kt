@@ -65,11 +65,12 @@ fun TopBar(
         shadowElevation = 0.dp,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .widthIn(max = 1200.dp)
-                .padding(horizontal = 24.dp)
-                .height(64.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .widthIn(max = 1200.dp)
+                    .padding(horizontal = 24.dp)
+                    .height(64.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -79,10 +80,11 @@ fun TopBar(
                 modifier = Modifier.clickable { onNavClick(NavSection.HOME) },
             ) {
                 Box(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primary),
+                    modifier =
+                        Modifier
+                            .size(8.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primary),
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
@@ -105,11 +107,12 @@ fun TopBar(
                             text = label,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Medium,
-                            color = if (activeSection == section) {
-                                MaterialTheme.colorScheme.primary
-                            } else {
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                            },
+                            color =
+                                if (activeSection == section) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                },
                             modifier = Modifier.clickable { onNavClick(section) },
                         )
                     }

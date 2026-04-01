@@ -1,6 +1,7 @@
 package net.brightroom.homepage.screens.stats
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -48,44 +48,46 @@ fun StatsSection(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
-    Column(
-        modifier = Modifier
-            .widthIn(max = 1200.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 100.dp, bottom = 60.dp),
-    ) {
-        SectionHeader(
-            label = stringResource(Res.string.stats_label),
-            title = stringResource(Res.string.stats_title),
-            description = stringResource(Res.string.stats_desc),
-        )
-
-        Spacer(Modifier.height(48.dp))
-
-        val items = listOf(
-            stringResource(Res.string.stats_repositories) to stats.repositories.toString(),
-            stringResource(Res.string.stats_contributors) to stats.contributors.toString(),
-            stringResource(Res.string.stats_total_commits) to "${stats.totalCommits}+",
-            stringResource(Res.string.stats_open_prs) to stats.openPrs.toString(),
-            stringResource(Res.string.stats_closed_issues) to stats.closedIssues.toString(),
-            stringResource(Res.string.stats_total_stars) to stats.totalStars.toString(),
-        )
-
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            maxItemsInEachRow = 6,
+        Column(
+            modifier =
+                Modifier
+                    .widthIn(max = 1200.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 100.dp, bottom = 60.dp),
         ) {
-            items.forEach { (label, value) ->
-                StatCard(
-                    label = label,
-                    value = value,
-                    modifier = Modifier.weight(1f).widthIn(min = 160.dp, max = 200.dp),
+            SectionHeader(
+                label = stringResource(Res.string.stats_label),
+                title = stringResource(Res.string.stats_title),
+                description = stringResource(Res.string.stats_desc),
+            )
+
+            Spacer(Modifier.height(48.dp))
+
+            val items =
+                listOf(
+                    stringResource(Res.string.stats_repositories) to stats.repositories.toString(),
+                    stringResource(Res.string.stats_contributors) to stats.contributors.toString(),
+                    stringResource(Res.string.stats_total_commits) to "${stats.totalCommits}+",
+                    stringResource(Res.string.stats_open_prs) to stats.openPrs.toString(),
+                    stringResource(Res.string.stats_closed_issues) to stats.closedIssues.toString(),
+                    stringResource(Res.string.stats_total_stars) to stats.totalStars.toString(),
                 )
+
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                maxItemsInEachRow = 6,
+            ) {
+                items.forEach { (label, value) ->
+                    StatCard(
+                        label = label,
+                        value = value,
+                        modifier = Modifier.weight(1f).widthIn(min = 160.dp, max = 200.dp),
+                    )
+                }
             }
         }
-    }
     }
 }
 

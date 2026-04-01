@@ -26,11 +26,9 @@ kotlin {
     }
 
     sourceSets {
-        val webMain by creating {
-            dependsOn(commonMain.get())
-        }
-        jsMain.get().dependsOn(webMain)
-        wasmJsMain.get().dependsOn(webMain)
+        val webMain by creating {}
+        jsMain {}
+        wasmJsMain {}
 
         commonMain.dependencies {
             implementation(libs.kotlinx.datetime)

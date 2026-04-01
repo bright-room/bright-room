@@ -4,10 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TechStackData(
-    val categories: List<TechCategoryData> = emptyList(),
-    val items: List<TechItemData> = emptyList(),
-)
+data class TechStackData(val categories: List<TechCategoryData> = emptyList(), val items: List<TechItemData> = emptyList())
 
 @Serializable
 data class TechCategoryData(

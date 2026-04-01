@@ -31,6 +31,7 @@ import bright_room.generated.resources.nav_projects
 import bright_room.generated.resources.nav_roadmap
 import bright_room.generated.resources.nav_stats
 import bright_room.generated.resources.nav_tech
+import kotlinx.coroutines.launch
 import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.components.Footer
 import net.brightroom.homepage.components.MobileNavigationMenu
@@ -46,7 +47,6 @@ import net.brightroom.homepage.screens.projects.ProjectsSection
 import net.brightroom.homepage.screens.roadmap.RoadmapSection
 import net.brightroom.homepage.screens.stats.StatsSection
 import net.brightroom.homepage.screens.techstack.TechStackSection
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -70,48 +70,65 @@ fun Layout() {
     val faqLabel = stringResource(Res.string.nav_faq)
     val joinLabel = stringResource(Res.string.nav_join)
 
-    val navLabels = remember(
-        homeLabel, aboutLabel, statsLabel, membersLabel, projectsLabel,
-        techLabel, contribLabel, roadmapLabel, faqLabel, joinLabel,
-    ) {
-        mapOf(
-            NavSection.HOME to homeLabel,
-            NavSection.ABOUT to aboutLabel,
-            NavSection.STATS to statsLabel,
-            NavSection.MEMBERS to membersLabel,
-            NavSection.PROJECTS to projectsLabel,
-            NavSection.TECHSTACK to techLabel,
-            NavSection.CONTRIBUTING to contribLabel,
-            NavSection.ROADMAP to roadmapLabel,
-            NavSection.FAQ to faqLabel,
-            NavSection.JOIN to joinLabel,
-        )
-    }
+    val navLabels =
+        remember(
+            homeLabel,
+            aboutLabel,
+            statsLabel,
+            membersLabel,
+            projectsLabel,
+            techLabel,
+            contribLabel,
+            roadmapLabel,
+            faqLabel,
+            joinLabel,
+        ) {
+            mapOf(
+                NavSection.HOME to homeLabel,
+                NavSection.ABOUT to aboutLabel,
+                NavSection.STATS to statsLabel,
+                NavSection.MEMBERS to membersLabel,
+                NavSection.PROJECTS to projectsLabel,
+                NavSection.TECHSTACK to techLabel,
+                NavSection.CONTRIBUTING to contribLabel,
+                NavSection.ROADMAP to roadmapLabel,
+                NavSection.FAQ to faqLabel,
+                NavSection.JOIN to joinLabel,
+            )
+        }
 
     // Track active section based on scroll position
     LaunchedEffect(listState.firstVisibleItemIndex) {
         val index = listState.firstVisibleItemIndex
-        activeSection = when {
-            index >= 10 -> NavSection.JOIN
-            index >= 9 -> NavSection.FAQ
-            index >= 8 -> NavSection.ROADMAP
-            index >= 7 -> NavSection.CONTRIBUTING
-            index >= 6 -> NavSection.TECHSTACK
-            index >= 5 -> NavSection.PROJECTS
-            index >= 4 -> NavSection.MEMBERS
-            index >= 3 -> NavSection.STATS
-            index >= 2 -> NavSection.ABOUT
-            else -> NavSection.HOME
-        }
+        activeSection =
+            when {
+                index >= 10 -> NavSection.JOIN
+                index >= 9 -> NavSection.FAQ
+                index >= 8 -> NavSection.ROADMAP
+                index >= 7 -> NavSection.CONTRIBUTING
+                index >= 6 -> NavSection.TECHSTACK
+                index >= 5 -> NavSection.PROJECTS
+                index >= 4 -> NavSection.MEMBERS
+                index >= 3 -> NavSection.STATS
+                index >= 2 -> NavSection.ABOUT
+                else -> NavSection.HOME
+            }
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .onSizeChanged { size ->
-                val widthDp = with(density) { size.width.toDp().value.toInt() }
-                viewModel.updateWindowSize(widthDp)
-            },
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .onSizeChanged { size ->
+                    val widthDp =
+                        with(density) {
+                            size.width
+                                .toDp()
+                                .value
+                                .toInt()
+                        }
+                    viewModel.updateWindowSize(widthDp)
+                },
     ) {
         Scaffold(
             topBar = {
@@ -130,9 +147,10 @@ fun Layout() {
         ) { padding ->
             LazyColumn(
                 state = listState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(padding),
             ) {
                 item {
                     HeroSection(

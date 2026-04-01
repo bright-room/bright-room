@@ -66,12 +66,12 @@ fun MobileNavigationMenu(
                     fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier
-                        .clickable {
-                            onNavClick(section)
-                            onClose()
-                        }
-                        .padding(vertical = 12.dp),
+                    modifier =
+                        Modifier
+                            .clickable {
+                                onNavClick(section)
+                                onClose()
+                            }.padding(vertical = 12.dp),
                 )
             }
 

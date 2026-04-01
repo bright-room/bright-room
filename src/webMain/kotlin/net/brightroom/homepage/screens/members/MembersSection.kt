@@ -69,34 +69,35 @@ fun MembersSection(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
-    Column(
-        modifier = Modifier
-            .widthIn(max = 1200.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 100.dp, bottom = 60.dp),
-    ) {
-        SectionHeader(
-            label = stringResource(Res.string.members_label),
-            title = stringResource(Res.string.members_title),
-            description = stringResource(Res.string.members_desc),
-        )
-
-        Spacer(Modifier.height(48.dp))
-
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            maxItemsInEachRow = 6,
+        Column(
+            modifier =
+                Modifier
+                    .widthIn(max = 1200.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 100.dp, bottom = 60.dp),
         ) {
-            members.forEach { member ->
-                MemberCard(
-                    member = member,
-                    modifier = Modifier.weight(1f).widthIn(min = 180.dp, max = 220.dp),
-                )
+            SectionHeader(
+                label = stringResource(Res.string.members_label),
+                title = stringResource(Res.string.members_title),
+                description = stringResource(Res.string.members_desc),
+            )
+
+            Spacer(Modifier.height(48.dp))
+
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                maxItemsInEachRow = 6,
+            ) {
+                members.forEach { member ->
+                    MemberCard(
+                        member = member,
+                        modifier = Modifier.weight(1f).widthIn(min = 180.dp, max = 220.dp),
+                    )
+                }
             }
         }
-    }
     }
 }
 
@@ -116,17 +117,18 @@ private fun MemberCard(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(
-                modifier = Modifier
-                    .size(64.dp)
-                    .clip(CircleShape)
-                    .background(
-                        Brush.linearGradient(
-                            listOf(
-                                MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
-                                AccentBlue.copy(alpha = 0.15f),
+                modifier =
+                    Modifier
+                        .size(64.dp)
+                        .clip(CircleShape)
+                        .background(
+                            Brush.linearGradient(
+                                listOf(
+                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                                    AccentBlue.copy(alpha = 0.15f),
+                                ),
                             ),
                         ),
-                    ),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(

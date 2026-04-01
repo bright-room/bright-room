@@ -52,30 +52,31 @@ fun RoadmapSection(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
-    Column(
-        modifier = Modifier
-            .widthIn(max = 1200.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 100.dp, bottom = 60.dp),
-    ) {
-        SectionHeader(
-            label = stringResource(Res.string.roadmap_label),
-            title = stringResource(Res.string.roadmap_title),
-            description = stringResource(Res.string.roadmap_desc),
-        )
+        Column(
+            modifier =
+                Modifier
+                    .widthIn(max = 1200.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 100.dp, bottom = 60.dp),
+        ) {
+            SectionHeader(
+                label = stringResource(Res.string.roadmap_label),
+                title = stringResource(Res.string.roadmap_title),
+                description = stringResource(Res.string.roadmap_desc),
+            )
 
-        Spacer(Modifier.height(48.dp))
+            Spacer(Modifier.height(48.dp))
 
-        Column(modifier = Modifier.padding(start = 32.dp)) {
-            roadmapItems.forEachIndexed { index, item ->
-                RoadmapTimelineItem(
-                    item = item,
-                    isLast = index == roadmapItems.lastIndex,
-                )
+            Column(modifier = Modifier.padding(start = 32.dp)) {
+                roadmapItems.forEachIndexed { index, item ->
+                    RoadmapTimelineItem(
+                        item = item,
+                        isLast = index == roadmapItems.lastIndex,
+                    )
+                }
             }
         }
-    }
     }
 }
 
@@ -85,23 +86,26 @@ private fun RoadmapTimelineItem(
     isLast: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val dotColor = when (item.status) {
-        RoadmapStatus.CURRENT -> MaterialTheme.colorScheme.primary
-        RoadmapStatus.UPCOMING -> AccentBlue
-        RoadmapStatus.PLANNED -> MaterialTheme.colorScheme.outline
-    }
+    val dotColor =
+        when (item.status) {
+            RoadmapStatus.CURRENT -> MaterialTheme.colorScheme.primary
+            RoadmapStatus.UPCOMING -> AccentBlue
+            RoadmapStatus.PLANNED -> MaterialTheme.colorScheme.outline
+        }
 
-    val statusLabel = when (item.status) {
-        RoadmapStatus.CURRENT -> stringResource(Res.string.roadmap_status_current)
-        RoadmapStatus.UPCOMING -> stringResource(Res.string.roadmap_status_upcoming)
-        RoadmapStatus.PLANNED -> stringResource(Res.string.roadmap_status_planned)
-    }
+    val statusLabel =
+        when (item.status) {
+            RoadmapStatus.CURRENT -> stringResource(Res.string.roadmap_status_current)
+            RoadmapStatus.UPCOMING -> stringResource(Res.string.roadmap_status_upcoming)
+            RoadmapStatus.PLANNED -> stringResource(Res.string.roadmap_status_planned)
+        }
 
-    val statusColor = when (item.status) {
-        RoadmapStatus.CURRENT -> MaterialTheme.colorScheme.primary
-        RoadmapStatus.UPCOMING -> AccentBlue
-        RoadmapStatus.PLANNED -> MaterialTheme.colorScheme.onSurfaceVariant
-    }
+    val statusColor =
+        when (item.status) {
+            RoadmapStatus.CURRENT -> MaterialTheme.colorScheme.primary
+            RoadmapStatus.UPCOMING -> AccentBlue
+            RoadmapStatus.PLANNED -> MaterialTheme.colorScheme.onSurfaceVariant
+        }
 
     Row(modifier = Modifier.height(IntrinsicSize.Min)) {
         // Timeline line + dot
@@ -110,25 +114,28 @@ private fun RoadmapTimelineItem(
             modifier = Modifier.width(32.dp),
         ) {
             Box(
-                modifier = Modifier
-                    .size(14.dp)
-                    .clip(CircleShape)
-                    .background(dotColor),
+                modifier =
+                    Modifier
+                        .size(14.dp)
+                        .clip(CircleShape)
+                        .background(dotColor),
             )
             if (!isLast) {
                 Box(
-                    modifier = Modifier
-                        .width(2.dp)
-                        .fillMaxHeight()
-                        .background(MaterialTheme.colorScheme.outline),
+                    modifier =
+                        Modifier
+                            .width(2.dp)
+                            .fillMaxHeight()
+                            .background(MaterialTheme.colorScheme.outline),
                 )
             }
         }
 
         // Content
         Column(
-            modifier = Modifier
-                .padding(start = 16.dp, bottom = if (isLast) 0.dp else 40.dp),
+            modifier =
+                Modifier
+                    .padding(start = 16.dp, bottom = if (isLast) 0.dp else 40.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
@@ -145,10 +152,11 @@ private fun RoadmapTimelineItem(
                     fontWeight = FontWeight.SemiBold,
                     letterSpacing = 1.sp,
                     color = statusColor,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(100.dp))
-                        .background(statusColor.copy(alpha = 0.15f))
-                        .padding(horizontal = 10.dp, vertical = 2.dp),
+                    modifier =
+                        Modifier
+                            .clip(RoundedCornerShape(100.dp))
+                            .background(statusColor.copy(alpha = 0.15f))
+                            .padding(horizontal = 10.dp, vertical = 2.dp),
                 )
             }
 

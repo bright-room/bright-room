@@ -28,11 +28,12 @@ object RoadmapParser {
                     result.add(RoadmapItem(currentQuarter, currentStatus, currentItems.toList()))
                 }
                 currentQuarter = headerMatch.groupValues[1]
-                currentStatus = when (headerMatch.groupValues[2].lowercase()) {
-                    "current" -> RoadmapStatus.CURRENT
-                    "upcoming" -> RoadmapStatus.UPCOMING
-                    else -> RoadmapStatus.PLANNED
-                }
+                currentStatus =
+                    when (headerMatch.groupValues[2].lowercase()) {
+                        "current" -> RoadmapStatus.CURRENT
+                        "upcoming" -> RoadmapStatus.UPCOMING
+                        else -> RoadmapStatus.PLANNED
+                    }
                 currentItems = mutableListOf()
             } else if (line.trimStart().startsWith("- ")) {
                 currentItems.add(line.trimStart().removePrefix("- "))

@@ -45,54 +45,56 @@ fun AboutSection(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
-    Column(
-        modifier = Modifier
-            .widthIn(max = 1200.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 100.dp, bottom = 60.dp),
-    ) {
-        SectionHeader(
-            label = stringResource(Res.string.about_label),
-            title = stringResource(Res.string.about_title),
-            description = stringResource(Res.string.about_desc),
-        )
-
-        Spacer(Modifier.height(48.dp))
-
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            maxItemsInEachRow = 3,
+        Column(
+            modifier =
+                Modifier
+                    .widthIn(max = 1200.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 100.dp, bottom = 60.dp),
         ) {
-            val cards = listOf(
-                Triple(
-                    stringResource(Res.string.about_card_oss_title),
-                    stringResource(Res.string.about_card_oss_desc),
-                    MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
-                ),
-                Triple(
-                    stringResource(Res.string.about_card_community_title),
-                    stringResource(Res.string.about_card_community_desc),
-                    AccentBlue.copy(alpha = 0.1f),
-                ),
-                Triple(
-                    stringResource(Res.string.about_card_products_title),
-                    stringResource(Res.string.about_card_products_desc),
-                    AccentPink.copy(alpha = 0.1f),
-                ),
+            SectionHeader(
+                label = stringResource(Res.string.about_label),
+                title = stringResource(Res.string.about_title),
+                description = stringResource(Res.string.about_desc),
             )
 
-            cards.forEach { (title, desc, iconBg) ->
-                AboutCard(
-                    title = title,
-                    description = desc,
-                    iconBackground = iconBg,
-                    modifier = Modifier.weight(1f).widthIn(min = 280.dp, max = 380.dp),
-                )
+            Spacer(Modifier.height(48.dp))
+
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                maxItemsInEachRow = 3,
+            ) {
+                val cards =
+                    listOf(
+                        Triple(
+                            stringResource(Res.string.about_card_oss_title),
+                            stringResource(Res.string.about_card_oss_desc),
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                        ),
+                        Triple(
+                            stringResource(Res.string.about_card_community_title),
+                            stringResource(Res.string.about_card_community_desc),
+                            AccentBlue.copy(alpha = 0.1f),
+                        ),
+                        Triple(
+                            stringResource(Res.string.about_card_products_title),
+                            stringResource(Res.string.about_card_products_desc),
+                            AccentPink.copy(alpha = 0.1f),
+                        ),
+                    )
+
+                cards.forEach { (title, desc, iconBg) ->
+                    AboutCard(
+                        title = title,
+                        description = desc,
+                        iconBackground = iconBg,
+                        modifier = Modifier.weight(1f).widthIn(min = 280.dp, max = 380.dp),
+                    )
+                }
             }
         }
-    }
     }
 }
 
@@ -111,9 +113,10 @@ private fun AboutCard(
     ) {
         Column(modifier = Modifier.padding(32.dp)) {
             Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .padding(bottom = 20.dp),
+                modifier =
+                    Modifier
+                        .size(48.dp)
+                        .padding(bottom = 20.dp),
             )
             Text(
                 text = title,

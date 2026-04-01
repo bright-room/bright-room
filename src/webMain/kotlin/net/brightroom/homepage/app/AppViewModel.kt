@@ -4,14 +4,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import net.brightroom.homepage.data.ContentLoader
 import net.brightroom.homepage.data.MemberData
 import net.brightroom.homepage.data.ProjectData
 import net.brightroom.homepage.data.RoadmapItem
 import net.brightroom.homepage.data.StatsData
 import net.brightroom.homepage.data.TechStackData
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 enum class WindowSizeClass {
     COMPACT,
@@ -53,11 +53,12 @@ class AppViewModel : ViewModel() {
     }
 
     fun updateWindowSize(widthDp: Int) {
-        windowSizeClass = when {
-            widthDp < 600 -> WindowSizeClass.COMPACT
-            widthDp < 893 -> WindowSizeClass.MEDIUM
-            else -> WindowSizeClass.EXPANDED
-        }
+        windowSizeClass =
+            when {
+                widthDp < 600 -> WindowSizeClass.COMPACT
+                widthDp < 893 -> WindowSizeClass.MEDIUM
+                else -> WindowSizeClass.EXPANDED
+            }
     }
 
     suspend fun loadContent() {

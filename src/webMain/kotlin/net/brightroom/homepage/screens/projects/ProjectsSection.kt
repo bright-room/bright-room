@@ -2,6 +2,7 @@ package net.brightroom.homepage.screens.projects
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -10,7 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -61,34 +61,35 @@ fun ProjectsSection(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
-    Column(
-        modifier = Modifier
-            .widthIn(max = 1200.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 100.dp, bottom = 60.dp),
-    ) {
-        SectionHeader(
-            label = stringResource(Res.string.projects_label),
-            title = stringResource(Res.string.projects_title),
-            description = stringResource(Res.string.projects_desc),
-        )
-
-        Spacer(Modifier.height(48.dp))
-
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            maxItemsInEachRow = 2,
+        Column(
+            modifier =
+                Modifier
+                    .widthIn(max = 1200.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 100.dp, bottom = 60.dp),
         ) {
-            projects.forEach { project ->
-                ProjectCard(
-                    project = project,
-                    modifier = Modifier.weight(1f).widthIn(min = 280.dp, max = 560.dp),
-                )
+            SectionHeader(
+                label = stringResource(Res.string.projects_label),
+                title = stringResource(Res.string.projects_title),
+                description = stringResource(Res.string.projects_desc),
+            )
+
+            Spacer(Modifier.height(48.dp))
+
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(20.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                maxItemsInEachRow = 2,
+            ) {
+                projects.forEach { project ->
+                    ProjectCard(
+                        project = project,
+                        modifier = Modifier.weight(1f).widthIn(min = 280.dp, max = 560.dp),
+                    )
+                }
             }
         }
-    }
     }
 }
 

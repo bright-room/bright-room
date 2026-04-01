@@ -68,22 +68,24 @@ fun TechStackSection(modifier: Modifier = Modifier) {
     val techStack by viewModel.techStack.collectAsState()
     var selectedCategory by remember { mutableStateOf("ALL") }
 
-    val filteredItems = if (selectedCategory == "ALL") {
-        techStack.items
-    } else {
-        techStack.items.filter { it.category == selectedCategory }
-    }
+    val filteredItems =
+        if (selectedCategory == "ALL") {
+            techStack.items
+        } else {
+            techStack.items.filter { it.category == selectedCategory }
+        }
 
     Box(
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
         Column(
-            modifier = Modifier
-                .widthIn(max = 1200.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .padding(top = 100.dp, bottom = 60.dp),
+            modifier =
+                Modifier
+                    .widthIn(max = 1200.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 100.dp, bottom = 60.dp),
         ) {
             SectionHeader(
                 label = stringResource(Res.string.tech_label),
@@ -139,13 +141,14 @@ private fun TechCard(
     modifier: Modifier = Modifier,
 ) {
     val fallbackColor = MaterialTheme.colorScheme.primary
-    val color = remember(item.color) {
-        try {
-            Color(("FF" + item.color.removePrefix("#")).toLong(16))
-        } catch (_: Exception) {
-            fallbackColor
+    val color =
+        remember(item.color) {
+            try {
+                Color(("FF" + item.color.removePrefix("#")).toLong(16))
+            } catch (_: Exception) {
+                fallbackColor
+            }
         }
-    }
 
     Card(
         modifier = modifier,
@@ -158,10 +161,11 @@ private fun TechCard(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(
-                modifier = Modifier
-                    .size(10.dp)
-                    .clip(CircleShape)
-                    .background(color),
+                modifier =
+                    Modifier
+                        .size(10.dp)
+                        .clip(CircleShape)
+                        .background(color),
             )
             Spacer(Modifier.height(10.dp))
             Text(

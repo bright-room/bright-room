@@ -52,42 +52,44 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun FaqSection(modifier: Modifier = Modifier) {
-    val faqItems = listOf(
-        Res.string.faq_q1 to Res.string.faq_a1,
-        Res.string.faq_q2 to Res.string.faq_a2,
-        Res.string.faq_q3 to Res.string.faq_a3,
-        Res.string.faq_q4 to Res.string.faq_a4,
-        Res.string.faq_q5 to Res.string.faq_a5,
-    )
+    val faqItems =
+        listOf(
+            Res.string.faq_q1 to Res.string.faq_a1,
+            Res.string.faq_q2 to Res.string.faq_a2,
+            Res.string.faq_q3 to Res.string.faq_a3,
+            Res.string.faq_q4 to Res.string.faq_a4,
+            Res.string.faq_q5 to Res.string.faq_a5,
+        )
 
     Box(
         modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
-    Column(
-        modifier = Modifier
-            .widthIn(max = 1200.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 100.dp, bottom = 60.dp),
-    ) {
-        SectionHeader(
-            label = stringResource(Res.string.faq_label),
-            title = stringResource(Res.string.faq_title),
-            description = stringResource(Res.string.faq_desc),
-        )
+        Column(
+            modifier =
+                Modifier
+                    .widthIn(max = 1200.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(top = 100.dp, bottom = 60.dp),
+        ) {
+            SectionHeader(
+                label = stringResource(Res.string.faq_label),
+                title = stringResource(Res.string.faq_title),
+                description = stringResource(Res.string.faq_desc),
+            )
 
-        Spacer(Modifier.height(48.dp))
+            Spacer(Modifier.height(48.dp))
 
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            faqItems.forEach { (qRes, aRes) ->
-                FaqItem(
-                    question = stringResource(qRes),
-                    answer = stringResource(aRes),
-                )
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                faqItems.forEach { (qRes, aRes) ->
+                    FaqItem(
+                        question = stringResource(qRes),
+                        answer = stringResource(aRes),
+                    )
+                }
             }
         }
-    }
     }
 }
 
@@ -107,10 +109,11 @@ private fun FaqItem(
     ) {
         Column {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { expanded = !expanded }
-                    .padding(horizontal = 24.dp, vertical = 20.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable { expanded = !expanded }
+                        .padding(horizontal = 24.dp, vertical = 20.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
