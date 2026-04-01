@@ -1,0 +1,97 @@
+name: on-tag-push
+
+on:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Fetch GitHub Data
+        run: ./.github/scripts/fetch-github-data.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build with Gradle
+        uses: ./.github/actions/gradle-action
+        with:
+          command: wasmJsBrowserDistribution
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: build/dist/wasmJs/productionExecutable
+
+  deploy:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  release:
+    name: GitHub Release
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes
+
+  close-milestone:
+    name: Close Milestone
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close milestone matching release tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          MILESTONE_NUMBER=$(gh api "repos/$REPO/milestones?state=open" \
+            --jq ".[] | select(.title == \"$TAG\") | .number")
+
+          if [ -z "$MILESTONE_NUMBER" ]; then
+            echo "No open milestone found for tag '$TAG'. Skipping."
+            exit 0
+          fi
+
+          gh api -X PATCH "repos/$REPO/milestones/$MILESTONE_NUMBER" \
+            -f state=closed
+
+          echo "Closed milestone '$TAG' (#$MILESTONE_NUMBER)."

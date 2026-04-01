@@ -1,0 +1,88 @@
+<resources>
+    <!-- Hero -->
+    <string name="hero_sub">Illuminating the future with open source. bright-room is a GitHub Organization where developers gather, learn together, and create.</string>
+    <string name="join_cta">Join Us</string>
+
+    <!-- About -->
+    <string name="about_title">What is bright-room?</string>
+    <string name="about_desc">bright-room is a GitHub Organization focused on product development, knowledge sharing, and community activities through open source. Like a \"bright room,\" we aim to be a welcoming space where anyone can find inspiration.</string>
+    <string name="about_card_oss_title">Open Source</string>
+    <string name="about_card_oss_desc">All projects are published as OSS. Anyone can access the code, learn from it, and contribute.</string>
+    <string name="about_card_community_title">Community Driven</string>
+    <string name="about_card_community_desc">Members from diverse backgrounds participate and leverage each other\'s strengths in development.</string>
+    <string name="about_card_products_title">Practical Products</string>
+    <string name="about_card_products_desc">We ship real-world tools and libraries, not just learning exercises.</string>
+
+    <!-- Stats -->
+    <string name="stats_title">Contribution Statistics</string>
+    <string name="stats_desc">See bright-room\'s activity in numbers. Every contribution supports the growth of our Organization.</string>
+    <string name="stats_repositories">Repositories</string>
+    <string name="stats_contributors">Contributors</string>
+    <string name="stats_total_commits">Total Commits</string>
+    <string name="stats_open_prs">Open PRs</string>
+    <string name="stats_closed_issues">Closed Issues</string>
+    <string name="stats_total_stars">Total Stars</string>
+
+    <!-- Members -->
+    <string name="members_title">Our Members</string>
+    <string name="members_desc">The core members who power bright-room. Each brings their own expertise to drive our projects forward.</string>
+
+    <!-- Projects -->
+    <string name="projects_title">Projects</string>
+    <string name="projects_desc">A selection of OSS projects built by bright-room.</string>
+    <string name="project_bright_cms_desc">A lightweight, fast headless CMS with Markdown-based content management.</string>
+    <string name="project_room_ui_desc">A UI component library by bright-room. Fully accessible.</string>
+    <string name="project_luminous_cli_desc">A CLI tool for project template generation and task automation.</string>
+    <string name="project_beacon_api_desc">A WebSocket API framework for real-time notifications.</string>
+
+    <!-- Tech Stack -->
+    <string name="tech_title">Tech Stack</string>
+    <string name="tech_desc">Key technologies used across bright-room projects. We choose the best tool for each project.</string>
+
+    <!-- Contributing -->
+    <string name="contrib_title">Contribution Guide</string>
+    <string name="contrib_desc">Contributing to bright-room is easy in 4 steps. Perfect for your first OSS contribution.</string>
+    <string name="contrib_step1_title">Fork the Repo</string>
+    <string name="contrib_step1_desc">Fork the repository you want to contribute to and clone it locally.</string>
+    <string name="contrib_step2_title">Create a Branch</string>
+    <string name="contrib_step2_desc">Use format like feature/xxx or fix/xxx to describe your changes.</string>
+    <string name="contrib_step3_title">Make Changes</string>
+    <string name="contrib_step3_desc">Develop following coding conventions, add tests and run them.</string>
+    <string name="contrib_step4_title">Submit a PR</string>
+    <string name="contrib_step4_desc">Create a Pull Request describing your changes. It will be reviewed and merged.</string>
+    <string name="contrib_rules_title">Coding Conventions &amp; Rules</string>
+    <string name="contrib_rule1">Follow Conventional Commits format for commit messages (feat:, fix:, docs:, etc.)</string>
+    <string name="contrib_rule2">Include a summary and related Issue number in your PR description</string>
+    <string name="contrib_rule3">Add tests for new features and ensure existing tests pass</string>
+    <string name="contrib_rule4">Follow ESLint / Prettier config in each repository</string>
+    <string name="contrib_rule5">Discuss large changes in Issues or Discussions beforehand</string>
+
+    <!-- Roadmap -->
+    <string name="roadmap_title">Roadmap</string>
+    <string name="roadmap_desc">Our plans for the future. Updated regularly based on community feedback.</string>
+
+    <!-- FAQ -->
+    <string name="faq_title">Frequently Asked Questions</string>
+    <string name="faq_desc">Common questions from those considering joining.</string>
+    <string name="faq_q1">Can beginners participate?</string>
+    <string name="faq_a1">Absolutely! bright-room welcomes all experience levels. We value non-code contributions like documentation fixes and issue reports too. Feel free to ask questions on Discord.</string>
+    <string name="faq_q2">How active do I need to be?</string>
+    <string name="faq_a2">Each member contributes at their own pace. Weekends only, a few times a month — whatever works for you. There are no mandatory quotas or obligations.</string>
+    <string name="faq_q3">Are specific languages or frameworks required?</string>
+    <string name="faq_a3">It varies by project, but we mainly use TypeScript, React, Go, and Rust. We actively explore new technologies, so you can propose projects to learn something new.</string>
+    <string name="faq_q4">How do you communicate?</string>
+    <string name="faq_a4">Primarily through Discord and GitHub Issues, PRs, and Discussions. Communication is mostly asynchronous, so timezone differences aren\'t a concern.</string>
+    <string name="faq_q5">Can I propose my own project ideas?</string>
+    <string name="faq_a5">Absolutely! Share them in GitHub Discussions or the #ideas channel on Discord. Get feedback from members and launch it as a new Organization repository.</string>
+
+    <!-- Join -->
+    <string name="join_title">Join bright-room</string>
+    <string name="join_desc">We welcome all developers, from beginners to experts. Let\'s build OSS together.</string>
+    <string name="join_step1_title">Get a GitHub Account</string>
+    <string name="join_step1_desc">Create a free GitHub account if you don\'t have one yet.</string>
+    <string name="join_step2_title">Join Discord</string>
+    <string name="join_step2_desc">Join our community Discord server and introduce yourself.</string>
+    <string name="join_step3_title">Contribute</string>
+    <string name="join_step3_desc">Find an Issue, send a PR, or propose a new idea.</string>
+    <string name="join_btn">View Organization</string>
+</resources>
