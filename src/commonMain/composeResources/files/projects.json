@@ -1,0 +1,30 @@
+[
+  {
+    "name": "bright-cms",
+    "description_key": "project_bright_cms_desc",
+    "tags": ["TypeScript", "Next.js", "Markdown"],
+    "stars": 128,
+    "github_url": "https://github.com/bright-room/bright-cms"
+  },
+  {
+    "name": "room-ui",
+    "description_key": "project_room_ui_desc",
+    "tags": ["React", "CSS", "a11y"],
+    "stars": 256,
+    "github_url": "https://github.com/bright-room/room-ui"
+  },
+  {
+    "name": "luminous-cli",
+    "description_key": "project_luminous_cli_desc",
+    "tags": ["Rust", "CLI", "DX"],
+    "stars": 89,
+    "github_url": "https://github.com/bright-room/luminous-cli"
+  },
+  {
+    "name": "beacon-api",
+    "description_key": "project_beacon_api_desc",
+    "tags": ["Go", "WebSocket", "API"],
+    "stars": 175,
+    "github_url": "https://github.com/bright-room/beacon-api"
+  }
+]

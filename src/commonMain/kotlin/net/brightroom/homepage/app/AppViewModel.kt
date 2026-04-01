@@ -1,0 +1,71 @@
+package net.brightroom.homepage.app
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import net.brightroom.homepage.data.ContentLoader
+import net.brightroom.homepage.data.MemberData
+import net.brightroom.homepage.data.ProjectData
+import net.brightroom.homepage.data.RoadmapItem
+import net.brightroom.homepage.data.StatsData
+import net.brightroom.homepage.data.TechStackData
+
+enum class WindowSizeClass {
+    COMPACT,
+    MEDIUM,
+    EXPANDED,
+}
+
+class AppViewModel : ViewModel() {
+    var isDarkTheme by mutableStateOf(true)
+        private set
+
+    var isJapanese by mutableStateOf(true)
+        private set
+
+    var windowSizeClass by mutableStateOf(WindowSizeClass.EXPANDED)
+        private set
+
+    private val _members = MutableStateFlow<List<MemberData>>(emptyList())
+    val members: StateFlow<List<MemberData>> = _members
+
+    private val _projects = MutableStateFlow<List<ProjectData>>(emptyList())
+    val projects: StateFlow<List<ProjectData>> = _projects
+
+    private val _stats = MutableStateFlow(StatsData())
+    val stats: StateFlow<StatsData> = _stats
+
+    private val _techStack = MutableStateFlow(TechStackData())
+    val techStack: StateFlow<TechStackData> = _techStack
+
+    private val _roadmapItems = MutableStateFlow<List<RoadmapItem>>(emptyList())
+    val roadmapItems: StateFlow<List<RoadmapItem>> = _roadmapItems
+
+    fun toggleTheme() {
+        isDarkTheme = !isDarkTheme
+    }
+
+    fun toggleLanguage() {
+        isJapanese = !isJapanese
+    }
+
+    fun updateWindowSize(widthDp: Int) {
+        windowSizeClass =
+            when {
+                widthDp < 600 -> WindowSizeClass.COMPACT
+                widthDp < 893 -> WindowSizeClass.MEDIUM
+                else -> WindowSizeClass.EXPANDED
+            }
+    }
+
+    suspend fun loadContent() {
+        _members.value = ContentLoader.loadMembers()
+        _projects.value = ContentLoader.loadProjects()
+        _stats.value = ContentLoader.loadStats()
+        _techStack.value = ContentLoader.loadTechStack()
+        _roadmapItems.value = ContentLoader.loadRoadmap()
+    }
+}

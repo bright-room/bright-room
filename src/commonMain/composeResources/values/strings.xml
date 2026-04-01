@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_about">About</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_members">Members</string>
+    <string name="nav_projects">Projects</string>
+    <string name="nav_tech">Tech</string>
+    <string name="nav_contributing">Contributing</string>
+    <string name="nav_roadmap">Roadmap</string>
+    <string name="nav_faq">FAQ</string>
+    <string name="nav_join">Join Us</string>
+
+    <!-- Hero -->
+    <string name="hero_tagline">Open Source Organization on GitHub</string>
+    <string name="hero_title_1">Build in the</string>
+    <string name="hero_title_2">bright room.</string>
+    <string name="hero_sub">オープンソースで未来を照らす。bright-roomは、開発者が集まり、共に学び、創造するGitHub Organizationです。</string>
+    <string name="view_on_github">View on GitHub</string>
+    <string name="join_cta">参加する</string>
+
+    <!-- About -->
+    <string name="about_label">About</string>
+    <string name="about_title">bright-roomとは</string>
+    <string name="about_desc">bright-roomは、オープンソースを軸にプロダクト開発・技術共有・コミュニティ活動を行うGitHub Organizationです。「明るい部屋」のように、誰でも気軽に入れて、刺激とインスピレーションを得られる場所を目指しています。</string>
+    <string name="about_card_oss_title">オープンソース</string>
+    <string name="about_card_oss_desc">すべてのプロジェクトはOSSとして公開。誰もがコードにアクセスし、学び、貢献できます。</string>
+    <string name="about_card_community_title">コミュニティ駆動</string>
+    <string name="about_card_community_desc">多様なバックグラウンドを持つメンバーが参加し、互いの強みを活かしながら開発を進めます。</string>
+    <string name="about_card_products_title">実践的なプロダクト</string>
+    <string name="about_card_products_desc">学習のためだけでなく、実際に使えるツールやライブラリを世に送り出しています。</string>
+
+    <!-- Stats -->
+    <string name="stats_label">Stats</string>
+    <string name="stats_title">コントリビューション統計</string>
+    <string name="stats_desc">bright-roomの活動を数字で見てみましょう。すべてのコントリビューションがOrganizationの成長を支えています。</string>
+    <string name="stats_repositories">リポジトリ数</string>
+    <string name="stats_contributors">コントリビューター</string>
+    <string name="stats_total_commits">総コミット数</string>
+    <string name="stats_open_prs">オープンPR</string>
+    <string name="stats_closed_issues">クローズ済みIssue</string>
+    <string name="stats_total_stars">スター合計</string>
+
+    <!-- Members -->
+    <string name="members_label">Members</string>
+    <string name="members_title">メンバー紹介</string>
+    <string name="members_desc">bright-roomを支えるコアメンバーたちです。それぞれの専門分野を持ち寄り、プロジェクトを推進しています。</string>
+    <string name="role_founder">Founder / Lead Developer</string>
+    <string name="role_frontend">Frontend Engineer</string>
+    <string name="role_backend">Backend Engineer</string>
+    <string name="role_designer">UI/UX Designer</string>
+    <string name="role_devops">DevOps Engineer</string>
+    <string name="role_mobile">Mobile Developer</string>
+
+    <!-- Projects -->
+    <string name="projects_label">Projects</string>
+    <string name="projects_title">プロジェクト</string>
+    <string name="projects_desc">bright-roomが手がけるOSSプロジェクトの一部を紹介します。</string>
+    <string name="project_bright_cms_desc">軽量で高速なヘッドレスCMS。Markdownベースのコンテンツ管理を実現。</string>
+    <string name="project_room_ui_desc">bright-room発のUIコンポーネントライブラリ。アクセシビリティ対応済み。</string>
+    <string name="project_luminous_cli_desc">プロジェクトテンプレート生成とタスク自動化のためのCLIツール。</string>
+    <string name="project_beacon_api_desc">リアルタイム通知を実現するWebSocket APIフレームワーク。</string>
+
+    <!-- Tech Stack -->
+    <string name="tech_label">Tech Stack</string>
+    <string name="tech_title">技術スタック</string>
+    <string name="tech_desc">bright-roomのプロジェクトで使用されている主要な技術です。プロジェクトごとに最適な技術を選択しています。</string>
+    <string name="tech_cat_all">All</string>
+    <string name="tech_cat_language">Language</string>
+    <string name="tech_cat_frontend">Frontend</string>
+    <string name="tech_cat_backend">Backend</string>
+    <string name="tech_cat_database">Database</string>
+    <string name="tech_cat_infra">Infra</string>
+
+    <!-- Contributing -->
+    <string name="contrib_label">Contributing</string>
+    <string name="contrib_title">コントリビューションガイド</string>
+    <string name="contrib_desc">bright-roomへの貢献は簡単な4ステップ。初めてのOSS貢献にもぴったりです。</string>
+    <string name="contrib_step1_title">リポジトリをFork</string>
+    <string name="contrib_step1_desc">貢献したいリポジトリをForkし、ローカルにCloneします。</string>
+    <string name="contrib_step2_title">Branchを作成</string>
+    <string name="contrib_step2_desc">feature/xxx や fix/xxx の形式で、変更内容がわかるブランチ名をつけます。</string>
+    <string name="contrib_step3_title">コードを変更</string>
+    <string name="contrib_step3_desc">コーディング規約に沿って開発し、テストを追加・実行してください。</string>
+    <string name="contrib_step4_title">PRを送る</string>
+    <string name="contrib_step4_desc">変更内容を説明したPull Requestを作成。レビューを受けてマージされます。</string>
+    <string name="contrib_rules_title">コーディング規約 &amp; ルール</string>
+    <string name="contrib_rule1">コミットメッセージは Conventional Commits 形式に従ってください（feat:, fix:, docs: など）</string>
+    <string name="contrib_rule2">PRには変更内容の概要と、関連するIssue番号を記載してください</string>
+    <string name="contrib_rule3">新機能にはテストを追加し、既存テストがパスすることを確認してください</string>
+    <string name="contrib_rule4">コードスタイルは各リポジトリの ESLint / Prettier 設定に従います</string>
+    <string name="contrib_rule5">大きな変更は事前にIssueやDiscussionで相談することを推奨します</string>
+
+    <!-- Roadmap -->
+    <string name="roadmap_label">Roadmap</string>
+    <string name="roadmap_title">ロードマップ</string>
+    <string name="roadmap_desc">bright-roomの今後の計画です。コミュニティからのフィードバックをもとに随時更新しています。</string>
+    <string name="roadmap_status_current">In Progress</string>
+    <string name="roadmap_status_upcoming">Next Up</string>
+    <string name="roadmap_status_planned">Planned</string>
+
+    <!-- FAQ -->
+    <string name="faq_label">FAQ</string>
+    <string name="faq_title">よくある質問</string>
+    <string name="faq_desc">参加を検討している方からよく寄せられる質問をまとめました。</string>
+    <string name="faq_q1">プログラミング初心者でも参加できますか？</string>
+    <string name="faq_a1">もちろんです！bright-roomは経験レベルを問わず歓迎しています。ドキュメントの修正やIssueの報告など、コード以外の貢献も大切にしています。わからないことがあればDiscordで気軽に質問してください。</string>
+    <string name="faq_q2">活動のペースはどのくらいですか？</string>
+    <string name="faq_a2">メンバーそれぞれが自分のペースで貢献しています。週末だけ、月に数回など、無理のない範囲で大丈夫です。強制的なノルマや義務はありません。</string>
+    <string name="faq_q3">使用する言語やフレームワークは決まっていますか？</string>
+    <string name="faq_a3">プロジェクトによって異なりますが、主にTypeScript、React、Go、Rustを使用しています。新しい技術への挑戦も積極的に行っているので、学びたい技術があればプロジェクトを提案することも可能です。</string>
+    <string name="faq_q4">どのようにコミュニケーションを取っていますか？</string>
+    <string name="faq_a4">主にDiscordサーバーとGitHub上のIssue・PR・Discussionでコミュニケーションしています。非同期のやり取りが中心なので、タイムゾーンの違いを気にする必要はありません。</string>
+    <string name="faq_q5">自分のプロジェクトアイデアを提案できますか？</string>
+    <string name="faq_a5">大歓迎です！GitHubのDiscussionで提案するか、Discordの #ideas チャンネルで共有してください。メンバーからフィードバックを得て、Organizationの新しいリポジトリとして立ち上げることができます。</string>
+
+    <!-- Join -->
+    <string name="join_label">Join Us</string>
+    <string name="join_title">bright-roomに参加しよう</string>
+    <string name="join_desc">初心者から経験者まで、すべての開発者を歓迎します。一緒にOSSを作りましょう。</string>
+    <string name="join_step1_title">GitHubアカウントを準備</string>
+    <string name="join_step1_desc">まだアカウントがなければ、GitHubで無料アカウントを作成してください。</string>
+    <string name="join_step2_title">Discordに参加</string>
+    <string name="join_step2_desc">コミュニティのDiscordサーバーに参加して、自己紹介をしましょう。</string>
+    <string name="join_step3_title">プロジェクトに貢献</string>
+    <string name="join_step3_desc">Issueを見つけてPRを送るか、新しいアイデアを提案してみましょう。</string>
+    <string name="join_btn">Organizationを見る</string>
+
+    <!-- Footer -->
+    <string name="footer_copy">© 2025 bright-room. All rights reserved.</string>
+</resources>
