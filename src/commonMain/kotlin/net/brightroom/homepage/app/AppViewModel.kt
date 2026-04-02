@@ -22,6 +22,9 @@ enum class WindowSizeClass {
 }
 
 class AppViewModel : ViewModel() {
+    var isLoading by mutableStateOf(true)
+        private set
+
     var isDarkTheme by mutableStateOf(true)
         private set
 
@@ -76,5 +79,6 @@ class AppViewModel : ViewModel() {
         _stats.value = ContentLoader.loadStats()
         _techStack.value = ContentLoader.loadTechStack()
         _roadmapItems.value = ContentLoader.loadRoadmap()
+        isLoading = false
     }
 }
