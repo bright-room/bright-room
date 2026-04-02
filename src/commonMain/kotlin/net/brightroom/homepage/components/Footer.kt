@@ -28,12 +28,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import bright_room.generated.resources.Res
-import bright_room.generated.resources.footer_copy
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.shared.lib.openUrl
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun Footer(modifier: Modifier = Modifier) {
@@ -101,8 +101,13 @@ private fun FooterLogo() {
 
 @Composable
 private fun FooterCopy() {
+    val year =
+        Clock.System
+            .now()
+            .toLocalDateTime(TimeZone.currentSystemDefault())
+            .year
     Text(
-        text = stringResource(Res.string.footer_copy),
+        text = "\u00A9 $year bright-room. All rights reserved.",
         fontSize = 13.sp,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )

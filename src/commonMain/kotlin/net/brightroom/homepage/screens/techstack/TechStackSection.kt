@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -100,11 +104,17 @@ fun TechStackSection(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
+                val filterChipColors =
+                    FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = MaterialTheme.colorScheme.primary,
+                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                    )
                 FilterChip(
                     selected = selectedCategory == "ALL",
                     onClick = { selectedCategory = "ALL" },
                     label = { Text(stringResource(Res.string.tech_cat_all)) },
                     shape = RoundedCornerShape(100.dp),
+                    colors = filterChipColors,
                 )
                 techStack.categories.forEach { category ->
                     FilterChip(
@@ -112,6 +122,7 @@ fun TechStackSection(modifier: Modifier = Modifier) {
                         onClick = { selectedCategory = category.id },
                         label = { Text(resolveCategoryLabel(category.labelKey)) },
                         shape = RoundedCornerShape(100.dp),
+                        colors = filterChipColors,
                     )
                 }
             }
@@ -119,6 +130,9 @@ fun TechStackSection(modifier: Modifier = Modifier) {
             Spacer(Modifier.height(24.dp))
 
             // Tech grid
+            val density = LocalDensity.current
+            var maxTechCardHeight by remember { mutableStateOf(0.dp) }
+
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -127,6 +141,11 @@ fun TechStackSection(modifier: Modifier = Modifier) {
                 filteredItems.forEach { item ->
                     TechCard(
                         item = item,
+                        maxCardHeight = maxTechCardHeight,
+                        onHeightMeasured = { h ->
+                            val hDp = with(density) { h.toDp() }
+                            if (hDp > maxTechCardHeight) maxTechCardHeight = hDp
+                        },
                         modifier = Modifier.width(160.dp),
                     )
                 }
@@ -138,6 +157,8 @@ fun TechStackSection(modifier: Modifier = Modifier) {
 @Composable
 private fun TechCard(
     item: TechItemData,
+    maxCardHeight: androidx.compose.ui.unit.Dp,
+    onHeightMeasured: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val fallbackColor = MaterialTheme.colorScheme.primary
@@ -151,7 +172,10 @@ private fun TechCard(
         }
 
     Card(
-        modifier = modifier,
+        modifier =
+            modifier
+                .defaultMinSize(minHeight = maxCardHeight)
+                .onSizeChanged { onHeightMeasured(it.height) },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         border = CardDefaults.outlinedCardBorder(),
