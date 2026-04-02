@@ -31,10 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private data class NavRailItemData(
-    val category: NavCategory,
-    val icon: ImageVector,
-)
+private data class NavRailItemData(val category: NavCategory, val icon: ImageVector)
 
 private val navRailItems =
     listOf(
@@ -52,21 +49,23 @@ fun NavigationRailNav(
     onHoveredCategoryChange: (NavCategory?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val activeCategory = NavCategory.entries.firstOrNull { category ->
-        activeSection in category.sections
-    }
+    val activeCategory =
+        NavCategory.entries.firstOrNull { category ->
+            activeSection in category.sections
+        }
 
     NavigationRail(
-        modifier = modifier.pointerInput(Unit) {
-            awaitPointerEventScope {
-                while (true) {
-                    val event = awaitPointerEvent()
-                    if (event.type == PointerEventType.Exit) {
-                        onHoveredCategoryChange(null)
+        modifier =
+            modifier.pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        if (event.type == PointerEventType.Exit) {
+                            onHoveredCategoryChange(null)
+                        }
                     }
                 }
-            }
-        },
+            },
         containerColor = MaterialTheme.colorScheme.background.copy(alpha = 0.85f),
         contentColor = MaterialTheme.colorScheme.onBackground,
         header = {
@@ -79,16 +78,17 @@ fun NavigationRailNav(
             val isSelected = item.category == activeCategory
 
             Box(
-                modifier = Modifier.pointerInput(item.category) {
-                    awaitPointerEventScope {
-                        while (true) {
-                            val event = awaitPointerEvent()
-                            if (event.type == PointerEventType.Enter) {
-                                onHoveredCategoryChange(item.category)
+                modifier =
+                    Modifier.pointerInput(item.category) {
+                        awaitPointerEventScope {
+                            while (true) {
+                                val event = awaitPointerEvent()
+                                if (event.type == PointerEventType.Enter) {
+                                    onHoveredCategoryChange(item.category)
+                                }
                             }
                         }
-                    }
-                },
+                    },
             ) {
                 NavigationRailItem(
                     selected = isSelected,
@@ -114,13 +114,14 @@ fun NavigationRailNav(
                         )
                     },
                     alwaysShowLabel = true,
-                    colors = NavigationRailItemDefaults.colors(
-                        selectedIconColor = MaterialTheme.colorScheme.primary,
-                        selectedTextColor = MaterialTheme.colorScheme.primary,
-                        indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
-                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    ),
+                    colors =
+                        NavigationRailItemDefaults.colors(
+                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                            indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                            unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        ),
                 )
             }
         }
@@ -139,17 +140,19 @@ fun NavigationRailFlyout(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxHeight()
-            .fillMaxWidth(0.33f),
+        modifier =
+            modifier
+                .fillMaxHeight()
+                .fillMaxWidth(0.33f),
         color = MaterialTheme.colorScheme.surface.copy(alpha = 0.97f),
         shadowElevation = 8.dp,
         shape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(top = 24.dp, bottom = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxHeight()
+                    .padding(top = 24.dp, bottom = 16.dp),
         ) {
             Text(
                 text = categoryLabel,
@@ -164,29 +167,30 @@ fun NavigationRailFlyout(
                 val isActive = section == activeSection
 
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onSectionClick(section) }
-                        .then(
-                            if (isActive) {
-                                Modifier.background(
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
-                                )
-                            } else {
-                                Modifier
-                            },
-                        )
-                        .padding(horizontal = 20.dp, vertical = 14.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .clickable { onSectionClick(section) }
+                            .then(
+                                if (isActive) {
+                                    Modifier.background(
+                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
+                                    )
+                                } else {
+                                    Modifier
+                                },
+                            ).padding(horizontal = 20.dp, vertical = 14.dp),
                 ) {
                     Text(
                         text = navLabels[section] ?: section.id,
                         fontSize = 15.sp,
                         fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
-                        color = if (isActive) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onSurface
-                        },
+                        color =
+                            if (isActive) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurface
+                            },
                     )
                 }
             }

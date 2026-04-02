@@ -1,5 +1,9 @@
 package net.brightroom.homepage.shared.layout
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -15,10 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventType
@@ -181,8 +181,9 @@ fun Layout() {
                 },
     ) {
         val isWide = viewModel.windowSizeClass == WindowSizeClass.WIDE
-        val isMediumOrExpanded = viewModel.windowSizeClass == WindowSizeClass.MEDIUM ||
-            viewModel.windowSizeClass == WindowSizeClass.EXPANDED
+        val isMediumOrExpanded =
+            viewModel.windowSizeClass == WindowSizeClass.MEDIUM ||
+                viewModel.windowSizeClass == WindowSizeClass.EXPANDED
         val isCompact = viewModel.windowSizeClass == WindowSizeClass.COMPACT
 
         val scrollToSection: (NavSection) -> Unit = { section ->
@@ -225,18 +226,19 @@ fun Layout() {
                 Box(Modifier.weight(1f).fillMaxHeight()) {
                     LazyColumn(
                         state = listState,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .pointerInput(Unit) {
-                                awaitPointerEventScope {
-                                    while (true) {
-                                        val event = awaitPointerEvent()
-                                        if (event.type == PointerEventType.Press) {
-                                            railHoveredCategory = null
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .pointerInput(Unit) {
+                                    awaitPointerEventScope {
+                                        while (true) {
+                                            val event = awaitPointerEvent()
+                                            if (event.type == PointerEventType.Press) {
+                                                railHoveredCategory = null
+                                            }
                                         }
                                     }
-                                }
-                            },
+                                },
                     ) {
                         item {
                             HeroSection(
@@ -303,41 +305,46 @@ fun Layout() {
                             navLabels = navLabels,
                             categoryLabels = categoryLabels,
                             onNavClick = scrollToSection,
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .padding(16.dp),
+                            modifier =
+                                Modifier
+                                    .align(Alignment.BottomEnd)
+                                    .padding(16.dp),
                         )
                     }
 
                     // Flyout overlay (MEDIUM / EXPANDED)
                     androidx.compose.animation.AnimatedVisibility(
                         visible = isMediumOrExpanded && railHoveredCategory != null,
-                        enter = expandHorizontally(
-                            animationSpec = tween(200),
-                            expandFrom = Alignment.Start,
-                        ),
-                        exit = shrinkHorizontally(
-                            animationSpec = tween(200),
-                            shrinkTowards = Alignment.Start,
-                        ),
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .fillMaxHeight()
-                            .pointerInput(Unit) {
-                                awaitPointerEventScope {
-                                    while (true) {
-                                        val event = awaitPointerEvent()
-                                        when (event.type) {
-                                            PointerEventType.Enter -> {
-                                                railDismissPending = false
-                                            }
-                                            PointerEventType.Exit -> {
-                                                railDismissPending = true
+                        enter =
+                            expandHorizontally(
+                                animationSpec = tween(200),
+                                expandFrom = Alignment.Start,
+                            ),
+                        exit =
+                            shrinkHorizontally(
+                                animationSpec = tween(200),
+                                shrinkTowards = Alignment.Start,
+                            ),
+                        modifier =
+                            Modifier
+                                .align(Alignment.TopStart)
+                                .fillMaxHeight()
+                                .pointerInput(Unit) {
+                                    awaitPointerEventScope {
+                                        while (true) {
+                                            val event = awaitPointerEvent()
+                                            when (event.type) {
+                                                PointerEventType.Enter -> {
+                                                    railDismissPending = false
+                                                }
+
+                                                PointerEventType.Exit -> {
+                                                    railDismissPending = true
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            },
+                                },
                     ) {
                         val category = railHoveredCategory ?: lastRailCategory
                         NavigationRailFlyout(

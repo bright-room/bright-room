@@ -62,11 +62,12 @@ fun NavFab(
             contentColor = MaterialTheme.colorScheme.onSurface,
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(bottom = 32.dp)
-                    .navigationBarsPadding(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp)
+                        .padding(bottom = 32.dp)
+                        .navigationBarsPadding(),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 NavCategory.entries.forEach { category ->
@@ -93,21 +94,22 @@ fun NavFab(
                             text = label,
                             fontSize = 18.sp,
                             fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
-                            color = if (isActive) {
-                                MaterialTheme.colorScheme.primary
-                            } else {
-                                MaterialTheme.colorScheme.onSurface
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    onNavClick(section)
-                                    scope.launch {
-                                        sheetState.hide()
-                                        showSheet = false
-                                    }
-                                }
-                                .padding(vertical = 10.dp, horizontal = 8.dp),
+                            color =
+                                if (isActive) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.onSurface
+                                },
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        onNavClick(section)
+                                        scope.launch {
+                                            sheetState.hide()
+                                            showSheet = false
+                                        }
+                                    }.padding(vertical = 10.dp, horizontal = 8.dp),
                         )
                     }
                 }

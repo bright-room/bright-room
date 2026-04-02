@@ -150,7 +150,6 @@ fun TopBar(
                         fontFamily = FontFamily.Monospace,
                     )
                 }
-
             }
         }
     }
