@@ -30,9 +30,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
@@ -191,9 +191,10 @@ fun JoinSection(modifier: Modifier = Modifier) {
                                     painter = painterResource(Res.drawable.github),
                                     contentDescription = null,
                                     modifier = Modifier.size(22.dp),
-                                    colorFilter = ColorFilter.tint(
-                                        if (viewModel.isDarkTheme) MaterialTheme.colorScheme.background else Color.White,
-                                    ),
+                                    colorFilter =
+                                        ColorFilter.tint(
+                                            if (viewModel.isDarkTheme) MaterialTheme.colorScheme.background else Color.White,
+                                        ),
                                 )
                                 Spacer(Modifier.width(8.dp))
                                 Text(

@@ -83,7 +83,11 @@ fun StatsSection(modifier: Modifier = Modifier) {
 
             Spacer(Modifier.height(48.dp))
 
-            data class StatItem(val icon: ImageVector, val label: String, val value: String)
+            data class StatItem(
+                val icon: ImageVector,
+                val label: String,
+                val value: String,
+            )
 
             val items =
                 listOf(

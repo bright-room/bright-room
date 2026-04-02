@@ -201,9 +201,10 @@ fun HeroSection(
                                 painter = painterResource(Res.drawable.github),
                                 contentDescription = null,
                                 modifier = Modifier.size(22.dp),
-                                colorFilter = ColorFilter.tint(
-                                    if (viewModel.isDarkTheme) MaterialTheme.colorScheme.background else Color.White,
-                                ),
+                                colorFilter =
+                                    ColorFilter.tint(
+                                        if (viewModel.isDarkTheme) MaterialTheme.colorScheme.background else Color.White,
+                                    ),
                             )
                             Spacer(Modifier.width(8.dp))
                             Text(
