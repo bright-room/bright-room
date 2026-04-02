@@ -44,35 +44,38 @@ jobs:
           ADDITIONS="[]"
           for file in kotlin-js-store/yarn.lock kotlin-js-store/wasm/yarn.lock; do
             if ! git diff --quiet "$file" 2>/dev/null; then
+              base64 -w 0 "$file" > "/tmp/$(echo "$file" | tr '/' '_').b64"
               ADDITIONS=$(echo "$ADDITIONS" | jq \
                 --arg path "$file" \
-                --arg contents "$(base64 -w 0 "$file")" \
+                --rawfile contents "/tmp/$(echo "$file" | tr '/' '_').b64" \
                 '. + [{ path: $path, contents: $contents }]')
             fi
           done
 
-          gh api graphql \
-            --input <(jq -n \
-              --arg repo "${REPO}" \
-              --arg branch "${BRANCH}" \
-              --arg headOid "${HEAD_SHA}" \
-              --argjson additions "${ADDITIONS}" \
-              '{
-                query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid } } }",
-                variables: {
-                  input: {
-                    branch: {
-                      repositoryNameWithOwner: $repo,
-                      branchName: $branch
-                    },
-                    message: {
-                      headline: "update kotlin-js-store/yarn.lock"
-                    },
-                    fileChanges: {
-                      additions: $additions
-                    },
-                    expectedHeadOid: $headOid
-                  }
+          jq -n \
+            --arg repo "${REPO}" \
+            --arg branch "${BRANCH}" \
+            --arg headOid "${HEAD_SHA}" \
+            --argjson additions "${ADDITIONS}" \
+            '{
+              query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid } } }",
+              variables: {
+                input: {
+                  branch: {
+                    repositoryNameWithOwner: $repo,
+                    branchName: $branch
+                  },
+                  message: {
+                    headline: "update kotlin-js-store/yarn.lock"
+                  },
+                  fileChanges: {
+                    additions: $additions
+                  },
+                  expectedHeadOid: $headOid
                 }
-              }') \
+              }
+            }' > /tmp/graphql-input.json
+
+          gh api graphql \
+            --input /tmp/graphql-input.json \
             --jq '.data.createCommitOnBranch.commit.oid'
