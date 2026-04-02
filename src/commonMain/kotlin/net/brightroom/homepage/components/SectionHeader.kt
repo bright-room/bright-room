@@ -1,5 +1,6 @@
 package net.brightroom.homepage.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -21,9 +23,13 @@ fun SectionHeader(
     label: String,
     title: String,
     description: String,
+    centered: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = if (centered) Alignment.CenterHorizontally else Alignment.Start,
+    ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             HorizontalDivider(
                 modifier = Modifier.width(24.dp),
@@ -39,6 +45,14 @@ fun SectionHeader(
                 fontFamily = FontFamily.Monospace,
                 letterSpacing = 3.sp,
             )
+            if (centered) {
+                Spacer(Modifier.width(12.dp))
+                HorizontalDivider(
+                    modifier = Modifier.width(24.dp),
+                    thickness = 1.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
         }
         Spacer(Modifier.height(16.dp))
         Text(
@@ -46,6 +60,7 @@ fun SectionHeader(
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
             letterSpacing = (-1).sp,
+            textAlign = if (centered) TextAlign.Center else TextAlign.Start,
         )
         Spacer(Modifier.height(24.dp))
         Text(
@@ -53,6 +68,7 @@ fun SectionHeader(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             lineHeight = 28.sp,
+            textAlign = if (centered) TextAlign.Center else TextAlign.Start,
         )
     }
 }

@@ -1,11 +1,6 @@
 package net.brightroom.homepage.components
 
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,8 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MenuOpen
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Menu
@@ -30,15 +25,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import bright_room.generated.resources.Res
+import bright_room.generated.resources.logo
 import net.brightroom.homepage.app.LocalAppViewModel
+import org.jetbrains.compose.resources.painterResource
 
 enum class NavSection(val id: String) {
     HOME("home"),
@@ -81,17 +77,6 @@ fun TopBar(
 ) {
     val viewModel = LocalAppViewModel.current
 
-    val infiniteTransition = rememberInfiniteTransition()
-    val pulseAlpha by infiniteTransition.animateFloat(
-        initialValue = 1f,
-        targetValue = 0.3f,
-        animationSpec =
-            infiniteRepeatable(
-                animation = tween(durationMillis = 2000),
-                repeatMode = RepeatMode.Reverse,
-            ),
-    )
-
     Surface(
         modifier = modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.background.copy(alpha = 0.85f),
@@ -113,7 +98,7 @@ fun TopBar(
                     modifier = Modifier.align(Alignment.CenterStart).size(40.dp),
                 ) {
                     Icon(
-                        imageVector = if (isMenuOpen) Icons.Default.MenuOpen else Icons.Default.Menu,
+                        imageVector = if (isMenuOpen) Icons.AutoMirrored.Filled.MenuOpen else Icons.Default.Menu,
                         contentDescription = if (isMenuOpen) "Close menu" else "Open menu",
                         tint = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.size(24.dp),
@@ -125,12 +110,10 @@ fun TopBar(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.align(Alignment.Center).clickable { onHomeClick() },
                 ) {
-                    Box(
-                        modifier =
-                            Modifier
-                                .size(8.dp)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = pulseAlpha)),
+                    Image(
+                        painter = painterResource(Res.drawable.logo),
+                        contentDescription = "bright-room logo",
+                        modifier = Modifier.size(32.dp),
                     )
                     Spacer(Modifier.width(8.dp))
                     Text(
@@ -158,12 +141,10 @@ fun TopBar(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.clickable { onHomeClick() },
                 ) {
-                    Box(
-                        modifier =
-                            Modifier
-                                .size(8.dp)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = pulseAlpha)),
+                    Image(
+                        painter = painterResource(Res.drawable.logo),
+                        contentDescription = "bright-room logo",
+                        modifier = Modifier.size(32.dp),
                     )
                     Spacer(Modifier.width(8.dp))
                     Text(

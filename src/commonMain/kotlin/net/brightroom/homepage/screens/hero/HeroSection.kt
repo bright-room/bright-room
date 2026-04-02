@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,8 +23,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -34,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -43,6 +48,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import bright_room.generated.resources.Res
+import bright_room.generated.resources.github
 import bright_room.generated.resources.hero_sub
 import bright_room.generated.resources.hero_tagline
 import bright_room.generated.resources.hero_title_1
@@ -53,6 +59,7 @@ import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.shared.lib.openUrl
 import net.brightroom.homepage.shared.theme.AccentGreen
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -186,22 +193,46 @@ fun HeroSection(
                                     },
                             ),
                     ) {
-                        Text(
-                            text = stringResource(Res.string.view_on_github),
-                            fontWeight = FontWeight.SemiBold,
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(vertical = 6.dp),
-                        )
+                        ) {
+                            Image(
+                                painter = painterResource(Res.drawable.github),
+                                contentDescription = null,
+                                modifier = Modifier.size(22.dp),
+                                colorFilter =
+                                    ColorFilter.tint(
+                                        if (viewModel.isDarkTheme) MaterialTheme.colorScheme.background else Color.White,
+                                    ),
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                text = stringResource(Res.string.view_on_github),
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                        }
                     }
 
                     OutlinedButton(
                         onClick = onJoinClick,
                         shape = RoundedCornerShape(10.dp),
                     ) {
-                        Text(
-                            text = stringResource(Res.string.join_cta),
-                            fontWeight = FontWeight.SemiBold,
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(vertical = 6.dp),
-                        )
+                        ) {
+                            Text(
+                                text = stringResource(Res.string.join_cta),
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                contentDescription = null,
+                                modifier = Modifier.size(22.dp),
+                            )
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package net.brightroom.homepage.screens.members
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,12 +8,14 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
@@ -38,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import bright_room.generated.resources.Res
+import bright_room.generated.resources.github
 import bright_room.generated.resources.members_desc
 import bright_room.generated.resources.members_label
 import bright_room.generated.resources.members_title
@@ -52,6 +57,7 @@ import net.brightroom.homepage.components.SectionHeader
 import net.brightroom.homepage.data.MemberData
 import net.brightroom.homepage.shared.lib.openUrl
 import net.brightroom.homepage.shared.theme.AccentBlue
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -196,11 +202,20 @@ private fun MemberCard(
             Spacer(Modifier.height(12.dp))
 
             TextButton(onClick = { openUrl(member.githubUrl) }) {
-                Text(
-                    text = "GitHub",
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(Res.drawable.github),
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant),
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text(
+                        text = "GitHub",
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         }
     }
