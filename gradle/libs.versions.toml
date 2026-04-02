@@ -15,7 +15,7 @@ spotless = { id = "com.diffplug.spotless", version = { strictly = "8.4.0" } }
 
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = { strictly = "0.7.1-0.6.x-compat" } }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = { strictly = "1.8.1" } }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = { strictly = "1.10.0" } }
 
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose_multiplatform_version" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose_multiplatform_version" }
