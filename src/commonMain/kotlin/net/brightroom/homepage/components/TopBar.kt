@@ -141,7 +141,6 @@ fun TopBar(
                         color = MaterialTheme.colorScheme.primary,
                     )
                 }
-
             }
         } else {
             // Default: logo left, optional controls right
