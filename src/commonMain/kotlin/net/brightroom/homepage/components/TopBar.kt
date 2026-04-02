@@ -21,9 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Surface
@@ -38,7 +36,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.brightroom.homepage.app.LocalAppViewModel
-import net.brightroom.homepage.app.WindowSizeClass
 
 enum class NavSection(val id: String) {
     HOME("home"),
@@ -73,7 +70,6 @@ enum class NavCategory {
 @Composable
 fun TopBar(
     onHomeClick: () -> Unit,
-    onMenuClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel = LocalAppViewModel.current
@@ -155,17 +151,6 @@ fun TopBar(
                     )
                 }
 
-                if (viewModel.windowSizeClass != WindowSizeClass.WIDE) {
-                    IconButton(
-                        onClick = onMenuClick,
-                        modifier = Modifier.size(36.dp),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Open menu",
-                        )
-                    }
-                }
             }
         }
     }
