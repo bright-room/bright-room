@@ -37,14 +37,42 @@ jobs:
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.head_ref }}
         run: |
-          git diff --quiet kotlin-js-store/yarn.lock && exit 0
+          git diff --quiet kotlin-js-store/ && exit 0
 
-          FILE_SHA=$(gh api "repos/${REPO}/contents/kotlin-js-store/yarn.lock?ref=${BRANCH}" --jq '.sha')
-          CONTENT=$(base64 -w 0 kotlin-js-store/yarn.lock)
+          HEAD_SHA=$(gh api "repos/${REPO}/git/ref/heads/${BRANCH}" --jq '.object.sha')
 
-          gh api "repos/${REPO}/contents/kotlin-js-store/yarn.lock" \
-            --method PUT \
-            --field "message=update kotlin-js-store/yarn.lock" \
-            --field "content=${CONTENT}" \
-            --field "sha=${FILE_SHA}" \
-            --field "branch=${BRANCH}"
+          ADDITIONS="[]"
+          for file in kotlin-js-store/yarn.lock kotlin-js-store/wasm/yarn.lock; do
+            if ! git diff --quiet "$file" 2>/dev/null; then
+              ADDITIONS=$(echo "$ADDITIONS" | jq \
+                --arg path "$file" \
+                --arg contents "$(base64 -w 0 "$file")" \
+                '. + [{ path: $path, contents: $contents }]')
+            fi
+          done
+
+          gh api graphql \
+            --input <(jq -n \
+              --arg repo "${REPO}" \
+              --arg branch "${BRANCH}" \
+              --arg headOid "${HEAD_SHA}" \
+              --argjson additions "${ADDITIONS}" \
+              '{
+                query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid } } }",
+                variables: {
+                  input: {
+                    branch: {
+                      repositoryNameWithOwner: $repo,
+                      branchName: $branch
+                    },
+                    message: {
+                      headline: "update kotlin-js-store/yarn.lock"
+                    },
+                    fileChanges: {
+                      additions: $additions
+                    },
+                    expectedHeadOid: $headOid
+                  }
+                }
+              }') \
+            --jq '.data.createCommitOnBranch.commit.oid'
