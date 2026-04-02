@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <!-- Navigation Categories -->
+    <string name="nav_cat_overview">Overview</string>
+    <string name="nav_cat_works">Works</string>
+    <string name="nav_cat_participate">Participate</string>
+    <string name="nav_cat_support">Support</string>
+
     <!-- Hero -->
     <string name="hero_sub">Illuminating the future with open source. bright-room is a GitHub Organization where developers gather, learn together, and create.</string>
     <string name="join_cta">Join Us</string>

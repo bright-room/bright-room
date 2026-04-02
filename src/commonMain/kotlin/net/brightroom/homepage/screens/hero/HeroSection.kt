@@ -66,7 +66,7 @@ fun HeroSection(
         when (viewModel.windowSizeClass) {
             WindowSizeClass.COMPACT -> 40.sp
             WindowSizeClass.MEDIUM -> 56.sp
-            WindowSizeClass.EXPANDED -> 72.sp
+            WindowSizeClass.EXPANDED, WindowSizeClass.WIDE -> 72.sp
         }
 
     val infiniteTransition = rememberInfiniteTransition()
@@ -103,7 +103,7 @@ fun HeroSection(
             Column(
                 modifier =
                     Modifier
-                        .widthIn(max = 1200.dp)
+                        .widthIn(max = 1000.dp)
                         .padding(horizontal = 24.dp)
                         .padding(top = 120.dp, bottom = 80.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,

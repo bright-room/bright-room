@@ -11,17 +11,21 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import bright_room.generated.resources.Res
 import bright_room.generated.resources.nav_about
+import bright_room.generated.resources.nav_cat_overview
+import bright_room.generated.resources.nav_cat_participate
+import bright_room.generated.resources.nav_cat_support
+import bright_room.generated.resources.nav_cat_works
 import bright_room.generated.resources.nav_contributing
 import bright_room.generated.resources.nav_faq
 import bright_room.generated.resources.nav_home
@@ -34,8 +38,14 @@ import bright_room.generated.resources.nav_tech
 import kotlinx.coroutines.launch
 import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.components.Footer
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.ui.unit.dp
+import net.brightroom.homepage.app.WindowSizeClass
+import net.brightroom.homepage.components.BackToTopButton
 import net.brightroom.homepage.components.MobileNavigationMenu
+import net.brightroom.homepage.components.NavCategory
 import net.brightroom.homepage.components.NavSection
+import net.brightroom.homepage.components.SideNavIndicator
 import net.brightroom.homepage.components.TopBar
 import net.brightroom.homepage.screens.about.AboutSection
 import net.brightroom.homepage.screens.contributing.ContributingSection
@@ -97,20 +107,35 @@ fun Layout() {
             )
         }
 
+    val overviewLabel = stringResource(Res.string.nav_cat_overview)
+    val worksLabel = stringResource(Res.string.nav_cat_works)
+    val participateLabel = stringResource(Res.string.nav_cat_participate)
+    val supportLabel = stringResource(Res.string.nav_cat_support)
+
+    val categoryLabels =
+        remember(overviewLabel, worksLabel, participateLabel, supportLabel) {
+            mapOf(
+                NavCategory.OVERVIEW to overviewLabel,
+                NavCategory.WORKS to worksLabel,
+                NavCategory.PARTICIPATE to participateLabel,
+                NavCategory.SUPPORT to supportLabel,
+            )
+        }
+
     // Track active section based on scroll position
     LaunchedEffect(listState.firstVisibleItemIndex) {
         val index = listState.firstVisibleItemIndex
         activeSection =
             when {
-                index >= 10 -> NavSection.JOIN
-                index >= 9 -> NavSection.FAQ
-                index >= 8 -> NavSection.ROADMAP
-                index >= 7 -> NavSection.CONTRIBUTING
-                index >= 6 -> NavSection.TECHSTACK
-                index >= 5 -> NavSection.PROJECTS
-                index >= 4 -> NavSection.MEMBERS
-                index >= 3 -> NavSection.STATS
-                index >= 2 -> NavSection.ABOUT
+                index >= 9 -> NavSection.JOIN
+                index >= 8 -> NavSection.FAQ
+                index >= 7 -> NavSection.ROADMAP
+                index >= 6 -> NavSection.CONTRIBUTING
+                index >= 5 -> NavSection.TECHSTACK
+                index >= 4 -> NavSection.PROJECTS
+                index >= 3 -> NavSection.MEMBERS
+                index >= 2 -> NavSection.STATS
+                index >= 1 -> NavSection.ABOUT
                 else -> NavSection.HOME
             }
     }
@@ -134,44 +159,80 @@ fun Layout() {
         Scaffold(
             topBar = {
                 TopBar(
-                    activeSection = activeSection,
-                    navLabels = navLabels,
-                    onNavClick = { section ->
+                    onHomeClick = {
                         scope.launch {
-                            val index = NavSection.entries.indexOf(section)
-                            listState.animateScrollToItem(index)
+                            listState.animateScrollToItem(0)
                         }
                     },
                     onMenuClick = { mobileMenuOpen = true },
                 )
             },
         ) { padding ->
-            LazyColumn(
-                state = listState,
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-            ) {
-                item {
-                    HeroSection(
-                        onJoinClick = {
+            Box(Modifier.fillMaxSize().padding(padding)) {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    item {
+                        HeroSection(
+                            onJoinClick = {
+                                scope.launch {
+                                    listState.animateScrollToItem(NavSection.entries.indexOf(NavSection.JOIN))
+                                }
+                            },
+                        )
+                    }
+                    item { AboutSection() }
+                    item { StatsSection() }
+                    item { MembersSection() }
+                    item { ProjectsSection() }
+                    item { TechStackSection() }
+                    item { ContributingSection() }
+                    item { RoadmapSection() }
+                    item { FaqSection() }
+                    item { JoinSection() }
+                    item { Footer() }
+                }
+
+                // Side navigation indicator (desktop only)
+                if (viewModel.windowSizeClass == WindowSizeClass.WIDE) {
+                    SideNavIndicator(
+                        activeSection = activeSection,
+                        navLabels = navLabels,
+                        onNavClick = { section ->
                             scope.launch {
-                                listState.animateScrollToItem(NavSection.entries.indexOf(NavSection.JOIN))
+                                val index = NavSection.entries.indexOf(section)
+                                listState.animateScrollToItem(index)
                             }
                         },
+                        modifier = Modifier.align(Alignment.CenterStart),
                     )
                 }
-                item { AboutSection() }
-                item { StatsSection() }
-                item { MembersSection() }
-                item { ProjectsSection() }
-                item { TechStackSection() }
-                item { ContributingSection() }
-                item { RoadmapSection() }
-                item { FaqSection() }
-                item { JoinSection() }
-                item { Footer() }
+
+                // Back to top button (bottom-left, stays above footer, WIDE only)
+                if (viewModel.windowSizeClass == WindowSizeClass.WIDE && activeSection != NavSection.HOME) {
+                    val footerIndex = NavSection.entries.size
+                    val layoutInfo = listState.layoutInfo
+                    val footerItem = layoutInfo.visibleItemsInfo.firstOrNull { it.index == footerIndex }
+                    val viewportHeight = layoutInfo.viewportSize.height
+                    val bottomPadding = if (footerItem != null) {
+                        val footerVisibleHeight = viewportHeight - footerItem.offset
+                        with(density) { footerVisibleHeight.toDp() } + 24.dp
+                    } else {
+                        24.dp
+                    }
+
+                    BackToTopButton(
+                        onClick = {
+                            scope.launch {
+                                listState.animateScrollToItem(0)
+                            }
+                        },
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(start = 24.dp, bottom = bottomPadding),
+                    )
+                }
             }
         }
 
@@ -183,6 +244,7 @@ fun Layout() {
         ) {
             MobileNavigationMenu(
                 navLabels = navLabels,
+                categoryLabels = categoryLabels,
                 onNavClick = { section ->
                     scope.launch {
                         val index = NavSection.entries.indexOf(section)

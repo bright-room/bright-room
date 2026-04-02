@@ -79,7 +79,7 @@ fun MembersSection(modifier: Modifier = Modifier) {
         Column(
             modifier =
                 Modifier
-                    .widthIn(max = 1200.dp)
+                    .widthIn(max = 1000.dp)
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
                     .padding(top = 100.dp, bottom = 60.dp),

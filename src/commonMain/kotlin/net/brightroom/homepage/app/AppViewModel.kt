@@ -19,6 +19,7 @@ enum class WindowSizeClass {
     COMPACT,
     MEDIUM,
     EXPANDED,
+    WIDE,
 }
 
 class AppViewModel : ViewModel() {
@@ -31,7 +32,7 @@ class AppViewModel : ViewModel() {
     var isJapanese by mutableStateOf(true)
         private set
 
-    var windowSizeClass by mutableStateOf(WindowSizeClass.EXPANDED)
+    var windowSizeClass by mutableStateOf(WindowSizeClass.WIDE)
         private set
 
     var windowHeightDp by mutableStateOf(700.dp)
@@ -68,7 +69,8 @@ class AppViewModel : ViewModel() {
             when {
                 widthDp < 600 -> WindowSizeClass.COMPACT
                 widthDp < 893 -> WindowSizeClass.MEDIUM
-                else -> WindowSizeClass.EXPANDED
+                widthDp < 1200 -> WindowSizeClass.EXPANDED
+                else -> WindowSizeClass.WIDE
             }
         windowHeightDp = heightDp
     }

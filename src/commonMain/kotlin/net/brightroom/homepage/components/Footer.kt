@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import net.brightroom.homepage.app.LocalAppViewModel
@@ -62,7 +62,7 @@ fun Footer(modifier: Modifier = Modifier) {
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .widthIn(max = 1200.dp)
+                        .widthIn(max = 1000.dp)
                         .padding(horizontal = 24.dp, vertical = 48.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
