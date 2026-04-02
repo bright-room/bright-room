@@ -65,10 +65,11 @@ fun SideNavIndicator(
             },
             enabled = activeIndex > 0,
             modifier = Modifier.size(32.dp),
-            colors = IconButtonDefaults.iconButtonColors(
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f),
-            ),
+            colors =
+                IconButtonDefaults.iconButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f),
+                ),
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowUp,
@@ -100,10 +101,11 @@ fun SideNavIndicator(
             },
             enabled = activeIndex < sections.lastIndex,
             modifier = Modifier.size(32.dp),
-            colors = IconButtonDefaults.iconButtonColors(
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f),
-            ),
+            colors =
+                IconButtonDefaults.iconButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f),
+                ),
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowDown,
@@ -111,7 +113,6 @@ fun SideNavIndicator(
                 modifier = Modifier.size(20.dp),
             )
         }
-
     }
 }
 
@@ -123,10 +124,11 @@ fun BackToTopButton(
     IconButton(
         onClick = onClick,
         modifier = modifier.size(40.dp),
-        colors = IconButtonDefaults.iconButtonColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f),
-            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        ),
+        colors =
+            IconButtonDefaults.iconButtonColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f),
+                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            ),
     ) {
         Icon(
             imageVector = Icons.Default.VerticalAlignTop,
@@ -151,42 +153,47 @@ private fun SideNavDot(
     val dotHeight = 8.dp
 
     val dotColor by animateColorAsState(
-        targetValue = when {
-            isActive -> MaterialTheme.colorScheme.primary
-            isHovered -> MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
-            else -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
-        },
+        targetValue =
+            when {
+                isActive -> MaterialTheme.colorScheme.primary
+                isHovered -> MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+                else -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
+            },
         animationSpec = tween(durationMillis = 200),
     )
 
     Box(
         contentAlignment = Alignment.CenterStart,
-        modifier = Modifier
-            .pointerInput(Unit) {
-                awaitPointerEventScope {
-                    while (true) {
-                        val event = awaitPointerEvent()
-                        when (event.type) {
-                            PointerEventType.Enter -> isHovered = true
-                            PointerEventType.Exit -> isHovered = false
+        modifier =
+            Modifier
+                .pointerInput(Unit) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent()
+                            when (event.type) {
+                                PointerEventType.Enter -> isHovered = true
+                                PointerEventType.Exit -> isHovered = false
+                            }
                         }
                     }
-                }
-            }
-            .clickable(
-                indication = null,
-                interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
-                onClick = onClick,
-            )
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+                }.clickable(
+                    indication = null,
+                    interactionSource =
+                        remember {
+                            androidx.compose.foundation.interaction
+                                .MutableInteractionSource()
+                        },
+                    onClick = onClick,
+                ).padding(horizontal = 8.dp, vertical = 8.dp),
     ) {
         // Dot (always at the same position)
         Box(
-            modifier = Modifier
-                .width(dotWidth)
-                .height(dotHeight)
-                .clip(CircleShape)
-                .background(dotColor),
+            modifier =
+                Modifier
+                    .width(dotWidth)
+                    .height(dotHeight)
+                    .clip(CircleShape)
+                    .background(dotColor),
         )
 
         // Label — measured but reported as zero size so it doesn't push the parent
@@ -194,23 +201,25 @@ private fun SideNavDot(
             Surface(
                 color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f),
                 shape = RoundedCornerShape(4.dp),
-                modifier = Modifier
-                    .layout { measurable, constraints ->
-                        val placeable = measurable.measure(constraints.copy(maxWidth = Int.MAX_VALUE))
-                        layout(0, 0) {
-                            placeable.placeRelative(x = 28.dp.roundToPx(), y = -(placeable.height / 2))
-                        }
-                    },
+                modifier =
+                    Modifier
+                        .layout { measurable, constraints ->
+                            val placeable = measurable.measure(constraints.copy(maxWidth = Int.MAX_VALUE))
+                            layout(0, 0) {
+                                placeable.placeRelative(x = 28.dp.roundToPx(), y = -(placeable.height / 2))
+                            }
+                        },
             ) {
                 Text(
                     text = label,
                     fontSize = 11.sp,
                     fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
-                    color = if (isActive) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
-                    },
+                    color =
+                        if (isActive) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        },
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                 )
             }

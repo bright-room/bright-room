@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import bright_room.generated.resources.Res
 import bright_room.generated.resources.nav_about
 import bright_room.generated.resources.nav_cat_overview
@@ -37,11 +39,9 @@ import bright_room.generated.resources.nav_stats
 import bright_room.generated.resources.nav_tech
 import kotlinx.coroutines.launch
 import net.brightroom.homepage.app.LocalAppViewModel
-import net.brightroom.homepage.components.Footer
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.ui.unit.dp
 import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.components.BackToTopButton
+import net.brightroom.homepage.components.Footer
 import net.brightroom.homepage.components.MobileNavigationMenu
 import net.brightroom.homepage.components.NavCategory
 import net.brightroom.homepage.components.NavSection
@@ -215,12 +215,13 @@ fun Layout() {
                     val layoutInfo = listState.layoutInfo
                     val footerItem = layoutInfo.visibleItemsInfo.firstOrNull { it.index == footerIndex }
                     val viewportHeight = layoutInfo.viewportSize.height
-                    val bottomPadding = if (footerItem != null) {
-                        val footerVisibleHeight = viewportHeight - footerItem.offset
-                        with(density) { footerVisibleHeight.toDp() } + 24.dp
-                    } else {
-                        24.dp
-                    }
+                    val bottomPadding =
+                        if (footerItem != null) {
+                            val footerVisibleHeight = viewportHeight - footerItem.offset
+                            with(density) { footerVisibleHeight.toDp() } + 24.dp
+                        } else {
+                            24.dp
+                        }
 
                     BackToTopButton(
                         onClick = {
@@ -228,9 +229,10 @@ fun Layout() {
                                 listState.animateScrollToItem(0)
                             }
                         },
-                        modifier = Modifier
-                            .align(Alignment.BottomStart)
-                            .padding(start = 24.dp, bottom = bottomPadding),
+                        modifier =
+                            Modifier
+                                .align(Alignment.BottomStart)
+                                .padding(start = 24.dp, bottom = bottomPadding),
                     )
                 }
             }
