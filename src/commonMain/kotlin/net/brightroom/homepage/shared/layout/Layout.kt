@@ -1,11 +1,13 @@
 package net.brightroom.homepage.shared.layout
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -19,6 +21,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -42,9 +46,11 @@ import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.components.BackToTopButton
 import net.brightroom.homepage.components.Footer
-import net.brightroom.homepage.components.MobileNavigationMenu
 import net.brightroom.homepage.components.NavCategory
+import net.brightroom.homepage.components.NavFab
 import net.brightroom.homepage.components.NavSection
+import net.brightroom.homepage.components.NavigationRailFlyout
+import net.brightroom.homepage.components.NavigationRailNav
 import net.brightroom.homepage.components.SideNavIndicator
 import net.brightroom.homepage.components.TopBar
 import net.brightroom.homepage.screens.about.AboutSection
@@ -66,8 +72,26 @@ fun Layout() {
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
 
-    var mobileMenuOpen by remember { mutableStateOf(false) }
     var activeSection by remember { mutableStateOf(NavSection.HOME) }
+    var railHoveredCategory by remember { mutableStateOf<NavCategory?>(null) }
+    var lastRailCategory by remember { mutableStateOf(NavCategory.OVERVIEW) }
+    var railDismissPending by remember { mutableStateOf(false) }
+
+    // Remember last category for exit animation content
+    LaunchedEffect(railHoveredCategory) {
+        if (railHoveredCategory != null) {
+            lastRailCategory = railHoveredCategory!!
+        }
+    }
+
+    // Delayed dismiss — gives time to move mouse from Rail to Flyout
+    LaunchedEffect(railDismissPending) {
+        if (railDismissPending) {
+            kotlinx.coroutines.delay(120)
+            railDismissPending = false
+            railHoveredCategory = null
+        }
+    }
 
     val homeLabel = stringResource(Res.string.nav_home)
     val aboutLabel = stringResource(Res.string.nav_about)
@@ -156,6 +180,19 @@ fun Layout() {
                     }
                 },
     ) {
+        val isWide = viewModel.windowSizeClass == WindowSizeClass.WIDE
+        val isMediumOrExpanded =
+            viewModel.windowSizeClass == WindowSizeClass.MEDIUM ||
+                viewModel.windowSizeClass == WindowSizeClass.EXPANDED
+        val isCompact = viewModel.windowSizeClass == WindowSizeClass.COMPACT
+
+        val scrollToSection: (NavSection) -> Unit = { section ->
+            scope.launch {
+                val index = NavSection.entries.indexOf(section)
+                listState.animateScrollToItem(index)
+            }
+        }
+
         Scaffold(
             topBar = {
                 TopBar(
@@ -164,97 +201,165 @@ fun Layout() {
                             listState.animateScrollToItem(0)
                         }
                     },
-                    onMenuClick = { mobileMenuOpen = true },
                 )
             },
         ) { padding ->
-            Box(Modifier.fillMaxSize().padding(padding)) {
-                LazyColumn(
-                    state = listState,
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    item {
-                        HeroSection(
-                            onJoinClick = {
+            Row(Modifier.fillMaxSize().padding(padding)) {
+                // Navigation Rail + Flyout hover zone (MEDIUM / EXPANDED only)
+                if (isMediumOrExpanded) {
+                    NavigationRailNav(
+                        activeSection = activeSection,
+                        categoryLabels = categoryLabels,
+                        onHoveredCategoryChange = { category ->
+                            if (category != null) {
+                                railDismissPending = false
+                                railHoveredCategory = category
+                            } else {
+                                railDismissPending = true
+                            }
+                        },
+                        hoveredCategory = railHoveredCategory,
+                        modifier = Modifier.fillMaxHeight(),
+                    )
+                }
+
+                Box(Modifier.weight(1f).fillMaxHeight()) {
+                    LazyColumn(
+                        state = listState,
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .pointerInput(Unit) {
+                                    awaitPointerEventScope {
+                                        while (true) {
+                                            val event = awaitPointerEvent()
+                                            if (event.type == PointerEventType.Press) {
+                                                railHoveredCategory = null
+                                            }
+                                        }
+                                    }
+                                },
+                    ) {
+                        item {
+                            HeroSection(
+                                onJoinClick = {
+                                    scope.launch {
+                                        listState.animateScrollToItem(NavSection.entries.indexOf(NavSection.JOIN))
+                                    }
+                                },
+                            )
+                        }
+                        item { AboutSection() }
+                        item { StatsSection() }
+                        item { MembersSection() }
+                        item { ProjectsSection() }
+                        item { TechStackSection() }
+                        item { ContributingSection() }
+                        item { RoadmapSection() }
+                        item { FaqSection() }
+                        item { JoinSection() }
+                        item { Footer() }
+                    }
+
+                    // Side navigation indicator (desktop WIDE only)
+                    if (isWide) {
+                        SideNavIndicator(
+                            activeSection = activeSection,
+                            navLabels = navLabels,
+                            onNavClick = scrollToSection,
+                            modifier = Modifier.align(Alignment.CenterStart),
+                        )
+                    }
+
+                    // Back to top button (WIDE only)
+                    if (isWide && activeSection != NavSection.HOME) {
+                        val footerIndex = NavSection.entries.size
+                        val layoutInfo = listState.layoutInfo
+                        val footerItem = layoutInfo.visibleItemsInfo.firstOrNull { it.index == footerIndex }
+                        val viewportHeight = layoutInfo.viewportSize.height
+                        val bottomPadding =
+                            if (footerItem != null) {
+                                val footerVisibleHeight = viewportHeight - footerItem.offset
+                                with(density) { footerVisibleHeight.toDp() } + 24.dp
+                            } else {
+                                24.dp
+                            }
+
+                        BackToTopButton(
+                            onClick = {
                                 scope.launch {
-                                    listState.animateScrollToItem(NavSection.entries.indexOf(NavSection.JOIN))
+                                    listState.animateScrollToItem(0)
                                 }
+                            },
+                            modifier =
+                                Modifier
+                                    .align(Alignment.BottomStart)
+                                    .padding(start = 24.dp, bottom = bottomPadding),
+                        )
+                    }
+
+                    // FAB with Bottom Sheet (COMPACT only)
+                    if (isCompact && activeSection != NavSection.HOME) {
+                        NavFab(
+                            activeSection = activeSection,
+                            navLabels = navLabels,
+                            categoryLabels = categoryLabels,
+                            onNavClick = scrollToSection,
+                            modifier =
+                                Modifier
+                                    .align(Alignment.BottomEnd)
+                                    .padding(16.dp),
+                        )
+                    }
+
+                    // Flyout overlay (MEDIUM / EXPANDED)
+                    androidx.compose.animation.AnimatedVisibility(
+                        visible = isMediumOrExpanded && railHoveredCategory != null,
+                        enter =
+                            expandHorizontally(
+                                animationSpec = tween(200),
+                                expandFrom = Alignment.Start,
+                            ),
+                        exit =
+                            shrinkHorizontally(
+                                animationSpec = tween(200),
+                                shrinkTowards = Alignment.Start,
+                            ),
+                        modifier =
+                            Modifier
+                                .align(Alignment.TopStart)
+                                .fillMaxHeight()
+                                .pointerInput(Unit) {
+                                    awaitPointerEventScope {
+                                        while (true) {
+                                            val event = awaitPointerEvent()
+                                            when (event.type) {
+                                                PointerEventType.Enter -> {
+                                                    railDismissPending = false
+                                                }
+
+                                                PointerEventType.Exit -> {
+                                                    railDismissPending = true
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                    ) {
+                        val category = railHoveredCategory ?: lastRailCategory
+                        NavigationRailFlyout(
+                            category = category,
+                            categoryLabel = categoryLabels[category] ?: category.name,
+                            navLabels = navLabels,
+                            activeSection = activeSection,
+                            onSectionClick = { section ->
+                                scrollToSection(section)
+                                railHoveredCategory = null
                             },
                         )
                     }
-                    item { AboutSection() }
-                    item { StatsSection() }
-                    item { MembersSection() }
-                    item { ProjectsSection() }
-                    item { TechStackSection() }
-                    item { ContributingSection() }
-                    item { RoadmapSection() }
-                    item { FaqSection() }
-                    item { JoinSection() }
-                    item { Footer() }
-                }
-
-                // Side navigation indicator (desktop only)
-                if (viewModel.windowSizeClass == WindowSizeClass.WIDE) {
-                    SideNavIndicator(
-                        activeSection = activeSection,
-                        navLabels = navLabels,
-                        onNavClick = { section ->
-                            scope.launch {
-                                val index = NavSection.entries.indexOf(section)
-                                listState.animateScrollToItem(index)
-                            }
-                        },
-                        modifier = Modifier.align(Alignment.CenterStart),
-                    )
-                }
-
-                // Back to top button (bottom-left, stays above footer, WIDE only)
-                if (viewModel.windowSizeClass == WindowSizeClass.WIDE && activeSection != NavSection.HOME) {
-                    val footerIndex = NavSection.entries.size
-                    val layoutInfo = listState.layoutInfo
-                    val footerItem = layoutInfo.visibleItemsInfo.firstOrNull { it.index == footerIndex }
-                    val viewportHeight = layoutInfo.viewportSize.height
-                    val bottomPadding =
-                        if (footerItem != null) {
-                            val footerVisibleHeight = viewportHeight - footerItem.offset
-                            with(density) { footerVisibleHeight.toDp() } + 24.dp
-                        } else {
-                            24.dp
-                        }
-
-                    BackToTopButton(
-                        onClick = {
-                            scope.launch {
-                                listState.animateScrollToItem(0)
-                            }
-                        },
-                        modifier =
-                            Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(start = 24.dp, bottom = bottomPadding),
-                    )
                 }
             }
-        }
-
-        // Mobile menu overlay
-        AnimatedVisibility(
-            visible = mobileMenuOpen,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
-            MobileNavigationMenu(
-                navLabels = navLabels,
-                categoryLabels = categoryLabels,
-                onNavClick = { section ->
-                    scope.launch {
-                        val index = NavSection.entries.indexOf(section)
-                        listState.animateScrollToItem(index)
-                    }
-                },
-                onClose = { mobileMenuOpen = false },
-            )
         }
     }
 }
