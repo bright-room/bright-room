@@ -39,31 +39,12 @@ jobs:
         run: |
           git diff --quiet kotlin-js-store/yarn.lock && exit 0
 
+          FILE_SHA=$(gh api "repos/${REPO}/contents/kotlin-js-store/yarn.lock?ref=${BRANCH}" --jq '.sha')
           CONTENT=$(base64 -w 0 kotlin-js-store/yarn.lock)
-          BLOB_SHA=$(gh api "repos/${REPO}/git/blobs" \
-            --method POST \
-            --field "content=${CONTENT}" \
-            --field "encoding=base64" \
-            --jq '.sha')
 
-          HEAD_SHA=$(gh api "repos/${REPO}/git/ref/heads/${BRANCH}" --jq '.object.sha')
-          BASE_TREE=$(gh api "repos/${REPO}/git/commits/${HEAD_SHA}" --jq '.tree.sha')
-
-          TREE_SHA=$(gh api "repos/${REPO}/git/trees" \
-            --method POST \
-            --field "base_tree=${BASE_TREE}" \
-            --input - <<TREE_JSON | jq -r '.sha'
-          {"tree":[{"path":"kotlin-js-store/yarn.lock","mode":"100644","type":"blob","sha":"${BLOB_SHA}"}]}
-          TREE_JSON
-          )
-
-          COMMIT_SHA=$(gh api "repos/${REPO}/git/commits" \
-            --method POST \
+          gh api "repos/${REPO}/contents/kotlin-js-store/yarn.lock" \
+            --method PUT \
             --field "message=update kotlin-js-store/yarn.lock" \
-            --field "tree=${TREE_SHA}" \
-            --field "parents[]=${HEAD_SHA}" \
-            --jq '.sha')
-
-          gh api "repos/${REPO}/git/refs/heads/${BRANCH}" \
-            --method PATCH \
-            --field "sha=${COMMIT_SHA}"
+            --field "content=${CONTENT}" \
+            --field "sha=${FILE_SHA}" \
+            --field "branch=${BRANCH}"
