@@ -46,8 +46,8 @@ import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.components.BackToTopButton
 import net.brightroom.homepage.components.Footer
+import net.brightroom.homepage.components.MobileDrawerNav
 import net.brightroom.homepage.components.NavCategory
-import net.brightroom.homepage.components.NavFab
 import net.brightroom.homepage.components.NavSection
 import net.brightroom.homepage.components.NavigationRailFlyout
 import net.brightroom.homepage.components.NavigationRailNav
@@ -76,6 +76,7 @@ fun Layout() {
     var railHoveredCategory by remember { mutableStateOf<NavCategory?>(null) }
     var lastRailCategory by remember { mutableStateOf(NavCategory.OVERVIEW) }
     var railDismissPending by remember { mutableStateOf(false) }
+    var mobileDrawerOpen by remember { mutableStateOf(false) }
 
     // Remember last category for exit animation content
     LaunchedEffect(railHoveredCategory) {
@@ -201,6 +202,10 @@ fun Layout() {
                             listState.animateScrollToItem(0)
                         }
                     },
+                    isCompact = isCompact,
+                    showControls = isWide,
+                    isMenuOpen = mobileDrawerOpen,
+                    onMenuClick = { mobileDrawerOpen = !mobileDrawerOpen },
                 )
             },
         ) { padding ->
@@ -298,17 +303,15 @@ fun Layout() {
                         )
                     }
 
-                    // FAB with Bottom Sheet (COMPACT only)
-                    if (isCompact && activeSection != NavSection.HOME) {
-                        NavFab(
+                    // Mobile drawer navigation (COMPACT only)
+                    if (isCompact) {
+                        MobileDrawerNav(
+                            isOpen = mobileDrawerOpen,
                             activeSection = activeSection,
                             navLabels = navLabels,
                             categoryLabels = categoryLabels,
-                            onNavClick = scrollToSection,
-                            modifier =
-                                Modifier
-                                    .align(Alignment.BottomEnd)
-                                    .padding(16.dp),
+                            onSectionClick = scrollToSection,
+                            onDismiss = { mobileDrawerOpen = false },
                         )
                     }
 
