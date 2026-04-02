@@ -1,5 +1,6 @@
 package net.brightroom.homepage.screens.contributing
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,10 +12,17 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.AccountTree
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.ForkRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +32,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
@@ -55,12 +65,19 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ContributingSection(modifier: Modifier = Modifier) {
+    data class ContribStep(
+        val number: String,
+        val icon: ImageVector,
+        val titleRes: StringResource,
+        val descRes: StringResource,
+    )
+
     val steps =
         listOf(
-            Triple("01", Res.string.contrib_step1_title, Res.string.contrib_step1_desc),
-            Triple("02", Res.string.contrib_step2_title, Res.string.contrib_step2_desc),
-            Triple("03", Res.string.contrib_step3_title, Res.string.contrib_step3_desc),
-            Triple("04", Res.string.contrib_step4_title, Res.string.contrib_step4_desc),
+            ContribStep("01", Icons.Default.ForkRight, Res.string.contrib_step1_title, Res.string.contrib_step1_desc),
+            ContribStep("02", Icons.Default.AccountTree, Res.string.contrib_step2_title, Res.string.contrib_step2_desc),
+            ContribStep("03", Icons.Default.Code, Res.string.contrib_step3_title, Res.string.contrib_step3_desc),
+            ContribStep("04", Icons.AutoMirrored.Filled.Send, Res.string.contrib_step4_title, Res.string.contrib_step4_desc),
         )
 
     val rules =
@@ -100,11 +117,12 @@ fun ContributingSection(modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 maxItemsInEachRow = 4,
             ) {
-                steps.forEach { (num, titleRes, descRes) ->
+                steps.forEach { step ->
                     ContribStepCard(
-                        number = num,
-                        title = stringResource(titleRes),
-                        description = stringResource(descRes),
+                        number = step.number,
+                        icon = step.icon,
+                        title = stringResource(step.titleRes),
+                        description = stringResource(step.descRes),
                         maxCardHeight = maxStepCardHeight,
                         onHeightMeasured = { h ->
                             val hDp = with(density) { h.toDp() }
@@ -144,6 +162,7 @@ fun ContributingSection(modifier: Modifier = Modifier) {
 @Composable
 private fun ContribStepCard(
     number: String,
+    icon: ImageVector,
     title: String,
     description: String,
     maxCardHeight: androidx.compose.ui.unit.Dp,
@@ -159,15 +178,32 @@ private fun ContribStepCard(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         border = CardDefaults.outlinedCardBorder(),
     ) {
-        Box(modifier = Modifier.padding(32.dp)) {
+        Column(modifier = Modifier.padding(32.dp)) {
+            Box(
+                modifier =
+                    Modifier
+                        .size(44.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(22.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
+            Spacer(Modifier.height(16.dp))
             Text(
                 text = number,
                 fontFamily = FontFamily.Monospace,
-                fontSize = 36.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
             )
-            Column(modifier = Modifier.padding(top = 48.dp)) {
+            Spacer(Modifier.height(8.dp))
+            Column {
                 Text(
                     text = title,
                     fontSize = 17.sp,

@@ -1,5 +1,6 @@
 package net.brightroom.homepage.screens.about
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,8 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.Rocket
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +30,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
@@ -77,30 +85,46 @@ fun AboutSection(modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 maxItemsInEachRow = 3,
             ) {
+                data class AboutCardData(
+                    val icon: ImageVector,
+                    val title: String,
+                    val description: String,
+                    val iconBackground: Color,
+                    val iconTint: Color,
+                )
+
                 val cards =
                     listOf(
-                        Triple(
-                            stringResource(Res.string.about_card_oss_title),
-                            stringResource(Res.string.about_card_oss_desc),
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                        AboutCardData(
+                            icon = Icons.Default.Code,
+                            title = stringResource(Res.string.about_card_oss_title),
+                            description = stringResource(Res.string.about_card_oss_desc),
+                            iconBackground = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                            iconTint = MaterialTheme.colorScheme.primary,
                         ),
-                        Triple(
-                            stringResource(Res.string.about_card_community_title),
-                            stringResource(Res.string.about_card_community_desc),
-                            AccentBlue.copy(alpha = 0.1f),
+                        AboutCardData(
+                            icon = Icons.Default.Groups,
+                            title = stringResource(Res.string.about_card_community_title),
+                            description = stringResource(Res.string.about_card_community_desc),
+                            iconBackground = AccentBlue.copy(alpha = 0.1f),
+                            iconTint = AccentBlue,
                         ),
-                        Triple(
-                            stringResource(Res.string.about_card_products_title),
-                            stringResource(Res.string.about_card_products_desc),
-                            AccentPink.copy(alpha = 0.1f),
+                        AboutCardData(
+                            icon = Icons.Default.Rocket,
+                            title = stringResource(Res.string.about_card_products_title),
+                            description = stringResource(Res.string.about_card_products_desc),
+                            iconBackground = AccentPink.copy(alpha = 0.1f),
+                            iconTint = AccentPink,
                         ),
                     )
 
-                cards.forEach { (title, desc, iconBg) ->
+                cards.forEach { card ->
                     AboutCard(
-                        title = title,
-                        description = desc,
-                        iconBackground = iconBg,
+                        icon = card.icon,
+                        title = card.title,
+                        description = card.description,
+                        iconBackground = card.iconBackground,
+                        iconTint = card.iconTint,
                         maxCardHeight = maxCardHeight,
                         onHeightMeasured = { h ->
                             val hDp = with(density) { h.toDp() }
@@ -116,9 +140,11 @@ fun AboutSection(modifier: Modifier = Modifier) {
 
 @Composable
 private fun AboutCard(
+    icon: ImageVector,
     title: String,
     description: String,
     iconBackground: Color,
+    iconTint: Color,
     maxCardHeight: Dp,
     onHeightMeasured: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -137,8 +163,18 @@ private fun AboutCard(
                 modifier =
                     Modifier
                         .size(48.dp)
-                        .padding(bottom = 20.dp),
-            )
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(iconBackground),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                    tint = iconTint,
+                )
+            }
+            Spacer(Modifier.height(16.dp))
             Text(
                 text = title,
                 fontSize = 18.sp,

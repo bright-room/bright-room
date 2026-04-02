@@ -1,9 +1,7 @@
 package net.brightroom.homepage.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,26 +11,28 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedIconButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import bright_room.generated.resources.Res
+import bright_room.generated.resources.bsky
+import bright_room.generated.resources.github
+import bright_room.generated.resources.logo
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.shared.lib.openUrl
+import org.jetbrains.compose.resources.painterResource
 import kotlin.time.Clock
 
 @Composable
@@ -81,12 +81,10 @@ fun Footer(modifier: Modifier = Modifier) {
 @Composable
 private fun FooterLogo() {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Box(
-            modifier =
-                Modifier
-                    .size(6.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary),
+        Image(
+            painter = painterResource(Res.drawable.logo),
+            contentDescription = "bright-room logo",
+            modifier = Modifier.size(28.dp),
         )
         Spacer(Modifier.width(8.dp))
         Text(
@@ -116,23 +114,27 @@ private fun FooterCopy() {
 @Composable
 private fun FooterSocials() {
     Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-        OutlinedIconButton(
+        IconButton(
             onClick = { openUrl("https://github.com/bright-room") },
             modifier = Modifier.size(40.dp),
         ) {
-            Text("GH", fontSize = 12.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
+            Image(
+                painter = painterResource(Res.drawable.github),
+                contentDescription = "GitHub",
+                modifier = Modifier.size(24.dp),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant),
+            )
         }
-        OutlinedIconButton(
-            onClick = { openUrl("https://twitter.com/") },
+        IconButton(
+            onClick = { openUrl("https://bsky.app/profile/bright-room.net") },
             modifier = Modifier.size(40.dp),
         ) {
-            Text("X", fontSize = 12.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
-        }
-        OutlinedIconButton(
-            onClick = { openUrl("https://discord.gg/") },
-            modifier = Modifier.size(40.dp),
-        ) {
-            Text("DC", fontSize = 12.sp, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Bold)
+            Image(
+                painter = painterResource(Res.drawable.bsky),
+                contentDescription = "Bluesky",
+                modifier = Modifier.size(24.dp),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant),
+            )
         }
     }
 }
