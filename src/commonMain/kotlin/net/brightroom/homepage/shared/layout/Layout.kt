@@ -120,14 +120,15 @@ fun Layout() {
             Modifier
                 .fillMaxSize()
                 .onSizeChanged { size ->
-                    val widthDp =
-                        with(density) {
+                    with(density) {
+                        val widthDp =
                             size.width
                                 .toDp()
                                 .value
                                 .toInt()
-                        }
-                    viewModel.updateWindowSize(widthDp)
+                        val heightDp = size.height.toDp()
+                        viewModel.updateWindowSize(widthDp, heightDp)
+                    }
                 },
     ) {
         Scaffold(

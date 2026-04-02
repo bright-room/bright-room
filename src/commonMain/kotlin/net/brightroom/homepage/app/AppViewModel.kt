@@ -3,6 +3,8 @@ package net.brightroom.homepage.app
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,6 +31,9 @@ class AppViewModel : ViewModel() {
     var windowSizeClass by mutableStateOf(WindowSizeClass.EXPANDED)
         private set
 
+    var windowHeightDp by mutableStateOf(700.dp)
+        private set
+
     private val _members = MutableStateFlow<List<MemberData>>(emptyList())
     val members: StateFlow<List<MemberData>> = _members
 
@@ -52,13 +57,17 @@ class AppViewModel : ViewModel() {
         isJapanese = !isJapanese
     }
 
-    fun updateWindowSize(widthDp: Int) {
+    fun updateWindowSize(
+        widthDp: Int,
+        heightDp: Dp,
+    ) {
         windowSizeClass =
             when {
                 widthDp < 600 -> WindowSizeClass.COMPACT
                 widthDp < 893 -> WindowSizeClass.MEDIUM
                 else -> WindowSizeClass.EXPANDED
             }
+        windowHeightDp = heightDp
     }
 
     suspend fun loadContent() {

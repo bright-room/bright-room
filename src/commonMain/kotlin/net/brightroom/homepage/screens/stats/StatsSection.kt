@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,10 +19,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import bright_room.generated.resources.Res
@@ -74,6 +81,9 @@ fun StatsSection(modifier: Modifier = Modifier) {
                     stringResource(Res.string.stats_total_stars) to stats.totalStars.toString(),
                 )
 
+            val density = LocalDensity.current
+            var maxCardHeight by remember { mutableStateOf(0.dp) }
+
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -83,7 +93,12 @@ fun StatsSection(modifier: Modifier = Modifier) {
                     StatCard(
                         label = label,
                         value = value,
-                        modifier = Modifier.weight(1f).widthIn(min = 160.dp, max = 200.dp),
+                        maxCardHeight = maxCardHeight,
+                        onHeightMeasured = { h ->
+                            val hDp = with(density) { h.toDp() }
+                            if (hDp > maxCardHeight) maxCardHeight = hDp
+                        },
+                        modifier = Modifier.weight(1f).widthIn(min = 160.dp),
                     )
                 }
             }
@@ -95,10 +110,15 @@ fun StatsSection(modifier: Modifier = Modifier) {
 private fun StatCard(
     label: String,
     value: String,
+    maxCardHeight: Dp,
+    onHeightMeasured: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier,
+        modifier =
+            modifier
+                .defaultMinSize(minHeight = maxCardHeight)
+                .onSizeChanged { onHeightMeasured(it.height) },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         border = CardDefaults.outlinedCardBorder(),

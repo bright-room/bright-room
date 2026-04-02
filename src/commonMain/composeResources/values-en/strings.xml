@@ -6,17 +6,17 @@
 
     <!-- About -->
     <string name="about_title">What is bright-room?</string>
-    <string name="about_desc">bright-room is a GitHub Organization focused on product development, knowledge sharing, and community activities through open source. Like a \"bright room,\" we aim to be a welcoming space where anyone can find inspiration.</string>
+    <string name="about_desc">bright-room is a GitHub Organization focused on product development, knowledge sharing, and community activities through open source. Like a &quot;bright room,&quot; we aim to be a welcoming space where anyone can find inspiration.</string>
     <string name="about_card_oss_title">Open Source</string>
     <string name="about_card_oss_desc">All projects are published as OSS. Anyone can access the code, learn from it, and contribute.</string>
     <string name="about_card_community_title">Community Driven</string>
-    <string name="about_card_community_desc">Members from diverse backgrounds participate and leverage each other\'s strengths in development.</string>
+    <string name="about_card_community_desc">Members from diverse backgrounds participate and leverage each other&apos;s strengths in development.</string>
     <string name="about_card_products_title">Practical Products</string>
     <string name="about_card_products_desc">We ship real-world tools and libraries, not just learning exercises.</string>
 
     <!-- Stats -->
     <string name="stats_title">Contribution Statistics</string>
-    <string name="stats_desc">See bright-room\'s activity in numbers. Every contribution supports the growth of our Organization.</string>
+    <string name="stats_desc">See bright-room&apos;s activity in numbers. Every contribution supports the growth of our Organization.</string>
     <string name="stats_repositories">Repositories</string>
     <string name="stats_contributors">Contributors</string>
     <string name="stats_total_commits">Total Commits</string>
@@ -72,15 +72,15 @@
     <string name="faq_q3">Are specific languages or frameworks required?</string>
     <string name="faq_a3">It varies by project, but we mainly use TypeScript, React, Go, and Rust. We actively explore new technologies, so you can propose projects to learn something new.</string>
     <string name="faq_q4">How do you communicate?</string>
-    <string name="faq_a4">Primarily through Discord and GitHub Issues, PRs, and Discussions. Communication is mostly asynchronous, so timezone differences aren\'t a concern.</string>
+    <string name="faq_a4">Primarily through Discord and GitHub Issues, PRs, and Discussions. Communication is mostly asynchronous, so timezone differences aren&apos;t a concern.</string>
     <string name="faq_q5">Can I propose my own project ideas?</string>
     <string name="faq_a5">Absolutely! Share them in GitHub Discussions or the #ideas channel on Discord. Get feedback from members and launch it as a new Organization repository.</string>
 
     <!-- Join -->
     <string name="join_title">Join bright-room</string>
-    <string name="join_desc">We welcome all developers, from beginners to experts. Let\'s build OSS together.</string>
+    <string name="join_desc">We welcome all developers, from beginners to experts. Let&apos;s build OSS together.</string>
     <string name="join_step1_title">Get a GitHub Account</string>
-    <string name="join_step1_desc">Create a free GitHub account if you don\'t have one yet.</string>
+    <string name="join_step1_desc">Create a free GitHub account if you don&apos;t have one yet.</string>
     <string name="join_step2_title">Join Discord</string>
     <string name="join_step2_desc">Join our community Discord server and introduce yourself.</string>
     <string name="join_step3_title">Contribute</string>
