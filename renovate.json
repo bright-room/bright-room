@@ -8,6 +8,7 @@
   "prHourlyLimit": 0,
   "separateMinorPatch": true,
   "minimumReleaseAge": "3 days",
+  "gitIgnoredAuthors": ["chloe-chan-bot[bot]@users.noreply.github.com"],
   "automerge": true,
   "major": {
     "minimumReleaseAge": "7 days",
