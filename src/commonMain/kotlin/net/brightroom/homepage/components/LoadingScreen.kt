@@ -32,32 +32,36 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
     val alpha1 by infiniteTransition.animateFloat(
         initialValue = 0.2f,
         targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 600),
-            repeatMode = RepeatMode.Reverse,
-        ),
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(durationMillis = 600),
+                repeatMode = RepeatMode.Reverse,
+            ),
     )
     val alpha2 by infiniteTransition.animateFloat(
         initialValue = 0.2f,
         targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 600, delayMillis = 200),
-            repeatMode = RepeatMode.Reverse,
-        ),
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(durationMillis = 600, delayMillis = 200),
+                repeatMode = RepeatMode.Reverse,
+            ),
     )
     val alpha3 by infiniteTransition.animateFloat(
         initialValue = 0.2f,
         targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 600, delayMillis = 400),
-            repeatMode = RepeatMode.Reverse,
-        ),
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(durationMillis = 600, delayMillis = 400),
+                repeatMode = RepeatMode.Reverse,
+            ),
     )
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(LoadingBackground),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(LoadingBackground),
         contentAlignment = Alignment.Center,
     ) {
         Row(
@@ -65,24 +69,27 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier
-                    .size(10.dp)
-                    .clip(CircleShape)
-                    .background(LoadingDot.copy(alpha = alpha1)),
+                modifier =
+                    Modifier
+                        .size(10.dp)
+                        .clip(CircleShape)
+                        .background(LoadingDot.copy(alpha = alpha1)),
             )
             Spacer(Modifier.width(8.dp))
             Box(
-                modifier = Modifier
-                    .size(10.dp)
-                    .clip(CircleShape)
-                    .background(LoadingDot.copy(alpha = alpha2)),
+                modifier =
+                    Modifier
+                        .size(10.dp)
+                        .clip(CircleShape)
+                        .background(LoadingDot.copy(alpha = alpha2)),
             )
             Spacer(Modifier.width(8.dp))
             Box(
-                modifier = Modifier
-                    .size(10.dp)
-                    .clip(CircleShape)
-                    .background(LoadingDot.copy(alpha = alpha3)),
+                modifier =
+                    Modifier
+                        .size(10.dp)
+                        .clip(CircleShape)
+                        .background(LoadingDot.copy(alpha = alpha3)),
             )
         }
     }

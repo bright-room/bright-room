@@ -66,7 +66,12 @@ fun App() {
             // Loading screen overlays on top, fades out when ready
             AnimatedVisibility(
                 visible = viewModel.isLoading,
-                exit = fadeOut(animationSpec = androidx.compose.animation.core.tween(400)),
+                exit =
+                    fadeOut(
+                        animationSpec =
+                            androidx.compose.animation.core
+                                .tween(400),
+                    ),
             ) {
                 LoadingScreen()
             }
