@@ -1,6 +1,5 @@
 package net.brightroom.homepage.screens.projects
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -120,11 +119,11 @@ private fun ProjectCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
+        onClick = { openUrl(project.githubUrl) },
         modifier =
             modifier
                 .defaultMinSize(minHeight = maxCardHeight)
-                .onSizeChanged { onHeightMeasured(it.height) }
-                .clickable { openUrl(project.githubUrl) },
+                .onSizeChanged { onHeightMeasured(it.height) },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         border = CardDefaults.outlinedCardBorder(),

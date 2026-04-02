@@ -87,12 +87,12 @@ fun HeroSection(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .heightIn(min = viewModel.windowHeightDp)
+                    .heightIn(min = viewModel.windowHeightDp * 0.9f)
                     .background(
                         Brush.radialGradient(
                             colors =
                                 listOf(
-                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
+                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
                                     Color.Transparent,
                                 ),
                             radius = 800f,
