@@ -12,6 +12,12 @@
     <string name="nav_faq">FAQ</string>
     <string name="nav_join">Join Us</string>
 
+    <!-- Navigation Categories -->
+    <string name="nav_cat_overview">Overview</string>
+    <string name="nav_cat_works">Works</string>
+    <string name="nav_cat_participate">Participate</string>
+    <string name="nav_cat_support">Support</string>
+
     <!-- Hero -->
     <string name="hero_tagline">Open Source Organization on GitHub</string>
     <string name="hero_title_1">Build in the</string>

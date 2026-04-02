@@ -31,6 +31,7 @@ import net.brightroom.homepage.app.LocalAppViewModel
 @Composable
 fun MobileNavigationMenu(
     navLabels: Map<NavSection, String>,
+    categoryLabels: Map<NavCategory, String>,
     onNavClick: (NavSection) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
@@ -59,20 +60,32 @@ fun MobileNavigationMenu(
 
             Spacer(Modifier.height(32.dp))
 
-            NavSection.entries.forEach { section ->
-                val label = navLabels[section] ?: section.id
+            NavCategory.entries.forEach { category ->
+                val categoryLabel = categoryLabels[category] ?: category.name
                 Text(
-                    text = label,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier =
-                        Modifier
-                            .clickable {
-                                onNavClick(section)
-                                onClose()
-                            }.padding(vertical = 12.dp),
+                    text = categoryLabel,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    letterSpacing = 1.sp,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
                 )
+
+                category.sections.forEach { section ->
+                    val label = navLabels[section] ?: section.id
+                    Text(
+                        text = label,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        modifier =
+                            Modifier
+                                .clickable {
+                                    onNavClick(section)
+                                    onClose()
+                                }.padding(vertical = 8.dp),
+                    )
+                }
             }
 
             Spacer(Modifier.height(24.dp))

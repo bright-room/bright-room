@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
@@ -54,11 +53,26 @@ enum class NavSection(val id: String) {
     JOIN("join"),
 }
 
+enum class NavCategory {
+    OVERVIEW,
+    WORKS,
+    PARTICIPATE,
+    SUPPORT,
+    ;
+
+    val sections: List<NavSection>
+        get() =
+            when (this) {
+                OVERVIEW -> listOf(NavSection.ABOUT, NavSection.STATS, NavSection.MEMBERS)
+                WORKS -> listOf(NavSection.PROJECTS, NavSection.TECHSTACK)
+                PARTICIPATE -> listOf(NavSection.CONTRIBUTING, NavSection.ROADMAP)
+                SUPPORT -> listOf(NavSection.FAQ, NavSection.JOIN)
+            }
+}
+
 @Composable
 fun TopBar(
-    activeSection: NavSection,
-    navLabels: Map<NavSection, String>,
-    onNavClick: (NavSection) -> Unit,
+    onHomeClick: () -> Unit,
     onMenuClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -85,7 +99,7 @@ fun TopBar(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .widthIn(max = 1200.dp)
+                    .widthIn(max = 1000.dp)
                     .padding(horizontal = 24.dp)
                     .height(64.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -94,7 +108,7 @@ fun TopBar(
             // Logo
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable { onNavClick(NavSection.HOME) },
+                modifier = Modifier.clickable { onHomeClick() },
             ) {
                 Box(
                     modifier =
@@ -111,29 +125,6 @@ fun TopBar(
                     fontSize = 18.sp,
                     color = MaterialTheme.colorScheme.primary,
                 )
-            }
-
-            // Navigation links (desktop only)
-            if (viewModel.windowSizeClass == WindowSizeClass.EXPANDED) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                ) {
-                    NavSection.entries.forEach { section ->
-                        val label = navLabels[section] ?: section.id
-                        Text(
-                            text = label,
-                            fontSize = 13.sp,
-                            fontWeight = FontWeight.Medium,
-                            color =
-                                if (activeSection == section) {
-                                    MaterialTheme.colorScheme.primary
-                                } else {
-                                    MaterialTheme.colorScheme.onSurfaceVariant
-                                },
-                            modifier = Modifier.clickable { onNavClick(section) },
-                        )
-                    }
-                }
             }
 
             // Controls
@@ -164,7 +155,7 @@ fun TopBar(
                     )
                 }
 
-                if (viewModel.windowSizeClass != WindowSizeClass.EXPANDED) {
+                if (viewModel.windowSizeClass != WindowSizeClass.WIDE) {
                     IconButton(
                         onClick = onMenuClick,
                         modifier = Modifier.size(36.dp),
