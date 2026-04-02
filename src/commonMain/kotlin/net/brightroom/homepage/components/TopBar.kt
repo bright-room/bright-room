@@ -21,9 +21,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MenuOpen
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -70,6 +73,10 @@ enum class NavCategory {
 @Composable
 fun TopBar(
     onHomeClick: () -> Unit,
+    isCompact: Boolean = false,
+    showControls: Boolean = false,
+    isMenuOpen: Boolean = false,
+    onMenuClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val viewModel = LocalAppViewModel.current
@@ -91,64 +98,121 @@ fun TopBar(
         tonalElevation = 0.dp,
         shadowElevation = 0.dp,
     ) {
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .widthIn(max = 1000.dp)
-                    .padding(horizontal = 24.dp)
-                    .height(64.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            // Logo
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable { onHomeClick() },
+        if (isCompact) {
+            // Mobile: hamburger | centered title | controls
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(64.dp)
+                        .padding(horizontal = 8.dp),
             ) {
-                Box(
-                    modifier =
-                        Modifier
-                            .size(8.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primary.copy(alpha = pulseAlpha)),
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(
-                    text = "bright-room",
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-            }
-
-            // Controls
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                OutlinedIconButton(
-                    onClick = { viewModel.toggleTheme() },
-                    modifier = Modifier.size(36.dp),
+                // Left: Hamburger / Close menu
+                IconButton(
+                    onClick = onMenuClick,
+                    modifier = Modifier.align(Alignment.CenterStart).size(40.dp),
                 ) {
                     Icon(
-                        imageVector = if (viewModel.isDarkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
-                        contentDescription = "Toggle theme",
-                        modifier = Modifier.size(18.dp),
+                        imageVector = if (isMenuOpen) Icons.Default.MenuOpen else Icons.Default.Menu,
+                        contentDescription = if (isMenuOpen) "Close menu" else "Open menu",
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.size(24.dp),
                     )
                 }
 
-                OutlinedIconButton(
-                    onClick = { viewModel.toggleLanguage() },
-                    modifier = Modifier.size(36.dp),
+                // Center: Logo
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.align(Alignment.Center).clickable { onHomeClick() },
                 ) {
-                    Text(
-                        text = if (viewModel.isJapanese) "EN" else "JA",
-                        fontSize = 13.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily.Monospace,
+                    Box(
+                        modifier =
+                            Modifier
+                                .size(8.dp)
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = pulseAlpha)),
                     )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = "bright-room",
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+
+            }
+        } else {
+            // Default: logo left, optional controls right
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .widthIn(max = 1000.dp)
+                        .padding(horizontal = 24.dp)
+                        .height(64.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.clickable { onHomeClick() },
+                ) {
+                    Box(
+                        modifier =
+                            Modifier
+                                .size(8.dp)
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = pulseAlpha)),
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = "bright-room",
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+
+                if (showControls) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        IconButton(
+                            onClick = { viewModel.toggleTheme() },
+                            modifier = Modifier.size(40.dp),
+                            colors =
+                                IconButtonDefaults.iconButtonColors(
+                                    containerColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+                                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                ),
+                        ) {
+                            Icon(
+                                imageVector = if (viewModel.isDarkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
+                                contentDescription = "Toggle theme",
+                                modifier = Modifier.size(20.dp),
+                            )
+                        }
+
+                        IconButton(
+                            onClick = { viewModel.toggleLanguage() },
+                            modifier = Modifier.size(40.dp),
+                            colors =
+                                IconButtonDefaults.iconButtonColors(
+                                    containerColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+                                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                ),
+                        ) {
+                            Text(
+                                text = if (viewModel.isJapanese) "EN" else "JA",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                            )
+                        }
+                    }
                 }
             }
         }
