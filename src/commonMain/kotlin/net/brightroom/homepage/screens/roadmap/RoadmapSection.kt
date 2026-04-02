@@ -68,7 +68,7 @@ fun RoadmapSection(modifier: Modifier = Modifier) {
 
             Spacer(Modifier.height(48.dp))
 
-            Column(modifier = Modifier.padding(start = 32.dp)) {
+            Column(modifier = Modifier.padding(start = 8.dp)) {
                 roadmapItems.forEachIndexed { index, item ->
                     RoadmapTimelineItem(
                         item = item,
@@ -116,6 +116,7 @@ private fun RoadmapTimelineItem(
             Box(
                 modifier =
                     Modifier
+                        .padding(top = 4.dp)
                         .size(14.dp)
                         .clip(CircleShape)
                         .background(dotColor),

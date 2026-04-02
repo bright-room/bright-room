@@ -3,6 +3,7 @@ package net.brightroom.homepage.screens.members
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -94,21 +95,37 @@ fun MembersSection(modifier: Modifier = Modifier) {
             val density = LocalDensity.current
             var maxCardHeight by remember { mutableStateOf(0.dp) }
 
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                maxItemsInEachRow = 6,
-            ) {
-                members.forEach { member ->
-                    MemberCard(
-                        member = member,
-                        maxCardHeight = maxCardHeight,
-                        onHeightMeasured = { h ->
-                            val hDp = with(density) { h.toDp() }
-                            if (hDp > maxCardHeight) maxCardHeight = hDp
-                        },
-                        modifier = Modifier.widthIn(min = 160.dp, max = 200.dp),
-                    )
+            BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+                val columns =
+                    when {
+                        maxWidth < 600.dp -> 2
+                        maxWidth < 900.dp -> 3
+                        else -> 4
+                    }
+
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    maxItemsInEachRow = columns,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    members.forEach { member ->
+                        MemberCard(
+                            member = member,
+                            maxCardHeight = maxCardHeight,
+                            onHeightMeasured = { h ->
+                                val hDp = with(density) { h.toDp() }
+                                if (hDp > maxCardHeight) maxCardHeight = hDp
+                            },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                    val remainder = members.size % columns
+                    if (remainder != 0) {
+                        repeat(columns - remainder) {
+                            Spacer(Modifier.weight(1f))
+                        }
+                    }
                 }
             }
         }

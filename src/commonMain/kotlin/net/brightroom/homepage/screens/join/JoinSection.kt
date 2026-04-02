@@ -84,7 +84,7 @@ fun JoinSection(modifier: Modifier = Modifier) {
                                 Brush.radialGradient(
                                     colors =
                                         listOf(
-                                            MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
+                                            MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
                                             Color.Transparent,
                                         ),
                                     radius = 600f,
