@@ -1,5 +1,6 @@
 package net.brightroom.homepage.screens.stats
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,6 +56,7 @@ import bright_room.generated.resources.stats_total_commits
 import bright_room.generated.resources.stats_total_stars
 import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.components.SectionHeader
+import net.brightroom.homepage.components.hoverFloat
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -138,10 +140,11 @@ private fun StatCard(
         modifier =
             modifier
                 .defaultMinSize(minHeight = maxCardHeight)
-                .onSizeChanged { onHeightMeasured(it.height) },
+                .onSizeChanged { onHeightMeasured(it.height) }
+                .hoverFloat(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-        border = CardDefaults.outlinedCardBorder(),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(28.dp),

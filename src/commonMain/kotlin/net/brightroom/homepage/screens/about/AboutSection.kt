@@ -1,5 +1,6 @@
 package net.brightroom.homepage.screens.about
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -50,6 +51,7 @@ import bright_room.generated.resources.about_desc
 import bright_room.generated.resources.about_label
 import bright_room.generated.resources.about_title
 import net.brightroom.homepage.components.SectionHeader
+import net.brightroom.homepage.components.hoverFloat
 import net.brightroom.homepage.shared.theme.AccentBlue
 import net.brightroom.homepage.shared.theme.AccentPink
 import org.jetbrains.compose.resources.stringResource
@@ -153,10 +155,11 @@ private fun AboutCard(
         modifier =
             modifier
                 .defaultMinSize(minHeight = maxCardHeight)
-                .onSizeChanged { onHeightMeasured(it.height) },
+                .onSizeChanged { onHeightMeasured(it.height) }
+                .hoverFloat(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-        border = CardDefaults.outlinedCardBorder(),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
     ) {
         Column(modifier = Modifier.padding(32.dp)) {
             Box(

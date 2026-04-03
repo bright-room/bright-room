@@ -1,5 +1,6 @@
 package net.brightroom.homepage.screens.members
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -54,6 +55,7 @@ import bright_room.generated.resources.role_frontend
 import bright_room.generated.resources.role_mobile
 import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.components.SectionHeader
+import net.brightroom.homepage.components.hoverFloat
 import net.brightroom.homepage.data.MemberData
 import net.brightroom.homepage.shared.lib.openUrl
 import net.brightroom.homepage.shared.theme.AccentBlue
@@ -149,10 +151,11 @@ private fun MemberCard(
         modifier =
             modifier
                 .defaultMinSize(minHeight = maxCardHeight)
-                .onSizeChanged { onHeightMeasured(it.height) },
+                .onSizeChanged { onHeightMeasured(it.height) }
+                .hoverFloat(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-        border = CardDefaults.outlinedCardBorder(),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(28.dp),

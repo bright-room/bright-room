@@ -1,5 +1,6 @@
 package net.brightroom.homepage.screens.join
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -54,6 +55,8 @@ import bright_room.generated.resources.join_step3_title
 import bright_room.generated.resources.join_title
 import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.components.SectionHeader
+import net.brightroom.homepage.components.HoverHighlight
+import net.brightroom.homepage.components.hoverFloat
 import net.brightroom.homepage.shared.lib.openUrl
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -81,7 +84,7 @@ fun JoinSection(modifier: Modifier = Modifier) {
                     CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                     ),
-                border = CardDefaults.outlinedCardBorder(),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
             ) {
                 Box(
                     modifier =
@@ -171,6 +174,7 @@ fun JoinSection(modifier: Modifier = Modifier) {
 
                         Button(
                             onClick = { openUrl("https://github.com/bright-room") },
+                            modifier = Modifier.hoverFloat(shape = RoundedCornerShape(10.dp), highlight = HoverHighlight.GLOW),
                             shape = RoundedCornerShape(10.dp),
                             colors =
                                 ButtonDefaults.buttonColors(

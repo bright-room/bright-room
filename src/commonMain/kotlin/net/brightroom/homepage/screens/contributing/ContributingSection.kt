@@ -1,5 +1,6 @@
 package net.brightroom.homepage.screens.contributing
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -59,6 +60,7 @@ import bright_room.generated.resources.contrib_step4_desc
 import bright_room.generated.resources.contrib_step4_title
 import bright_room.generated.resources.contrib_title
 import net.brightroom.homepage.components.SectionHeader
+import net.brightroom.homepage.components.hoverFloat
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -140,7 +142,7 @@ fun ContributingSection(modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-                border = CardDefaults.outlinedCardBorder(),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
             ) {
                 Column(modifier = Modifier.padding(32.dp)) {
                     Text(
@@ -173,36 +175,42 @@ private fun ContribStepCard(
         modifier =
             modifier
                 .defaultMinSize(minHeight = maxCardHeight)
-                .onSizeChanged { onHeightMeasured(it.height) },
+                .onSizeChanged { onHeightMeasured(it.height) }
+                .hoverFloat(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-        border = CardDefaults.outlinedCardBorder(),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
     ) {
         Column(modifier = Modifier.padding(32.dp)) {
-            Box(
-                modifier =
-                    Modifier
-                        .size(44.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
-                contentAlignment = Alignment.Center,
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(22.dp),
-                    tint = MaterialTheme.colorScheme.primary,
+                Box(
+                    modifier =
+                        Modifier
+                            .size(44.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(22.dp),
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
+                Text(
+                    text = number,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
                 )
             }
             Spacer(Modifier.height(16.dp))
-            Text(
-                text = number,
-                fontFamily = FontFamily.Monospace,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-            )
-            Spacer(Modifier.height(8.dp))
             Column {
                 Text(
                     text = title,
