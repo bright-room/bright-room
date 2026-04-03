@@ -54,8 +54,8 @@ import bright_room.generated.resources.join_step3_desc
 import bright_room.generated.resources.join_step3_title
 import bright_room.generated.resources.join_title
 import net.brightroom.homepage.app.LocalAppViewModel
-import net.brightroom.homepage.components.SectionHeader
 import net.brightroom.homepage.components.HoverHighlight
+import net.brightroom.homepage.components.SectionHeader
 import net.brightroom.homepage.components.hoverFloat
 import net.brightroom.homepage.shared.lib.openUrl
 import org.jetbrains.compose.resources.painterResource

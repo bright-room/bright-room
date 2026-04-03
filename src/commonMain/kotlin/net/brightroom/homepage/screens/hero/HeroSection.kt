@@ -56,9 +56,9 @@ import bright_room.generated.resources.hero_title_2
 import bright_room.generated.resources.join_cta
 import bright_room.generated.resources.view_on_github
 import net.brightroom.homepage.app.LocalAppViewModel
+import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.components.HoverHighlight
 import net.brightroom.homepage.components.hoverFloat
-import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.shared.lib.openUrl
 import net.brightroom.homepage.shared.theme.AccentGreen
 import org.jetbrains.compose.resources.painterResource

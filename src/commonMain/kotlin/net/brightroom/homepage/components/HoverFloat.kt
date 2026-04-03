@@ -59,11 +59,12 @@ fun Modifier.hoverFloat(
                     targetValue = if (isHovered) 1f else 0f,
                     animationSpec = tween(durationMillis = 200),
                 )
-                val highlightColor = lerp(
-                    Color.Transparent,
-                    MaterialTheme.colorScheme.outlineVariant,
-                    borderAlpha,
-                )
+                val highlightColor =
+                    lerp(
+                        Color.Transparent,
+                        MaterialTheme.colorScheme.outlineVariant,
+                        borderAlpha,
+                    )
                 base.border(
                     width = 1.dp,
                     color = highlightColor,
@@ -86,6 +87,8 @@ fun Modifier.hoverFloat(
                 )
             }
 
-            HoverHighlight.NONE -> base
+            HoverHighlight.NONE -> {
+                base
+            }
         }
     }
