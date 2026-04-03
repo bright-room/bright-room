@@ -15,9 +15,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MergeType
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material.icons.filled.MergeType
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Timeline
@@ -94,7 +94,7 @@ fun StatsSection(modifier: Modifier = Modifier) {
                     StatItem(Icons.Default.Folder, stringResource(Res.string.stats_repositories), stats.repositories.toString()),
                     StatItem(Icons.Default.People, stringResource(Res.string.stats_contributors), stats.contributors.toString()),
                     StatItem(Icons.Default.Timeline, stringResource(Res.string.stats_total_commits), "${stats.totalCommits}+"),
-                    StatItem(Icons.Default.MergeType, stringResource(Res.string.stats_open_prs), stats.openPrs.toString()),
+                    StatItem(Icons.AutoMirrored.Filled.MergeType, stringResource(Res.string.stats_open_prs), stats.openPrs.toString()),
                     StatItem(Icons.Default.CheckCircle, stringResource(Res.string.stats_closed_issues), stats.closedIssues.toString()),
                     StatItem(Icons.Default.Star, stringResource(Res.string.stats_total_stars), stats.totalStars.toString()),
                 )
