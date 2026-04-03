@@ -1,5 +1,6 @@
 package net.brightroom.homepage.screens.projects
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,6 +47,7 @@ import bright_room.generated.resources.projects_label
 import bright_room.generated.resources.projects_title
 import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.components.SectionHeader
+import net.brightroom.homepage.components.hoverFloat
 import net.brightroom.homepage.data.ProjectData
 import net.brightroom.homepage.shared.lib.openUrl
 import org.jetbrains.compose.resources.stringResource
@@ -123,10 +125,11 @@ private fun ProjectCard(
         modifier =
             modifier
                 .defaultMinSize(minHeight = maxCardHeight)
-                .onSizeChanged { onHeightMeasured(it.height) },
+                .onSizeChanged { onHeightMeasured(it.height) }
+                .hoverFloat(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-        border = CardDefaults.outlinedCardBorder(),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
     ) {
         Column(modifier = Modifier.padding(28.dp)) {
             Row(
