@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -54,6 +55,13 @@ kotlin {
             implementation(kotlin("test"))
         }
     }
+}
+
+rootProject.extensions.configure<YarnRootExtension> {
+    resolution("lodash", "4.18.1")
+    resolution("serialize-javascript", "7.0.5")
+    resolution("webpack", "5.104.1")
+    resolution("diff", "8.0.3")
 }
 
 spotless {
