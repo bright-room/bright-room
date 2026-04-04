@@ -1,6 +1,5 @@
 package net.brightroom.homepage.screens.members
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,17 +10,11 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -36,10 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import bright_room.generated.resources.Res
@@ -55,11 +48,13 @@ import bright_room.generated.resources.role_frontend
 import bright_room.generated.resources.role_mobile
 import bright_room.generated.resources.role_owner
 import net.brightroom.homepage.app.LocalAppViewModel
+import net.brightroom.homepage.components.SectionContainer
 import net.brightroom.homepage.components.SectionHeader
-import net.brightroom.homepage.components.hoverFloat
+import net.brightroom.homepage.components.StandardCard
 import net.brightroom.homepage.data.MemberData
 import net.brightroom.homepage.shared.lib.openUrl
 import net.brightroom.homepage.shared.theme.AccentBlue
+import net.brightroom.homepage.shared.theme.Dimensions
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -82,59 +77,47 @@ fun MembersSection(modifier: Modifier = Modifier) {
     val viewModel = LocalAppViewModel.current
     val members by viewModel.members.collectAsState()
 
-    Box(
-        modifier = modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Column(
-            modifier =
-                Modifier
-                    .widthIn(max = 1000.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(top = 100.dp, bottom = 60.dp),
-        ) {
-            SectionHeader(
-                label = stringResource(Res.string.members_label),
-                title = stringResource(Res.string.members_title),
-                description = stringResource(Res.string.members_desc),
-            )
+    SectionContainer(modifier = modifier) {
+        SectionHeader(
+            label = stringResource(Res.string.members_label),
+            title = stringResource(Res.string.members_title),
+            description = stringResource(Res.string.members_desc),
+        )
 
-            Spacer(Modifier.height(48.dp))
+        Spacer(Modifier.height(Dimensions.SectionContentSpacing))
 
-            val density = LocalDensity.current
-            var maxCardHeight by remember { mutableStateOf(0.dp) }
+        val density = LocalDensity.current
+        var maxCardHeight by remember { mutableStateOf(0.dp) }
 
-            BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-                val columns =
-                    when {
-                        maxWidth < 600.dp -> 2
-                        maxWidth < 900.dp -> 3
-                        else -> 4
-                    }
+        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+            val columns =
+                when {
+                    maxWidth < 600.dp -> 2
+                    maxWidth < 900.dp -> 3
+                    else -> 4
+                }
 
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    maxItemsInEachRow = columns,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    members.forEach { member ->
-                        MemberCard(
-                            member = member,
-                            maxCardHeight = maxCardHeight,
-                            onHeightMeasured = { h ->
-                                val hDp = with(density) { h.toDp() }
-                                if (hDp > maxCardHeight) maxCardHeight = hDp
-                            },
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
-                    val remainder = members.size % columns
-                    if (remainder != 0) {
-                        repeat(columns - remainder) {
-                            Spacer(Modifier.weight(1f))
-                        }
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(Dimensions.CardGridSpacingMd),
+                verticalArrangement = Arrangement.spacedBy(Dimensions.CardGridSpacingMd),
+                maxItemsInEachRow = columns,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                members.forEach { member ->
+                    MemberCard(
+                        member = member,
+                        maxCardHeight = maxCardHeight,
+                        onHeightMeasured = { h ->
+                            val hDp = with(density) { h.toDp() }
+                            if (hDp > maxCardHeight) maxCardHeight = hDp
+                        },
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+                val remainder = members.size % columns
+                if (remainder != 0) {
+                    repeat(columns - remainder) {
+                        Spacer(Modifier.weight(1f))
                     }
                 }
             }
@@ -145,22 +128,17 @@ fun MembersSection(modifier: Modifier = Modifier) {
 @Composable
 private fun MemberCard(
     member: MemberData,
-    maxCardHeight: androidx.compose.ui.unit.Dp,
+    maxCardHeight: Dp,
     onHeightMeasured: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
-        modifier =
-            modifier
-                .defaultMinSize(minHeight = maxCardHeight)
-                .onSizeChanged { onHeightMeasured(it.height) }
-                .hoverFloat(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
+    StandardCard(
+        modifier = modifier,
+        maxHeight = maxCardHeight,
+        onHeightMeasured = onHeightMeasured,
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(28.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(

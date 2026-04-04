@@ -9,17 +9,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Support
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
@@ -34,7 +30,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import net.brightroom.homepage.app.LocalAppViewModel
 
 private data class NavRailItemData(val category: NavCategory, val icon: ImageVector)
 
@@ -133,25 +128,7 @@ fun NavigationRailNav(
 
         Spacer(Modifier.weight(1f))
 
-        val viewModel = LocalAppViewModel.current
-
-        IconButton(onClick = { viewModel.toggleTheme() }) {
-            Icon(
-                imageVector = if (viewModel.isDarkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
-                contentDescription = "Toggle theme",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(20.dp),
-            )
-        }
-
-        IconButton(onClick = { viewModel.toggleLanguage() }) {
-            Text(
-                text = if (viewModel.isJapanese) "EN" else "JA",
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+        ThemeLanguageControls()
 
         Spacer(Modifier.height(8.dp))
     }
@@ -191,36 +168,46 @@ fun NavigationRailFlyout(
             )
 
             category.sections.forEach { section ->
-                val isActive = section == activeSection
-
-                Box(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .clickable { onSectionClick(section) }
-                            .then(
-                                if (isActive) {
-                                    Modifier.background(
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
-                                    )
-                                } else {
-                                    Modifier
-                                },
-                            ).padding(horizontal = 20.dp, vertical = 14.dp),
-                ) {
-                    Text(
-                        text = navLabels[section] ?: section.id,
-                        fontSize = 15.sp,
-                        fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
-                        color =
-                            if (isActive) {
-                                MaterialTheme.colorScheme.primary
-                            } else {
-                                MaterialTheme.colorScheme.onSurface
-                            },
-                    )
-                }
+                FlyoutNavItem(
+                    label = navLabels[section] ?: section.id,
+                    isActive = section == activeSection,
+                    onClick = { onSectionClick(section) },
+                )
             }
         }
+    }
+}
+
+@Composable
+private fun FlyoutNavItem(
+    label: String,
+    isActive: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .then(
+                    if (isActive) {
+                        Modifier.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.08f))
+                    } else {
+                        Modifier
+                    },
+                ).padding(horizontal = 20.dp, vertical = 14.dp),
+    ) {
+        Text(
+            text = label,
+            fontSize = 15.sp,
+            fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
+            color =
+                if (isActive) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurface
+                },
+        )
     }
 }
