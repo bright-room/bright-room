@@ -47,7 +47,7 @@ private fun resolveProjectDesc(descKey: String): String =
         "project_idem_desc" -> stringResource(Res.string.project_idem_desc)
         "project_uniso_desc" -> stringResource(Res.string.project_uniso_desc)
         "project_endpoint_gate_desc" -> stringResource(Res.string.project_endpoint_gate_desc)
-        else -> descKey
+        else -> descKey // strings.xml にキーが未定義の場合はキー名をそのまま表示
     }
 
 @OptIn(ExperimentalLayoutApi::class)

@@ -6,6 +6,6 @@ import kotlin.js.ExperimentalWasmJsInterop
 @JsFun("(url) => { window.open(url, '_blank'); }")
 private external fun wasmOpenUrl(url: String)
 
-actual fun openUrl(url: String) {
+internal actual fun platformOpenUrl(url: String) {
     wasmOpenUrl(url)
 }

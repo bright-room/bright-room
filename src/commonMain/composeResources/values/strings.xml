@@ -126,6 +126,9 @@
     <string name="join_step3_desc">Issueを見つけてPRを送るか、新しいアイデアを提案してみましょう。</string>
     <string name="join_btn">Organizationを見る</string>
 
+    <!-- Footer -->
+    <string name="footer_copy">© %1$d bright-room. All rights reserved.</string>
+
     <!-- Theme -->
     <string name="theme_dark_mode">Dark mode</string>
     <string name="theme_light_mode">Light mode</string>

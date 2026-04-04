@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import bright_room.generated.resources.Res
 import bright_room.generated.resources.bsky
+import bright_room.generated.resources.footer_copy
 import bright_room.generated.resources.github
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -30,6 +31,7 @@ import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.shared.lib.openUrl
 import net.brightroom.homepage.shared.theme.Dimensions
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 
 @Composable
@@ -91,7 +93,7 @@ private fun FooterCopy() {
             .toLocalDateTime(TimeZone.currentSystemDefault())
             .year
     Text(
-        text = "\u00A9 $year bright-room. All rights reserved.",
+        text = stringResource(Res.string.footer_copy, year),
         fontSize = 13.sp,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )

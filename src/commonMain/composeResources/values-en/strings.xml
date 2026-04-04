@@ -79,6 +79,9 @@
     <string name="faq_q5">Can I propose my own project ideas?</string>
     <string name="faq_a5">Absolutely! Share them in GitHub Discussions or the #ideas channel on Discord. Get feedback from members and launch it as a new Organization repository.</string>
 
+    <!-- Footer -->
+    <string name="footer_copy">© %1$d bright-room. All rights reserved.</string>
+
     <!-- Join -->
     <string name="join_title">Join bright-room</string>
     <string name="join_desc">We welcome all developers, from beginners to experts. Let&apos;s build OSS together.</string>

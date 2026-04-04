@@ -190,6 +190,7 @@ fun MobileDrawerNav(
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp),
                     )
+                    // 各言語の自称名は翻訳対象外のため意図的にハードコード
                     Text(
                         text = if (viewModel.isJapanese) "日本語" else "English",
                         style = MaterialTheme.typography.bodyLarge,

@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilterChip
@@ -58,7 +58,7 @@ private fun resolveCategoryLabel(labelKey: String): String =
         "tech_cat_backend" -> stringResource(Res.string.tech_cat_backend)
         "tech_cat_database" -> stringResource(Res.string.tech_cat_database)
         "tech_cat_infra" -> stringResource(Res.string.tech_cat_infra)
-        else -> labelKey
+        else -> labelKey // strings.xml にキーが未定義の場合はキー名をそのまま表示
     }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -120,12 +120,12 @@ fun TechStackSection(modifier: Modifier = Modifier) {
             maxItemsInEachRow = 6,
             horizontalSpacing = Dimensions.CardGridSpacingSm,
             verticalSpacing = Dimensions.CardGridSpacingSm,
-        ) { item, maxHeight, onHeightMeasured, _ ->
+        ) { item, maxHeight, onHeightMeasured, itemModifier ->
             TechCard(
                 item = item,
                 maxCardHeight = maxHeight,
                 onHeightMeasured = onHeightMeasured,
-                modifier = Modifier.width(160.dp),
+                modifier = itemModifier.widthIn(min = 140.dp),
             )
         }
     }
