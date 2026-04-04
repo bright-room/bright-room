@@ -38,7 +38,6 @@ import bright_room.generated.resources.nav_home
 import bright_room.generated.resources.nav_join
 import bright_room.generated.resources.nav_members
 import bright_room.generated.resources.nav_projects
-import bright_room.generated.resources.nav_roadmap
 import bright_room.generated.resources.nav_stats
 import bright_room.generated.resources.nav_tech
 import kotlinx.coroutines.launch
@@ -60,7 +59,6 @@ import net.brightroom.homepage.screens.hero.HeroSection
 import net.brightroom.homepage.screens.join.JoinSection
 import net.brightroom.homepage.screens.members.MembersSection
 import net.brightroom.homepage.screens.projects.ProjectsSection
-import net.brightroom.homepage.screens.roadmap.RoadmapSection
 import net.brightroom.homepage.screens.stats.StatsSection
 import net.brightroom.homepage.screens.techstack.TechStackSection
 import org.jetbrains.compose.resources.stringResource
@@ -101,7 +99,6 @@ fun Layout() {
     val projectsLabel = stringResource(Res.string.nav_projects)
     val techLabel = stringResource(Res.string.nav_tech)
     val contribLabel = stringResource(Res.string.nav_contributing)
-    val roadmapLabel = stringResource(Res.string.nav_roadmap)
     val faqLabel = stringResource(Res.string.nav_faq)
     val joinLabel = stringResource(Res.string.nav_join)
 
@@ -114,7 +111,6 @@ fun Layout() {
             projectsLabel,
             techLabel,
             contribLabel,
-            roadmapLabel,
             faqLabel,
             joinLabel,
         ) {
@@ -126,7 +122,6 @@ fun Layout() {
                 NavSection.PROJECTS to projectsLabel,
                 NavSection.TECHSTACK to techLabel,
                 NavSection.CONTRIBUTING to contribLabel,
-                NavSection.ROADMAP to roadmapLabel,
                 NavSection.FAQ to faqLabel,
                 NavSection.JOIN to joinLabel,
             )
@@ -152,9 +147,8 @@ fun Layout() {
         val index = listState.firstVisibleItemIndex
         activeSection =
             when {
-                index >= 9 -> NavSection.JOIN
-                index >= 8 -> NavSection.FAQ
-                index >= 7 -> NavSection.ROADMAP
+                index >= 8 -> NavSection.JOIN
+                index >= 7 -> NavSection.FAQ
                 index >= 6 -> NavSection.CONTRIBUTING
                 index >= 5 -> NavSection.TECHSTACK
                 index >= 4 -> NavSection.PROJECTS
@@ -260,7 +254,6 @@ fun Layout() {
                         item { ProjectsSection() }
                         item { TechStackSection() }
                         item { ContributingSection() }
-                        item { RoadmapSection() }
                         item { FaqSection() }
                         item { JoinSection() }
                         item { Footer() }

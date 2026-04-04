@@ -8,7 +8,6 @@
     <string name="nav_projects">Projects</string>
     <string name="nav_tech">Tech</string>
     <string name="nav_contributing">Contributing</string>
-    <string name="nav_roadmap">Roadmap</string>
     <string name="nav_faq">FAQ</string>
     <string name="nav_join">Join Us</string>
 
@@ -52,6 +51,7 @@
     <string name="members_label">Members</string>
     <string name="members_title">メンバー紹介</string>
     <string name="members_desc">bright-roomを支えるコアメンバーたちです。それぞれの専門分野を持ち寄り、プロジェクトを推進しています。</string>
+    <string name="role_owner">Owner</string>
     <string name="role_founder">Founder / Lead Developer</string>
     <string name="role_frontend">Frontend Engineer</string>
     <string name="role_backend">Backend Engineer</string>
@@ -63,10 +63,9 @@
     <string name="projects_label">Projects</string>
     <string name="projects_title">プロジェクト</string>
     <string name="projects_desc">bright-roomが手がけるOSSプロジェクトの一部を紹介します。</string>
-    <string name="project_bright_cms_desc">軽量で高速なヘッドレスCMS。Markdownベースのコンテンツ管理を実現。</string>
-    <string name="project_room_ui_desc">bright-room発のUIコンポーネントライブラリ。アクセシビリティ対応済み。</string>
-    <string name="project_luminous_cli_desc">プロジェクトテンプレート生成とタスク自動化のためのCLIツール。</string>
-    <string name="project_beacon_api_desc">リアルタイム通知を実現するWebSocket APIフレームワーク。</string>
+    <string name="project_idem_desc">Go製のHTTPミドルウェア。冪等キーによるリクエストの安全なリトライを実現。</string>
+    <string name="project_uniso_desc">複数のSNSアカウントを一元管理できる統合デスクトップクライアント。</string>
+    <string name="project_endpoint_gate_desc">JVMアプリケーション向けのエンドポイントアクセス制御ライブラリ。フィーチャーフラグやロールアウトに対応。</string>
 
     <!-- Tech Stack -->
     <string name="tech_label">Tech Stack</string>
@@ -99,12 +98,6 @@
     <string name="contrib_rule5">大きな変更は事前にIssueやDiscussionで相談することを推奨します</string>
 
     <!-- Roadmap -->
-    <string name="roadmap_label">Roadmap</string>
-    <string name="roadmap_title">ロードマップ</string>
-    <string name="roadmap_desc">bright-roomの今後の計画です。コミュニティからのフィードバックをもとに随時更新しています。</string>
-    <string name="roadmap_status_current">In Progress</string>
-    <string name="roadmap_status_upcoming">Next Up</string>
-    <string name="roadmap_status_planned">Planned</string>
 
     <!-- FAQ -->
     <string name="faq_label">FAQ</string>

@@ -27,9 +27,4 @@ object ContentLoader {
         val bytes = Res.readBytes("files/techstack.json")
         return json.decodeFromString(bytes.decodeToString())
     }
-
-    suspend fun loadRoadmap(): List<RoadmapItem> {
-        val bytes = Res.readBytes("files/roadmap.md")
-        return RoadmapParser.parse(bytes.decodeToString())
-    }
 }

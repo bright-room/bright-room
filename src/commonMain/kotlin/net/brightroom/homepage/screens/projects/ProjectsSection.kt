@@ -38,10 +38,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import bright_room.generated.resources.Res
-import bright_room.generated.resources.project_beacon_api_desc
-import bright_room.generated.resources.project_bright_cms_desc
-import bright_room.generated.resources.project_luminous_cli_desc
-import bright_room.generated.resources.project_room_ui_desc
+import bright_room.generated.resources.project_endpoint_gate_desc
+import bright_room.generated.resources.project_idem_desc
+import bright_room.generated.resources.project_uniso_desc
 import bright_room.generated.resources.projects_desc
 import bright_room.generated.resources.projects_label
 import bright_room.generated.resources.projects_title
@@ -55,10 +54,9 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 private fun resolveProjectDesc(descKey: String): String =
     when (descKey) {
-        "project_bright_cms_desc" -> stringResource(Res.string.project_bright_cms_desc)
-        "project_room_ui_desc" -> stringResource(Res.string.project_room_ui_desc)
-        "project_luminous_cli_desc" -> stringResource(Res.string.project_luminous_cli_desc)
-        "project_beacon_api_desc" -> stringResource(Res.string.project_beacon_api_desc)
+        "project_idem_desc" -> stringResource(Res.string.project_idem_desc)
+        "project_uniso_desc" -> stringResource(Res.string.project_uniso_desc)
+        "project_endpoint_gate_desc" -> stringResource(Res.string.project_endpoint_gate_desc)
         else -> descKey
     }
 

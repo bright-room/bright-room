@@ -37,10 +37,9 @@
     <!-- Projects -->
     <string name="projects_title">Projects</string>
     <string name="projects_desc">A selection of OSS projects built by bright-room.</string>
-    <string name="project_bright_cms_desc">A lightweight, fast headless CMS with Markdown-based content management.</string>
-    <string name="project_room_ui_desc">A UI component library by bright-room. Fully accessible.</string>
-    <string name="project_luminous_cli_desc">A CLI tool for project template generation and task automation.</string>
-    <string name="project_beacon_api_desc">A WebSocket API framework for real-time notifications.</string>
+    <string name="project_idem_desc">Idempotency key middleware for Go HTTP applications. Ensures safe request retries.</string>
+    <string name="project_uniso_desc">A unified desktop client for managing multiple SNS accounts in one place.</string>
+    <string name="project_endpoint_gate_desc">Endpoint access control library for JVM applications — feature flags, conditional access, and rollout.</string>
 
     <!-- Tech Stack -->
     <string name="tech_title">Tech Stack</string>
@@ -65,8 +64,6 @@
     <string name="contrib_rule5">Discuss large changes in Issues or Discussions beforehand</string>
 
     <!-- Roadmap -->
-    <string name="roadmap_title">Roadmap</string>
-    <string name="roadmap_desc">Our plans for the future. Updated regularly based on community feedback.</string>
 
     <!-- FAQ -->
     <string name="faq_title">Frequently Asked Questions</string>
