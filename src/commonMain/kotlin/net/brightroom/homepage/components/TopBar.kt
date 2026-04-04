@@ -44,7 +44,6 @@ enum class NavSection(val id: String) {
     PROJECTS("projects"),
     TECHSTACK("techstack"),
     CONTRIBUTING("contributing"),
-    ROADMAP("roadmap"),
     FAQ("faq"),
     JOIN("join"),
 }
@@ -61,7 +60,7 @@ enum class NavCategory {
             when (this) {
                 OVERVIEW -> listOf(NavSection.ABOUT, NavSection.STATS, NavSection.MEMBERS)
                 WORKS -> listOf(NavSection.PROJECTS, NavSection.TECHSTACK)
-                PARTICIPATE -> listOf(NavSection.CONTRIBUTING, NavSection.ROADMAP)
+                PARTICIPATE -> listOf(NavSection.CONTRIBUTING)
                 SUPPORT -> listOf(NavSection.FAQ, NavSection.JOIN)
             }
 }

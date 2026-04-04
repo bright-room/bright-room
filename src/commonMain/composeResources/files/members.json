@@ -1,38 +1,8 @@
 [
   {
-    "name": "Taro Yamada",
-    "role_key": "role_founder",
-    "avatar_initials": "TY",
-    "github_url": "https://github.com/"
-  },
-  {
-    "name": "Hana Suzuki",
-    "role_key": "role_frontend",
-    "avatar_initials": "HS",
-    "github_url": "https://github.com/"
-  },
-  {
-    "name": "Kenji Tanaka",
-    "role_key": "role_backend",
-    "avatar_initials": "KT",
-    "github_url": "https://github.com/"
-  },
-  {
-    "name": "Yui Watanabe",
-    "role_key": "role_designer",
-    "avatar_initials": "YW",
-    "github_url": "https://github.com/"
-  },
-  {
-    "name": "Ren Sato",
-    "role_key": "role_devops",
-    "avatar_initials": "RS",
-    "github_url": "https://github.com/"
-  },
-  {
-    "name": "Mio Kobayashi",
-    "role_key": "role_mobile",
-    "avatar_initials": "MK",
-    "github_url": "https://github.com/"
+    "name": "Nonaka Koki",
+    "role_key": "role_owner",
+    "avatar_initials": "NK",
+    "github_url": "https://github.com/kukv"
   }
 ]

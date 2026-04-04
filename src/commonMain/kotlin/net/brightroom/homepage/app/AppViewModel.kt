@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import net.brightroom.homepage.data.ContentLoader
 import net.brightroom.homepage.data.MemberData
 import net.brightroom.homepage.data.ProjectData
-import net.brightroom.homepage.data.RoadmapItem
 import net.brightroom.homepage.data.StatsData
 import net.brightroom.homepage.data.TechStackData
 
@@ -50,9 +49,6 @@ class AppViewModel : ViewModel() {
     private val _techStack = MutableStateFlow(TechStackData())
     val techStack: StateFlow<TechStackData> = _techStack
 
-    private val _roadmapItems = MutableStateFlow<List<RoadmapItem>>(emptyList())
-    val roadmapItems: StateFlow<List<RoadmapItem>> = _roadmapItems
-
     fun toggleTheme() {
         isDarkTheme = !isDarkTheme
     }
@@ -80,7 +76,6 @@ class AppViewModel : ViewModel() {
         _projects.value = ContentLoader.loadProjects()
         _stats.value = ContentLoader.loadStats()
         _techStack.value = ContentLoader.loadTechStack()
-        _roadmapItems.value = ContentLoader.loadRoadmap()
         isLoading = false
     }
 }

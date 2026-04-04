@@ -7,17 +7,19 @@
     { "id": "INFRA", "label_key": "tech_cat_infra" }
   ],
   "items": [
+    { "name": "Go", "category": "LANGUAGE", "color": "#00add8" },
     { "name": "TypeScript", "category": "LANGUAGE", "color": "#3178c6" },
+    { "name": "Java", "category": "LANGUAGE", "color": "#b07219" },
+    { "name": "Kotlin", "category": "LANGUAGE", "color": "#7f52ff" },
     { "name": "React", "category": "FRONTEND", "color": "#61dafb" },
-    { "name": "Next.js", "category": "FRONTEND", "color": "#000000" },
-    { "name": "Tailwind CSS", "category": "FRONTEND", "color": "#38bdf8" },
-    { "name": "Node.js", "category": "BACKEND", "color": "#68a063" },
-    { "name": "Go", "category": "BACKEND", "color": "#00add8" },
-    { "name": "Rust", "category": "BACKEND", "color": "#dea584" },
-    { "name": "PostgreSQL", "category": "DATABASE", "color": "#4169e1" },
+    { "name": "Vite", "category": "FRONTEND", "color": "#646cff" },
+    { "name": "Electron", "category": "FRONTEND", "color": "#47848f" },
+    { "name": "Spring", "category": "BACKEND", "color": "#6db33f" },
+    { "name": "Echo", "category": "BACKEND", "color": "#00add8" },
+    { "name": "Gin", "category": "BACKEND", "color": "#00add8" },
     { "name": "Redis", "category": "DATABASE", "color": "#dc382d" },
     { "name": "Docker", "category": "INFRA", "color": "#2496ed" },
     { "name": "GitHub Actions", "category": "INFRA", "color": "#2088ff" },
-    { "name": "Vercel", "category": "INFRA", "color": "#000000" }
+    { "name": "pnpm", "category": "INFRA", "color": "#f69220" }
   ]
 }

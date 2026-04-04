@@ -1,30 +1,23 @@
 [
   {
-    "name": "bright-cms",
-    "description_key": "project_bright_cms_desc",
-    "tags": ["TypeScript", "Next.js", "Markdown"],
-    "stars": 128,
-    "github_url": "https://github.com/bright-room/bright-cms"
+    "name": "idem",
+    "description_key": "project_idem_desc",
+    "tags": ["Go", "Redis", "Middleware"],
+    "stars": 0,
+    "github_url": "https://github.com/bright-room/idem"
   },
   {
-    "name": "room-ui",
-    "description_key": "project_room_ui_desc",
-    "tags": ["React", "CSS", "a11y"],
-    "stars": 256,
-    "github_url": "https://github.com/bright-room/room-ui"
+    "name": "uniso",
+    "description_key": "project_uniso_desc",
+    "tags": ["TypeScript", "React", "Electron"],
+    "stars": 0,
+    "github_url": "https://github.com/bright-room/uniso"
   },
   {
-    "name": "luminous-cli",
-    "description_key": "project_luminous_cli_desc",
-    "tags": ["Rust", "CLI", "DX"],
-    "stars": 89,
-    "github_url": "https://github.com/bright-room/luminous-cli"
-  },
-  {
-    "name": "beacon-api",
-    "description_key": "project_beacon_api_desc",
-    "tags": ["Go", "WebSocket", "API"],
-    "stars": 175,
-    "github_url": "https://github.com/bright-room/beacon-api"
+    "name": "endpoint-gate",
+    "description_key": "project_endpoint_gate_desc",
+    "tags": ["Java", "Spring", "Feature Flag"],
+    "stars": 0,
+    "github_url": "https://github.com/bright-room/endpoint-gate"
   }
 ]

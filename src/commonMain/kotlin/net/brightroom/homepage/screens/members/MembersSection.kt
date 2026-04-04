@@ -53,6 +53,7 @@ import bright_room.generated.resources.role_devops
 import bright_room.generated.resources.role_founder
 import bright_room.generated.resources.role_frontend
 import bright_room.generated.resources.role_mobile
+import bright_room.generated.resources.role_owner
 import net.brightroom.homepage.app.LocalAppViewModel
 import net.brightroom.homepage.components.SectionHeader
 import net.brightroom.homepage.components.hoverFloat
@@ -65,6 +66,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 private fun resolveRoleLabel(roleKey: String): String =
     when (roleKey) {
+        "role_owner" -> stringResource(Res.string.role_owner)
         "role_founder" -> stringResource(Res.string.role_founder)
         "role_frontend" -> stringResource(Res.string.role_frontend)
         "role_backend" -> stringResource(Res.string.role_backend)
