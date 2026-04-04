@@ -126,6 +126,15 @@
     <string name="join_step3_desc">Issueを見つけてPRを送るか、新しいアイデアを提案してみましょう。</string>
     <string name="join_btn">Organizationを見る</string>
 
-    <!-- Footer -->
-    <string name="footer_copy">© 2025 bright-room. All rights reserved.</string>
+    <!-- Theme -->
+    <string name="theme_dark_mode">Dark mode</string>
+    <string name="theme_light_mode">Light mode</string>
+
+    <!-- Accessibility -->
+    <string name="a11y_previous_section">Previous section</string>
+    <string name="a11y_next_section">Next section</string>
+    <string name="a11y_back_to_top">Back to top</string>
+    <string name="a11y_toggle_theme">Toggle theme</string>
+    <string name="a11y_open_menu">Open menu</string>
+    <string name="a11y_close_menu">Close menu</string>
 </resources>

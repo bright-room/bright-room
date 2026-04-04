@@ -20,7 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import bright_room.generated.resources.Res
+import bright_room.generated.resources.a11y_close_menu
+import bright_room.generated.resources.a11y_open_menu
 import net.brightroom.homepage.shared.theme.Dimensions
+import org.jetbrains.compose.resources.stringResource
 
 enum class NavSection(val id: String) {
     HOME("home"),
@@ -80,7 +84,7 @@ fun TopBar(
                 ) {
                     Icon(
                         imageVector = if (isMenuOpen) Icons.AutoMirrored.Filled.MenuOpen else Icons.Default.Menu,
-                        contentDescription = if (isMenuOpen) "Close menu" else "Open menu",
+                        contentDescription = stringResource(if (isMenuOpen) Res.string.a11y_close_menu else Res.string.a11y_open_menu),
                         tint = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.size(24.dp),
                     )

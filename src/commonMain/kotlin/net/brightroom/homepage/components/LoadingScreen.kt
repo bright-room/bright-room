@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+// テーマ適用前に表示されるため、ダークテーマのカラーをハードコードしている
 private val LoadingBackground = Color(0xFF0A0A0C)
 private val LoadingDot = Color(0xFFF0C040)
 

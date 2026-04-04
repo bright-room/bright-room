@@ -41,7 +41,11 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import bright_room.generated.resources.Res
+import bright_room.generated.resources.theme_dark_mode
+import bright_room.generated.resources.theme_light_mode
 import net.brightroom.homepage.app.LocalAppViewModel
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MobileDrawerNav(
@@ -159,7 +163,7 @@ fun MobileDrawerNav(
                         modifier = Modifier.size(20.dp),
                     )
                     Text(
-                        text = if (viewModel.isDarkTheme) "Dark mode" else "Light mode",
+                        text = stringResource(if (viewModel.isDarkTheme) Res.string.theme_dark_mode else Res.string.theme_light_mode),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.weight(1f),

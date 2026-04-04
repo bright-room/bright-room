@@ -19,7 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import bright_room.generated.resources.Res
+import bright_room.generated.resources.a11y_toggle_theme
 import net.brightroom.homepage.app.LocalAppViewModel
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ThemeLanguageControls(
@@ -55,7 +58,7 @@ fun ThemeLanguageControls(
         ) {
             Icon(
                 imageVector = if (viewModel.isDarkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
-                contentDescription = "Toggle theme",
+                contentDescription = stringResource(Res.string.a11y_toggle_theme),
                 modifier = Modifier.size(iconSize),
             )
         }

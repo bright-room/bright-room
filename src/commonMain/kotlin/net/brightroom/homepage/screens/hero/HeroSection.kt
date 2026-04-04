@@ -55,6 +55,7 @@ import net.brightroom.homepage.app.WindowSizeClass
 import net.brightroom.homepage.components.GitHubButton
 import net.brightroom.homepage.shared.lib.openUrl
 import net.brightroom.homepage.shared.theme.AccentGreen
+import net.brightroom.homepage.shared.theme.Dimensions
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -105,8 +106,8 @@ fun HeroSection(
             Column(
                 modifier =
                     Modifier
-                        .widthIn(max = 1000.dp)
-                        .padding(horizontal = 24.dp)
+                        .widthIn(max = Dimensions.MaxContentWidth)
+                        .padding(horizontal = Dimensions.SectionHorizontalPadding)
                         .padding(top = 120.dp, bottom = 80.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
