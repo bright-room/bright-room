@@ -40,7 +40,7 @@ src/
     app/          # App, Theme, AppViewModel
     components/   # Footer, Navigation 等の共通コンポーネント
     data/         # ContentLoader, データモデル
-    screens/      # 各セクション (hero, about, members, projects, etc.)
+    screens/      # 各セクション (hero, about, members, projects, stats, techstack, contributing, faq, join)
     shared/       # layout, lib, theme ユーティリティ
   commonMain/composeResources/
     drawable/     # SVG/PNG アセット
