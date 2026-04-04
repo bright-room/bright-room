@@ -18,7 +18,6 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -66,7 +65,7 @@ private fun resolveCategoryLabel(labelKey: String): String =
 @Composable
 fun TechStackSection(modifier: Modifier = Modifier) {
     val viewModel = LocalAppViewModel.current
-    val techStack by viewModel.techStack.collectAsState()
+    val techStack = viewModel.techStack
     var selectedCategory by remember { mutableStateOf("ALL") }
 
     val filteredItems =

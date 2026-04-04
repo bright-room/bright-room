@@ -40,6 +40,11 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import bright_room.generated.resources.Res
+import bright_room.generated.resources.a11y_back_to_top
+import bright_room.generated.resources.a11y_next_section
+import bright_room.generated.resources.a11y_previous_section
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SideNavIndicator(
@@ -73,7 +78,7 @@ fun SideNavIndicator(
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowUp,
-                contentDescription = "Previous section",
+                contentDescription = stringResource(Res.string.a11y_previous_section),
                 modifier = Modifier.size(20.dp),
             )
         }
@@ -109,7 +114,7 @@ fun SideNavIndicator(
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowDown,
-                contentDescription = "Next section",
+                contentDescription = stringResource(Res.string.a11y_next_section),
                 modifier = Modifier.size(20.dp),
             )
         }
@@ -132,7 +137,7 @@ fun BackToTopButton(
     ) {
         Icon(
             imageVector = Icons.Default.VerticalAlignTop,
-            contentDescription = "Back to top",
+            contentDescription = stringResource(Res.string.a11y_back_to_top),
             modifier = Modifier.size(20.dp),
         )
     }
