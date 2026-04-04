@@ -70,10 +70,13 @@ class AppViewModel : ViewModel() {
     }
 
     suspend fun loadContent() {
-        members = ContentLoader.loadMembers()
-        projects = ContentLoader.loadProjects()
-        stats = ContentLoader.loadStats()
-        techStack = ContentLoader.loadTechStack()
-        isLoading = false
+        try {
+            members = ContentLoader.loadMembers()
+            projects = ContentLoader.loadProjects()
+            stats = ContentLoader.loadStats()
+            techStack = ContentLoader.loadTechStack()
+        } finally {
+            isLoading = false
+        }
     }
 }

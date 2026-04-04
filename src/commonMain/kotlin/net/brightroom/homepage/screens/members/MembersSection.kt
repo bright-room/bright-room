@@ -67,7 +67,7 @@ private fun resolveRoleLabel(roleKey: String): String =
         "role_designer" -> stringResource(Res.string.role_designer)
         "role_devops" -> stringResource(Res.string.role_devops)
         "role_mobile" -> stringResource(Res.string.role_mobile)
-        else -> roleKey
+        else -> roleKey // strings.xml にキーが未定義の場合はキー名をそのまま表示
     }
 
 @OptIn(ExperimentalLayoutApi::class)

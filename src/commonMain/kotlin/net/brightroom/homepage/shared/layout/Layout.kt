@@ -14,11 +14,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventType
@@ -69,28 +66,7 @@ fun Layout() {
     val density = LocalDensity.current
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
-
-    var activeSection by remember { mutableStateOf(NavSection.HOME) }
-    var railHoveredCategory by remember { mutableStateOf<NavCategory?>(null) }
-    var lastRailCategory by remember { mutableStateOf(NavCategory.OVERVIEW) }
-    var railDismissPending by remember { mutableStateOf(false) }
-    var mobileDrawerOpen by remember { mutableStateOf(false) }
-
-    // Remember last category for exit animation content
-    LaunchedEffect(railHoveredCategory) {
-        if (railHoveredCategory != null) {
-            lastRailCategory = railHoveredCategory!!
-        }
-    }
-
-    // Delayed dismiss — gives time to move mouse from Rail to Flyout
-    LaunchedEffect(railDismissPending) {
-        if (railDismissPending) {
-            kotlinx.coroutines.delay(120)
-            railDismissPending = false
-            railHoveredCategory = null
-        }
-    }
+    val navState = rememberNavigationState()
 
     val homeLabel = stringResource(Res.string.nav_home)
     val aboutLabel = stringResource(Res.string.nav_about)
@@ -144,19 +120,7 @@ fun Layout() {
 
     // Track active section based on scroll position
     LaunchedEffect(listState.firstVisibleItemIndex) {
-        val index = listState.firstVisibleItemIndex
-        activeSection =
-            when {
-                index >= 8 -> NavSection.JOIN
-                index >= 7 -> NavSection.FAQ
-                index >= 6 -> NavSection.CONTRIBUTING
-                index >= 5 -> NavSection.TECHSTACK
-                index >= 4 -> NavSection.PROJECTS
-                index >= 3 -> NavSection.MEMBERS
-                index >= 2 -> NavSection.STATS
-                index >= 1 -> NavSection.ABOUT
-                else -> NavSection.HOME
-            }
+        navState.updateActiveSection(listState.firstVisibleItemIndex)
     }
 
     Box(
@@ -198,8 +162,8 @@ fun Layout() {
                     },
                     isCompact = isCompact,
                     showControls = isWide,
-                    isMenuOpen = mobileDrawerOpen,
-                    onMenuClick = { mobileDrawerOpen = !mobileDrawerOpen },
+                    isMenuOpen = navState.mobileDrawerOpen,
+                    onMenuClick = { navState.toggleMobileDrawer() },
                 )
             },
         ) { padding ->
@@ -207,17 +171,12 @@ fun Layout() {
                 // Navigation Rail + Flyout hover zone (MEDIUM / EXPANDED only)
                 if (isMediumOrExpanded) {
                     NavigationRailNav(
-                        activeSection = activeSection,
+                        activeSection = navState.activeSection,
                         categoryLabels = categoryLabels,
                         onHoveredCategoryChange = { category ->
-                            if (category != null) {
-                                railDismissPending = false
-                                railHoveredCategory = category
-                            } else {
-                                railDismissPending = true
-                            }
+                            navState.requestRailHover(category)
                         },
-                        hoveredCategory = railHoveredCategory,
+                        hoveredCategory = navState.railHoveredCategory,
                         modifier = Modifier.fillMaxHeight(),
                     )
                 }
@@ -233,7 +192,7 @@ fun Layout() {
                                         while (true) {
                                             val event = awaitPointerEvent()
                                             if (event.type == PointerEventType.Press) {
-                                                railHoveredCategory = null
+                                                navState.dismissRail()
                                             }
                                         }
                                     }
@@ -262,7 +221,7 @@ fun Layout() {
                     // Side navigation indicator (desktop WIDE only)
                     if (isWide) {
                         SideNavIndicator(
-                            activeSection = activeSection,
+                            activeSection = navState.activeSection,
                             navLabels = navLabels,
                             onNavClick = scrollToSection,
                             modifier = Modifier.align(Alignment.CenterStart),
@@ -270,7 +229,7 @@ fun Layout() {
                     }
 
                     // Back to top button (WIDE only)
-                    if (isWide && activeSection != NavSection.HOME) {
+                    if (isWide && navState.activeSection != NavSection.HOME) {
                         val footerIndex = NavSection.entries.size
                         val layoutInfo = listState.layoutInfo
                         val footerItem = layoutInfo.visibleItemsInfo.firstOrNull { it.index == footerIndex }
@@ -299,18 +258,18 @@ fun Layout() {
                     // Mobile drawer navigation (COMPACT only)
                     if (isCompact) {
                         MobileDrawerNav(
-                            isOpen = mobileDrawerOpen,
-                            activeSection = activeSection,
+                            isOpen = navState.mobileDrawerOpen,
+                            activeSection = navState.activeSection,
                             navLabels = navLabels,
                             categoryLabels = categoryLabels,
                             onSectionClick = scrollToSection,
-                            onDismiss = { mobileDrawerOpen = false },
+                            onDismiss = { navState.closeMobileDrawer() },
                         )
                     }
 
                     // Flyout overlay (MEDIUM / EXPANDED)
                     androidx.compose.animation.AnimatedVisibility(
-                        visible = isMediumOrExpanded && railHoveredCategory != null,
+                        visible = isMediumOrExpanded && navState.railHoveredCategory != null,
                         enter =
                             expandHorizontally(
                                 animationSpec = tween(200),
@@ -331,26 +290,26 @@ fun Layout() {
                                             val event = awaitPointerEvent()
                                             when (event.type) {
                                                 PointerEventType.Enter -> {
-                                                    railDismissPending = false
+                                                    navState.railDismissPending = false
                                                 }
 
                                                 PointerEventType.Exit -> {
-                                                    railDismissPending = true
+                                                    navState.railDismissPending = true
                                                 }
                                             }
                                         }
                                     }
                                 },
                     ) {
-                        val category = railHoveredCategory ?: lastRailCategory
+                        val category = navState.railHoveredCategory ?: navState.lastRailCategory
                         NavigationRailFlyout(
                             category = category,
                             categoryLabel = categoryLabels[category] ?: category.name,
                             navLabels = navLabels,
-                            activeSection = activeSection,
+                            activeSection = navState.activeSection,
                             onSectionClick = { section ->
                                 scrollToSection(section)
-                                railHoveredCategory = null
+                                navState.dismissRail()
                             },
                         )
                     }

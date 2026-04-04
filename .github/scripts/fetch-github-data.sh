@@ -40,13 +40,12 @@ for repo_name in $(echo "$repos_json" | jq -r '.[].name'); do
 done
 unique_contributors=$(echo "$contributor_set" | sort -u | grep -c '.' || echo "0")
 
-# Get total commits (sum across all repos)
+# Get total commits (sum of contributions across all repos)
 total_commits=0
 for repo_name in $(echo "$repos_json" | jq -r '.[].name'); do
-    # Use the statistics API to get commit count
-    commit_count=$(api_get "https://api.github.com/repos/${ORG}/${repo_name}/commits?per_page=1" 2>/dev/null \
-        | jq 'length // 0' 2>/dev/null || echo "0")
-    total_commits=$((total_commits + commit_count))
+    contrib_json=$(api_get "https://api.github.com/repos/${ORG}/${repo_name}/contributors?per_page=100&anon=1" 2>/dev/null || echo "[]")
+    repo_commits=$(echo "$contrib_json" | jq '[.[].contributions // 0] | add // 0' 2>/dev/null || echo "0")
+    total_commits=$((total_commits + repo_commits))
 done
 
 # Get open PRs
