@@ -1,6 +1,5 @@
 package net.brightroom.homepage.screens.techstack
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,17 +7,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
@@ -33,10 +27,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import bright_room.generated.resources.Res
@@ -50,10 +43,12 @@ import bright_room.generated.resources.tech_desc
 import bright_room.generated.resources.tech_label
 import bright_room.generated.resources.tech_title
 import net.brightroom.homepage.app.LocalAppViewModel
+import net.brightroom.homepage.components.EqualHeightFlowRow
+import net.brightroom.homepage.components.SectionContainer
 import net.brightroom.homepage.components.SectionHeader
-import net.brightroom.homepage.components.hoverFloat
-import net.brightroom.homepage.data.TechCategoryData
+import net.brightroom.homepage.components.StandardCard
 import net.brightroom.homepage.data.TechItemData
+import net.brightroom.homepage.shared.theme.Dimensions
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -81,77 +76,58 @@ fun TechStackSection(modifier: Modifier = Modifier) {
             techStack.items.filter { it.category == selectedCategory }
         }
 
-    Box(
-        modifier = modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Column(
-            modifier =
-                Modifier
-                    .widthIn(max = 1000.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(top = 100.dp, bottom = 60.dp),
+    SectionContainer(modifier = modifier) {
+        SectionHeader(
+            label = stringResource(Res.string.tech_label),
+            title = stringResource(Res.string.tech_title),
+            description = stringResource(Res.string.tech_desc),
+        )
+
+        Spacer(Modifier.height(32.dp))
+
+        // Filter chips
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            SectionHeader(
-                label = stringResource(Res.string.tech_label),
-                title = stringResource(Res.string.tech_title),
-                description = stringResource(Res.string.tech_desc),
+            val filterChipColors =
+                FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                )
+            FilterChip(
+                selected = selectedCategory == "ALL",
+                onClick = { selectedCategory = "ALL" },
+                label = { Text(stringResource(Res.string.tech_cat_all)) },
+                shape = RoundedCornerShape(100.dp),
+                colors = filterChipColors,
             )
-
-            Spacer(Modifier.height(32.dp))
-
-            // Filter chips
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                val filterChipColors =
-                    FilterChipDefaults.filterChipColors(
-                        selectedContainerColor = MaterialTheme.colorScheme.primary,
-                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
-                    )
+            techStack.categories.forEach { category ->
                 FilterChip(
-                    selected = selectedCategory == "ALL",
-                    onClick = { selectedCategory = "ALL" },
-                    label = { Text(stringResource(Res.string.tech_cat_all)) },
+                    selected = selectedCategory == category.id,
+                    onClick = { selectedCategory = category.id },
+                    label = { Text(resolveCategoryLabel(category.labelKey)) },
                     shape = RoundedCornerShape(100.dp),
                     colors = filterChipColors,
                 )
-                techStack.categories.forEach { category ->
-                    FilterChip(
-                        selected = selectedCategory == category.id,
-                        onClick = { selectedCategory = category.id },
-                        label = { Text(resolveCategoryLabel(category.labelKey)) },
-                        shape = RoundedCornerShape(100.dp),
-                        colors = filterChipColors,
-                    )
-                }
             }
+        }
 
-            Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(24.dp))
 
-            // Tech grid
-            val density = LocalDensity.current
-            var maxTechCardHeight by remember { mutableStateOf(0.dp) }
-
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                maxItemsInEachRow = 6,
-            ) {
-                filteredItems.forEach { item ->
-                    TechCard(
-                        item = item,
-                        maxCardHeight = maxTechCardHeight,
-                        onHeightMeasured = { h ->
-                            val hDp = with(density) { h.toDp() }
-                            if (hDp > maxTechCardHeight) maxTechCardHeight = hDp
-                        },
-                        modifier = Modifier.width(160.dp),
-                    )
-                }
-            }
+        // Tech grid
+        EqualHeightFlowRow(
+            items = filteredItems,
+            maxItemsInEachRow = 6,
+            horizontalSpacing = Dimensions.CardGridSpacingSm,
+            verticalSpacing = Dimensions.CardGridSpacingSm,
+        ) { item, maxHeight, onHeightMeasured, _ ->
+            TechCard(
+                item = item,
+                maxCardHeight = maxHeight,
+                onHeightMeasured = onHeightMeasured,
+                modifier = Modifier.width(160.dp),
+            )
         }
     }
 }
@@ -159,7 +135,7 @@ fun TechStackSection(modifier: Modifier = Modifier) {
 @Composable
 private fun TechCard(
     item: TechItemData,
-    maxCardHeight: androidx.compose.ui.unit.Dp,
+    maxCardHeight: Dp,
     onHeightMeasured: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -173,18 +149,15 @@ private fun TechCard(
             }
         }
 
-    Card(
-        modifier =
-            modifier
-                .defaultMinSize(minHeight = maxCardHeight)
-                .onSizeChanged { onHeightMeasured(it.height) }
-                .hoverFloat(shape = RoundedCornerShape(12.dp)),
+    StandardCard(
+        modifier = modifier,
+        maxHeight = maxCardHeight,
+        onHeightMeasured = onHeightMeasured,
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
+        contentPadding = 20.dp,
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(20.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(

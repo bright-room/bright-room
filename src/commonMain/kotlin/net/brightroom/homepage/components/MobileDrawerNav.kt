@@ -124,37 +124,14 @@ fun MobileDrawerNav(
                         val label = navLabels[section] ?: section.id
                         val isActive = section == activeSection
 
-                        Box(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 12.dp)
-                                    .clip(RoundedCornerShape(50))
-                                    .clickable {
-                                        onSectionClick(section)
-                                        onDismiss()
-                                    }.then(
-                                        if (isActive) {
-                                            Modifier.background(
-                                                MaterialTheme.colorScheme.secondaryContainer,
-                                            )
-                                        } else {
-                                            Modifier
-                                        },
-                                    ).padding(horizontal = 16.dp, vertical = 14.dp),
-                        ) {
-                            Text(
-                                text = label,
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
-                                color =
-                                    if (isActive) {
-                                        MaterialTheme.colorScheme.onSecondaryContainer
-                                    } else {
-                                        MaterialTheme.colorScheme.onSurfaceVariant
-                                    },
-                            )
-                        }
+                        DrawerNavItem(
+                            label = label,
+                            isActive = isActive,
+                            onClick = {
+                                onSectionClick(section)
+                                onDismiss()
+                            },
+                        )
                     }
                 }
 
@@ -223,5 +200,41 @@ fun MobileDrawerNav(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun DrawerNavItem(
+    label: String,
+    isActive: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp)
+                .clip(RoundedCornerShape(50))
+                .clickable(onClick = onClick)
+                .then(
+                    if (isActive) {
+                        Modifier.background(MaterialTheme.colorScheme.secondaryContainer)
+                    } else {
+                        Modifier
+                    },
+                ).padding(horizontal = 16.dp, vertical = 14.dp),
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal,
+            color =
+                if (isActive) {
+                    MaterialTheme.colorScheme.onSecondaryContainer
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+        )
     }
 }

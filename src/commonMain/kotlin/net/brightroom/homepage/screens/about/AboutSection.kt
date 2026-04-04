@@ -1,43 +1,19 @@
 package net.brightroom.homepage.screens.about
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Rocket
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import bright_room.generated.resources.Res
@@ -50,146 +26,106 @@ import bright_room.generated.resources.about_card_products_title
 import bright_room.generated.resources.about_desc
 import bright_room.generated.resources.about_label
 import bright_room.generated.resources.about_title
+import net.brightroom.homepage.components.EqualHeightFlowRow
+import net.brightroom.homepage.components.IconBox
+import net.brightroom.homepage.components.SectionContainer
 import net.brightroom.homepage.components.SectionHeader
-import net.brightroom.homepage.components.hoverFloat
+import net.brightroom.homepage.components.StandardCard
 import net.brightroom.homepage.shared.theme.AccentBlue
 import net.brightroom.homepage.shared.theme.AccentPink
+import net.brightroom.homepage.shared.theme.Dimensions
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalLayoutApi::class)
+private data class AboutCardData(
+    val icon: ImageVector,
+    val title: String,
+    val description: String,
+    val iconBackground: Color,
+    val iconTint: Color,
+)
+
 @Composable
 fun AboutSection(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Column(
-            modifier =
-                Modifier
-                    .widthIn(max = 1000.dp)
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(top = 100.dp, bottom = 60.dp),
-        ) {
-            SectionHeader(
-                label = stringResource(Res.string.about_label),
-                title = stringResource(Res.string.about_title),
-                description = stringResource(Res.string.about_desc),
+    SectionContainer(modifier = modifier) {
+        SectionHeader(
+            label = stringResource(Res.string.about_label),
+            title = stringResource(Res.string.about_title),
+            description = stringResource(Res.string.about_desc),
+        )
+
+        Spacer(Modifier.height(Dimensions.SectionContentSpacing))
+
+        val cards =
+            listOf(
+                AboutCardData(
+                    icon = Icons.Default.Code,
+                    title = stringResource(Res.string.about_card_oss_title),
+                    description = stringResource(Res.string.about_card_oss_desc),
+                    iconBackground = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                    iconTint = MaterialTheme.colorScheme.primary,
+                ),
+                AboutCardData(
+                    icon = Icons.Default.Groups,
+                    title = stringResource(Res.string.about_card_community_title),
+                    description = stringResource(Res.string.about_card_community_desc),
+                    iconBackground = AccentBlue.copy(alpha = 0.1f),
+                    iconTint = AccentBlue,
+                ),
+                AboutCardData(
+                    icon = Icons.Default.Rocket,
+                    title = stringResource(Res.string.about_card_products_title),
+                    description = stringResource(Res.string.about_card_products_desc),
+                    iconBackground = AccentPink.copy(alpha = 0.1f),
+                    iconTint = AccentPink,
+                ),
             )
 
-            Spacer(Modifier.height(48.dp))
-
-            val density = LocalDensity.current
-            var maxCardHeight by remember { mutableStateOf(0.dp) }
-
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(20.dp),
-                verticalArrangement = Arrangement.spacedBy(20.dp),
-                maxItemsInEachRow = 3,
-            ) {
-                data class AboutCardData(
-                    val icon: ImageVector,
-                    val title: String,
-                    val description: String,
-                    val iconBackground: Color,
-                    val iconTint: Color,
-                )
-
-                val cards =
-                    listOf(
-                        AboutCardData(
-                            icon = Icons.Default.Code,
-                            title = stringResource(Res.string.about_card_oss_title),
-                            description = stringResource(Res.string.about_card_oss_desc),
-                            iconBackground = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
-                            iconTint = MaterialTheme.colorScheme.primary,
-                        ),
-                        AboutCardData(
-                            icon = Icons.Default.Groups,
-                            title = stringResource(Res.string.about_card_community_title),
-                            description = stringResource(Res.string.about_card_community_desc),
-                            iconBackground = AccentBlue.copy(alpha = 0.1f),
-                            iconTint = AccentBlue,
-                        ),
-                        AboutCardData(
-                            icon = Icons.Default.Rocket,
-                            title = stringResource(Res.string.about_card_products_title),
-                            description = stringResource(Res.string.about_card_products_desc),
-                            iconBackground = AccentPink.copy(alpha = 0.1f),
-                            iconTint = AccentPink,
-                        ),
-                    )
-
-                cards.forEach { card ->
-                    AboutCard(
-                        icon = card.icon,
-                        title = card.title,
-                        description = card.description,
-                        iconBackground = card.iconBackground,
-                        iconTint = card.iconTint,
-                        maxCardHeight = maxCardHeight,
-                        onHeightMeasured = { h ->
-                            val hDp = with(density) { h.toDp() }
-                            if (hDp > maxCardHeight) maxCardHeight = hDp
-                        },
-                        modifier = Modifier.weight(1f).widthIn(min = 280.dp),
-                    )
-                }
-            }
+        EqualHeightFlowRow(
+            items = cards,
+            maxItemsInEachRow = 3,
+            horizontalSpacing = Dimensions.CardGridSpacingLg,
+            verticalSpacing = Dimensions.CardGridSpacingLg,
+        ) { card, maxHeight, onHeightMeasured, itemModifier ->
+            AboutCard(
+                card = card,
+                maxCardHeight = maxHeight,
+                onHeightMeasured = onHeightMeasured,
+                modifier = itemModifier.widthIn(min = 280.dp),
+            )
         }
     }
 }
 
 @Composable
 private fun AboutCard(
-    icon: ImageVector,
-    title: String,
-    description: String,
-    iconBackground: Color,
-    iconTint: Color,
-    maxCardHeight: Dp,
+    card: AboutCardData,
+    maxCardHeight: androidx.compose.ui.unit.Dp,
     onHeightMeasured: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
-        modifier =
-            modifier
-                .defaultMinSize(minHeight = maxCardHeight)
-                .onSizeChanged { onHeightMeasured(it.height) }
-                .hoverFloat(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.25f)),
+    StandardCard(
+        modifier = modifier,
+        maxHeight = maxCardHeight,
+        onHeightMeasured = onHeightMeasured,
+        contentPadding = Dimensions.CardInnerPaddingLarge,
     ) {
-        Column(modifier = Modifier.padding(32.dp)) {
-            Box(
-                modifier =
-                    Modifier
-                        .size(48.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(iconBackground),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp),
-                    tint = iconTint,
-                )
-            }
-            Spacer(Modifier.height(16.dp))
-            Text(
-                text = title,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
-            )
-            Spacer(Modifier.height(10.dp))
-            Text(
-                text = description,
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                lineHeight = 24.sp,
-            )
-        }
+        IconBox(
+            icon = card.icon,
+            backgroundColor = card.iconBackground,
+            iconTint = card.iconTint,
+        )
+        Spacer(Modifier.height(16.dp))
+        Text(
+            text = card.title,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.SemiBold,
+        )
+        Spacer(Modifier.height(10.dp))
+        Text(
+            text = card.description,
+            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            lineHeight = 24.sp,
+        )
     }
 }
