@@ -15,7 +15,7 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 spotless = { id = "com.diffplug.spotless", version = { strictly = "8.4.0" } }
 
 [libraries]
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = { strictly = "0.7.1-0.6.x-compat" } }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = { strictly = "0.8.0-0.6.x-compat" } }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = { strictly = "1.11.0" } }
 
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose_multiplatform_version" }
