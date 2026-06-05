@@ -12,7 +12,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose_multiplatform_version" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin_version" }
 
-spotless = { id = "com.diffplug.spotless", version = { strictly = "8.5.1" } }
+spotless = { id = "com.diffplug.spotless", version = { strictly = "8.6.0" } }
 
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = { strictly = "0.8.0-0.6.x-compat" } }
