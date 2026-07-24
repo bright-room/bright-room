@@ -9,17 +9,22 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
-permissions:
-  contents: write
-  issues: write
+permissions: {}
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
 
       - name: Fetch GitHub Data
         run: ./.github/scripts/fetch-github-data.sh
@@ -32,7 +37,7 @@ jobs:
           command: wasmJsBrowserDistribution
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: build/dist/wasmJs/productionExecutable
 
@@ -52,17 +57,22 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
 
   release:
     name: GitHub Release
     needs: deploy
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Create GitHub Release
         env:
@@ -76,6 +86,10 @@ jobs:
     name: Close Milestone
     needs: release
     runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+
     steps:
       - name: Close milestone matching release tag
         env:
