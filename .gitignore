@@ -1,12 +1,81 @@
+# >>> repository-fanout managed >>>
+### JetBrains IDEs ###
+.fleet/
+.idea/
+*.iws
 *.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### VSCode ###
+.vscode/
+
+### OS ###
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+### env ###
+.env*
+!.env.example
+
+### AI agents ###
+.claude/settings.local.json
+.claude/worktrees/
+.claude/scheduled_tasks.lock
+.superpowers/
+CLAUDE.local.md
+
+### Logfiles ###
+log/*
+!log/.gitkeep
+
+### Tempfiles ###
+.tmp/
+tmp/*
+!tmp/.gitkeep
+
+### Misc ###
+HELP.md
+
+### gradle ###
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+local.properties
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### kotlin ###
+.kotlin/
+# <<< repository-fanout managed <<<
 .kotlin
 .gradle
 **/build/
 xcuserdata
 !src/**/build/
-local.properties
 .idea
-.DS_Store
 captures
 .externalNativeBuild
 .cxx
@@ -17,4 +86,3 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
-.tmp/
