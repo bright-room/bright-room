@@ -8,17 +8,21 @@ on:
         required: true
         type: string
 
-permissions:
-  contents: write
+permissions: {}
 
 jobs:
   validate:
     name: Validate
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
     steps:
       - name: Validate version format
+        env:
+          VERSION: ${{ inputs.version }}
         run: |
-          VERSION="${{ inputs.version }}"
           if [[ ! "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
             echo "::error::Invalid version format: $VERSION"
             echo "Expected format: v1.2.3 or v1.2.3-rc.1"
@@ -26,14 +30,17 @@ jobs:
           fi
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Check tag does not already exist
+        env:
+          VERSION: ${{ inputs.version }}
         run: |
-          if git rev-parse "${{ inputs.version }}" >/dev/null 2>&1; then
-            echo "::error::Tag ${{ inputs.version }} already exists"
+          if git rev-parse "$VERSION" >/dev/null 2>&1; then
+            echo "::error::Tag $VERSION already exists"
             exit 1
           fi
 
@@ -41,13 +48,17 @@ jobs:
     name: Push Tag
     needs: validate
     runs-on: ubuntu-latest
+
+    permissions: {}
+
     steps:
       - name: Generate GitHub App token
         id: app-token
-        uses: actions/create-github-app-token@v3
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
           app-id: ${{ vars.CHLOE_CHAN_APP_ID }}
           private-key: ${{ secrets.CHLOE_CHAN_APP_PRIVATE_KEY }}
+          permission-contents: write
 
       - name: Create signed tag via API
         env:
