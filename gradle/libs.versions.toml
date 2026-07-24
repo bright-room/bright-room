@@ -1,6 +1,6 @@
 [versions]
 java = "25"
-kotlin_version = { strictly = "2.3.21" }
+kotlin_version = { strictly = "2.4.10" }
 compose_multiplatform_version = { strictly = "1.11.1" }
 material3 = { strictly = "1.10.0-alpha05" }
 lifecycle = { strictly = "2.11.0" }
