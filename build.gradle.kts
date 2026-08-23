@@ -58,25 +58,12 @@ kotlin {
 }
 
 rootProject.extensions.configure<YarnRootExtension> {
-    resolution("lodash", "4.18.1")
     resolution("serialize-javascript", "7.0.5")
     resolution("webpack", "5.104.1")
     resolution("diff", "8.0.3")
-    resolution("body-parser", "1.20.6")
-    resolution("brace-expansion", "2.1.4")
-    resolution("engine.io", "6.6.7")
-    resolution("fast-uri", "3.1.5")
-    resolution("follow-redirects", "1.16.0")
-    resolution("http-proxy-middleware", "2.0.10")
-    resolution("js-yaml", "4.3.1")
-    resolution("launch-editor", "2.14.1")
     resolution("qs", "6.15.2")
-    resolution("shell-quote", "1.9.0")
-    resolution("socket.io-parser", "4.2.7")
-    resolution("tmp", "0.2.7")
     resolution("uuid", "11.1.1")
     resolution("webpack-dev-server", "5.2.6")
-    resolution("websocket-driver", "0.7.5")
     resolution("ws", "8.21.0")
 }
 
