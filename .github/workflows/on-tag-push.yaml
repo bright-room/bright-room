@@ -32,7 +32,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build with Gradle
-        uses: ./.github/actions/gradle-action
+        uses: ./.github/actions/gradle-action # zizmor: ignore[self-repository] $/ 記法は actionlint が未対応
         with:
           command: wasmJsBrowserDistribution
 

@@ -2,6 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>bright-room/renovate-config",
-    "github>bright-room/renovate-config:kotlin",
+    "github>bright-room/renovate-config:kotlin"
   ]
 }
