@@ -21,6 +21,6 @@ jobs:
           persist-credentials: false
 
       - name: Build
-        uses: ./.github/actions/gradle-action
+        uses: ./.github/actions/gradle-action # zizmor: ignore[self-repository] $/ 記法は actionlint が未対応
         with:
           command: check
