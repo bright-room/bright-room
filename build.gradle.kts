@@ -61,10 +61,12 @@ rootProject.extensions.configure<YarnRootExtension> {
     resolution("serialize-javascript", "7.0.5")
     resolution("webpack", "5.104.1")
     resolution("diff", "8.0.3")
-    resolution("qs", "6.15.2")
+    resolution("qs", "6.16.0")
     resolution("uuid", "11.1.1")
     resolution("webpack-dev-server", "5.2.6")
     resolution("ws", "8.21.0")
+    resolution("fast-uri", "3.1.7")
+    resolution("js-yaml", "4.3.2")
 }
 
 spotless {
